@@ -7,7 +7,7 @@ NotBoring = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(rece
 
 [Map Local]
 
-^https?:\/\/api-weather\.andy\.works\/v\d\/\w{13,18}$ data=https://raw.githubusercontent.com/Keywos/Rule/main/mocks/reject-dict.json
+^https?:\/\/api-weather\.andy\.works\/v\d\/\w{13,18}$ data="https://raw.githubusercontent.com/Keywos/Rule/main/mocks/reject-dict.json"
 
 [MITM]
 
