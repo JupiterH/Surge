@@ -1,5 +1,5 @@
-!name=Keep
-!desc=Keep解锁会员
+#!name=Keep
+#!desc=Keep解锁会员
 #!homepage=https://github.com/deezertidal
 
 [Script]
