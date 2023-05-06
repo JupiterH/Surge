@@ -2,10 +2,13 @@
 #!desc= Not Boring 四件套 解锁会员权限
 
 [Script]
+
 NotBoring = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/*),requires-body=0,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/NotBoring.js
 
 [Map Local]
-^https?:\/\/api-weather\.andy\.works\/v\d\/\w{13,18}$ data="https://raw.githubusercontent.com/Keywos/Rule/main/mocks/reject-dict.json"
+
+^https?:\/\/api-weather\.andy\.works\/v\d\/\w{13,18}$ data=https://raw.githubusercontent.com/Keywos/Rule/main/mocks/reject-dict.json
 
 [MITM]
+
 hostname = %APPEND% api-weather.andy.works,api.revenuecat.com
