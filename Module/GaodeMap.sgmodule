@@ -1,26 +1,21 @@
-#!name= Gaode Map
-#!desc= 去除 高德地图APP 广告
-
-[Url Rewrite]
-
-^https?:\/\/.*\.amap\.com\/ws\/asa\/ads_attribution - reject
-^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/card-service-route-plan\? reject-dict
-^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information reject-dict
-^https?:\/\/.*\.amap\.com\/ws\/shield\/scene\/recommend reject-dict
-^https?:\/\/.*\.amap\.com\/uploadimg\/\w+\.gif reject-dict
-^https?:\/\/.*\.amap\.com\/ws\/valueadded\/weather reject-dict
+#!name=高德地图去广告
+#!desc=高德地图去广告
+#!homepage=https://github.com/deezertidal
 
 [Script]
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/message\/notice\/list,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/search\/nearbyrec_smart,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/promotion-web\/resource,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/valueadded\/alimama\/splash_screen,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/msgbox\/pull,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaas,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
-amap = type=http-response,pattern=^https?:\/\/.*\.amap\.com\/ws\/shield\/search\/new_hotword,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+高德地图去广告=type=http-response,script-path=^https?:\/\/.*\.amap\.com\/ws\/faas\/amap-navigation\/main-page,requires-body=1,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+高德地图去广告=type=http-response,script-path=^https?:\/\/.*\.amap\.com\/ws\/valueadded\/alimama\/splash_screen,requires-body=1,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+高德地图去广告=type=http-response,script-path=^https?:\/\/.*\.amap\.com\/ws\/msgbox\/pull,requires-body=1,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+高德地图去广告=type=http-response,script-path=^https?:\/\/.*\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaas,requires-body=1,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+高德地图去广告=type=http-response,script-path=^https?:\/\/.*\.amap\.com\/ws\/shield\/search\/new_hotword,requires-body=1,script-path=https://github.com/ddgksf2013/Scripts/raw/master/amap.js
+
+
+[URL Rewrite]
+^https?:\/\/.*\.amap\.com\/ws\/boss\/order_web\/\w{8}_information reject-200
+^https?:\/\/.*\.amap\.com\/ws\/asa\/ads_attribution reject
+^https?:\/\/.*\.amap\.com\/ws\/shield\/scene\/recommend reject-dict
+^https?:\/\/.*\.amap\.com\/uploadimg\/\w+\.gif reject-img
+^https?:\/\/.*\.amap\.com\/ws\/valueadded\/weather reject-dict
 
 [MITM]
-
-hostname = %APPEND% *.amap.com
+hostname= %APPEND% *amap.com
