@@ -1,27 +1,32 @@
-# Client(仅 macOS)
-PROCESS-NAME,UUBooster,DIRECT
-# > Download (仅 macOS)
-PROCESS-NAME,aria2c,DIRECT
-PROCESS-NAME,fdm,DIRECT
-PROCESS-NAME,Folx,DIRECT
-PROCESS-NAME,NetTransport,DIRECT
-PROCESS-NAME,Thunder,DIRECT
-PROCESS-NAME,Transmission,DIRECT
-PROCESS-NAME,uTorrent,DIRECT
-PROCESS-NAME,WebTorrent,DIRECT
-PROCESS-NAME,WebTorrent Helper,DIRECT
-# BT
-DOMAIN-SUFFIX,smtp,DIRECT
-DOMAIN-KEYWORD,aria2,DIRECT
-DOMAIN-KEYWORD,announce,DIRECT
-DOMAIN-KEYWORD,torrent,DIRECT
-DOMAIN-KEYWORD,tracker,DIRECT
-URL-REGEX,(Subject|HELO|SMTP),DIRECT
-URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com,DIRECT
-# 迅雷
-URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.),DIRECT
-DOMAIN-SUFFIX,xunlei.com,DIRECT
-PROCESS-NAME,DownloadService,DIRECT
-PROCESS-NAME,Weiyun,DIRECT
-PROCESS-NAME,baidunetdisk,DIRECT
-URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com,DIRECT
+# NAME: Download
+
+# > Download
+PROCESS-NAME,aria2c
+PROCESS-NAME,fdm
+PROCESS-NAME,Folx
+PROCESS-NAME,NetTransport
+PROCESS-NAME,Thunder
+PROCESS-NAME,Transmission
+PROCESS-NAME,uTorrent
+PROCESS-NAME,WebTorrent
+PROCESS-NAME,WebTorrent Helper
+PROCESS-NAME,BitComet
+PROCESS-NAME,qbittorrent
+PROCESS-NAME,DownloadService
+PROCESS-NAME,Weiyun
+PROCESS-NAME,baidunetdisk
+PROCESS-NAME,UUBooster
+DOMAIN-SUFFIX,qbittorrent.org
+DOMAIN-SUFFIX,smtp
+DOMAIN-SUFFIX,xunlei.com
+DOMAIN-KEYWORD,thunder
+DOMAIN-KEYWORD,xlliveud
+DOMAIN-KEYWORD,yunpan
+DOMAIN-KEYWORD,aria2
+DOMAIN-KEYWORD,announce
+DOMAIN-KEYWORD,torrent
+DOMAIN-KEYWORD,tracker
+URL-REGEX,(Subject|HELO|SMTP)
+URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
+URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
+URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
