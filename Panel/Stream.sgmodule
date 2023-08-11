@@ -1,5 +1,5 @@
-#!name=今日天气
-#!desc=今日天气
+#!name=Stream-all
+#!desc=流媒体检测
 
 [Panel]
 stream-all = script-name=stream-all,title=流媒体解锁检测,content=请刷新面板,update-interval=3600
