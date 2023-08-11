@@ -1,6 +1,6 @@
 #!name=倒计时
 #!desc=节假日倒计时
-#!homepage=https://yfamily.vercel.app
+
 [Panel]
 节假日倒计时 = script-name=节假日倒计时,update-interval=600
 [Script]
