@@ -1,5 +1,5 @@
-#!name=今日天气
-#!desc=今日天气
+#!name=Connectivity_Test
+#!desc=连接测试
 
 [Panel]
 Connectivity_Test = script-name=Connectivity_Test,update-interval=1
