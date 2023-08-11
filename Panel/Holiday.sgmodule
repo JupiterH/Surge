@@ -1,0 +1,7 @@
+#!name=倒计时
+#!desc=节假日倒计时
+#!homepage=https://yfamily.vercel.app
+[Panel]
+节假日倒计时 = script-name=节假日倒计时,update-interval=600
+[Script]
+节假日倒计时 = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/Timecard.js
