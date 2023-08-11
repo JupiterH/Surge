@@ -1,0 +1,7 @@
+#!name=今日天气
+#!desc=今日天气
+
+[Panel]
+Connectivity_Test = script-name=Connectivity_Test,update-interval=1
+[Script]
+Connectivity_Test = type=generic,timeout=3,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/ConnectivityTest.js,argument=title=Connectivity Test&icon=icloud.and.arrow.down&color=#FF9F0A&server=false
