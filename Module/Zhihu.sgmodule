@@ -1,5 +1,5 @@
-#!name=zhihu
-#!desc=Zhihu去广告
+#!name=知乎去广告
+#!desc=知乎去广告
 #!homepage=https://github.com/ddgksf2013/ddgksf2013
 
 [Url Rewrite]
