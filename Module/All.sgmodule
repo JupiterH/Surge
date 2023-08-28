@@ -1,0 +1,65 @@
+#!name=AllInOne
+#!desc=最后更新时间 2023-08-28 02:16:12
+
+[General]
+force-http-engine-hosts = %APPEND% wmapi.meituan.com
+
+
+[Rule]
+
+
+
+[URL Rewrite]
+# 美团
+"^http:\/\/s3plus\.meituan\.net\/.*\/brandcpt-vedio\/.*\?time" - reject
+"^https?:\/\/(s3plus|flowplus)\.meituan\.net\/v\d\/\w+\/linglong\/\w+\.(gif|jpg|mp4)" - reject
+"^https?:\/\/apimobile\.meituan\.com\/appupdate\/mach\/checkUpdate?" - reject
+"^https?:\/\/flowplus\.meituan\.net\/v\d\/\w+\/linglong\/\d+\.(gif|jpg|mp4)" - reject
+"^https?:\/\/img\.meituan\.net\/(adunion|display|dpmobile|midas)\/\w+\.(gif|jpg|jpg\.webp)$" - reject
+"^https?:\/\/p\d\.meituan\.net\/(bizad|wmbanner)\/\w+\.jpg" - reject
+"^https?:\/\/p\d\.meituan\.net\/movie\/\w+\.jpg\?may_covertWebp" - reject
+"^https?:\/\/p\d\.meituan\.net\/wmbanner\/[A-Za-z0-9]+\.jpg" - reject
+"^https?:\/\/peisongapi\.meituan\.com\/client\/getInitiateImage" - reject
+"^https?:\/\/wmapi\.meituan\.com\/api\/v\d\/(openscreen\?ad|loadInfo\?|startpicture)" - reject
+"^https?:\/\/wmapi\.meituan\.com\/api\/v\d\/startpicture" - reject
+"^https?:\/\/www\.meituan\.com\/api\/v\d\/appstatus\?" - reject
+# 自如
+"^https?:\/\/ztoread\.ziroom\.com\/ymerApi\/v\d\/index\/open" - reject
+# 网易
+"^http:\/\/you\.163\.com\/" https://you.163.com/ 302
+"^https?:\/\/appconf\.mail\.163\.com\/mmad\/" - reject
+"^https?:\/\/c\.m\.163\.com\/nc\/gl\/" - reject
+"^https?:\/\/client\.mail\.163\.com\/apptrack\/confinfo\/searchMultiAds" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/eapi\/(ad|abtest|sp|hot|store|search\/(specialkeyword|defaultkeyword|hot))" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/w?e?api\/comment\/feed\/inserted" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/w?e?api\/comment\/hotcomment\/collect" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/w?e?api\/link\/position\/show\/resource" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/w?e?api\/v1\/content\/exposure\/comment" - reject
+"^https?:\/\/interface(\d)?\.music\.163\.com\/w?e?eapi\/resource-exposure\/config" - reject
+"^https?:\/\/m\.you\.163\.com\/activity\/popWindow" - reject
+"^https?:\/\/p\.du\.163\.com\/ad\/" - reject
+"^https?:\/\/support\.you\.163\.com\/xhr\/boot\/getBootMedia\.json" - reject
+"^https?:\/\/www\.icourse163\.org\/mob\/j\/v1\/mobRecommendRPCBean\.getMaxWeightAdvertisement\.rpc" - reject
+"https?:\/\/support\.you\.163\.com\/appversync\/check.do" - reject
+# 
+
+
+
+
+
+
+
+[Script
+美团外卖 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/wmapi\.meituan\.com\/api\/v\d+\/loadInfo?",requires-body=1
+
+
+
+
+[MITM]
+hostname = %APPEND% apimobile.meituan.com,flowplus.meituan.net,img.meituan.net,p*.meituan.net,peisongapi.meituan.com,s3plus.meituan.net,wmapi.meituan.com,www.meituan.com,ztoread.ziroom.com,appconf.mail.163.com,c.m.163.com,client.mail.163.com,interface*.music.163.com,m.you.163.com,p.du.163.com,support.you.163.com,www.icourse163.org,you.163.com,
+
+
+
+
+
+
