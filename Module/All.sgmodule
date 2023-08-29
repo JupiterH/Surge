@@ -1,5 +1,5 @@
-#!name=AllInOne
-#!desc=最后更新时间 2023-08-28 02:16:12
+#!name=All
+#!desc=自用去广告合集
 
 [General]
 force-http-engine-hosts = %APPEND% wmapi.meituan.com
