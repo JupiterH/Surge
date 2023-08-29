@@ -155,6 +155,7 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com
 # 豆瓣
 "^https?:\/\/api\.douban\.com\/b.*\/common_ads\?.*" - reject
 "^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash" - reject
+"^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash_show" - reject
 # 10086
 "^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/explorePage\/getAdverList" - reject
 "^https?:\/\/clientaccess\.10086\.cn\/biz-orange\/DN\/init\/startInit" - reject
