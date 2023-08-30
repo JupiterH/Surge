@@ -4,7 +4,6 @@
 [General]
 force-http-engine-hosts = %APPEND% wmapi.meituan.com
 
-
 [URL Rewrite]
 # 谷歌重定向
 "^https?:\/\/(www.)?(g|google)\.cn" https://www.google.com 302
@@ -79,7 +78,9 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com
 "^https?:\/\/video\.dispatch\.tc\.qq\.com\/\w+\.p20\d\.1\.mp4" - reject
 "^https:\/\/wx\.bthhotels\.com\/miniapp\/weixin\/v1\/home\/index_banner" - reject
 "^https:\/\/wxs-weixin\.sd\.zhumanggroup\.com\/api\/v2\/ad" - reject
+"^https?:\/\/y\.gtimg\.cn\/music\/common\/upload\/t_splash_info\/" - reject
 # 小红书
+"^https?:\/\/ads-img-al\.xhscdn\.com\/hera\/" - reject
 "^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/user\/teenager\/status" - reject
 "^https?:\/\/pages\.xiaohongshu\.com\/data\/native\/matrix_switches" - reject
 "^https?:\/\/referee\.xiaohongshu\.com\/v\d\/stateReport" - reject
@@ -151,8 +152,6 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com
 "^https?:\/\/optimus-ads\.amap\.com\/uploadimg\/" - reject
 "^https?:\/\/render-oss-cdn\.amap\.com\/render\/studio-dev\/image\/" - reject
 "^https?:\/\/sns\.amap\.com\/ws\/msgbox\/pull?" - reject
-# 掌盟
-"^https?:\/\/y\.gtimg\.cn\/music\/common\/upload\/t_splash_info\/" - reject
 # 豆瓣
 "^https?:\/\/api\.douban\.com\/b.*\/common_ads\?.*" - reject
 "^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash" - reject
@@ -171,10 +170,11 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com
 "^https?:\/\/api\.dangdang\.com\/mapi\d\/mobile\/init" - reject
 "^https?:\/\/e\.dangdang\.com\/media\/api.+?\?action=getDeviceStartPage" - reject
 "^https?:\/\/mapi\.dangdang\.com\/index\.php\?action=init" - reject
-
-
-
-
+# 饿了么
+"^https:\/\/ccmsupport-sz\.tenpay\.com\/cgi-bin\/common\/ccm_page_element.cgi" - reject
+"^https?:\/\/elemecdn\.com\/.+?\/sitemap" - reject
+"^https?:\/\/fuss10\.elemecdn\.com\/.+?\.mp4" - reject
+"^https?:\/\/fuss10\.elemecdn\.com\/.+?\/w\/640\/h\/\d{3,4}" - reject
 
 
 [Script
@@ -183,13 +183,5 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com
 爱奇艺_开屏去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/(t7z|kjp)\.cupid\.iqiyi\.com\/mixer\?",requires-body=1
 
 
-
-
 [MITM]
-hostname = %APPEND% apimobile.meituan.com,flowplus.meituan.net,img.meituan.net,p*.meituan.net,peisongapi.meituan.com,s3plus.meituan.net,wmapi.meituan.com,www.meituan.com,ztoread.ziroom.com,appconf.mail.163.com,c.m.163.com,client.mail.163.com,interface*.music.163.com,m.you.163.com,p.du.163.com,support.you.163.com,www.icourse163.org,you.163.com,afd.baidu.com,appwk.baidu.com,issuecdn.baidupcs.com,mbd.baidu.com,mime.baidu.com,newclient.map.baidu.com,pan.baidu.com,zhidao.baidu.com,*.tc.qq.com,3gimg.qq.com,4gimg.map.qq.com,api.gameplus.qq.com,bgw.xinyue.qq.com,btrace.qq.com,djcapp.game.qq.com,iphone.ac.qq.com,mi.gdt.qq.com,mlol.qt.qq.com,mp.weixin.qq.com,news.ssp.qq.com,newsso.map.qq.com,otheve.beacon.qq.com,qt.qq.com,r.inews.qq.com,ssl.kohsocialapp.qq.com,us.l.qq.com,video.dispatch.tc.qq.com,vv.video.qq.com,weixin110.qq.com,wx.wxqqurl.cn,wxa.wxs.qq.com,wxs-weixin.sd.zhumanggroup.com,*.google.cn,google.cn,edith.xiaohongshu.com,pages.xiaohongshu.com,referee.xiaohongshu.com,www.xiaohongshu.com,alittle-tea.oss-cn-shanghai.aliyuncs.com,api.aliyundrive.com,asp.cntv.myalicdn.com,g.alicdn.com,gw.alicdn.com,heic.alicdn.com,mgw.mpaas.cn-hangzhou.aliyuncs.com,sdk.alibaba.com.ailbaba.me,sto-customer-app.oss-cn-shanghai.aliyuncs.co,sto-customer-app.oss-cn-shanghai.aliyuncs.com,tracker-download.oss-cn-beijing.aliyuncs.com,zconfig.alibabausercontent.com,acs.m.taobao.com,taobao.com,ad.maoyan.com,api.maoyan.com,vod-movie.maoyan.com,wx.maoyan.com,api.m.jd.com,bdsp-x.jd.com,dsp-x.jd.com,jd.com,jdread-api.jd.com,ms.jr.jd.com,router-app-api.jdcloud.com,www.jd.com,dynamicad.kfc.com.cn,orders.kfc.com.cn,res.kfc.com.cn,m.ctrip.com,ma-adx.ctrip.com,amap-aos-info-nogw.amap.com,m*.amap.com,optimus-ads.amap.com,render-oss-cdn.amap.com,sns.amap.com,y.gtimg.cn,api.douban.com,client.app.coc.10086.cn,clientaccess.10086.cn,gd.10086.cn,gx.10086.cn,m.sd.10086.cn,wap.js.10086.cn,api.pinduoduo.com,common.diditaxi.com.cn,conf.diditaxi.com.cn,api.dangdang.com,e.dangdang.com,mapi.dangdang.com                          
-
-
-
-
-
-
+hostname = %APPEND% apimobile.meituan.com,flowplus.meituan.net,img.meituan.net,p*.meituan.net,peisongapi.meituan.com,s3plus.meituan.net,wmapi.meituan.com,www.meituan.com,ztoread.ziroom.com,appconf.mail.163.com,c.m.163.com,client.mail.163.com,interface*.music.163.com,m.you.163.com,p.du.163.com,support.you.163.com,www.icourse163.org,you.163.com,afd.baidu.com,appwk.baidu.com,issuecdn.baidupcs.com,mbd.baidu.com,mime.baidu.com,newclient.map.baidu.com,pan.baidu.com,zhidao.baidu.com,*.tc.qq.com,3gimg.qq.com,4gimg.map.qq.com,api.gameplus.qq.com,bgw.xinyue.qq.com,btrace.qq.com,djcapp.game.qq.com,iphone.ac.qq.com,mi.gdt.qq.com,mlol.qt.qq.com,mp.weixin.qq.com,news.ssp.qq.com,newsso.map.qq.com,otheve.beacon.qq.com,qt.qq.com,r.inews.qq.com,ssl.kohsocialapp.qq.com,us.l.qq.com,video.dispatch.tc.qq.com,vv.video.qq.com,weixin110.qq.com,wx.wxqqurl.cn,wxa.wxs.qq.com,wxs-weixin.sd.zhumanggroup.com,*.google.cn,google.cn,edith.xiaohongshu.com,pages.xiaohongshu.com,referee.xiaohongshu.com,www.xiaohongshu.com,alittle-tea.oss-cn-shanghai.aliyuncs.com,api.aliyundrive.com,asp.cntv.myalicdn.com,g.alicdn.com,gw.alicdn.com,heic.alicdn.com,mgw.mpaas.cn-hangzhou.aliyuncs.com,sdk.alibaba.com.ailbaba.me,sto-customer-app.oss-cn-shanghai.aliyuncs.co,sto-customer-app.oss-cn-shanghai.aliyuncs.com,tracker-download.oss-cn-beijing.aliyuncs.com,zconfig.alibabausercontent.com,acs.m.taobao.com,taobao.com,ad.maoyan.com,api.maoyan.com,vod-movie.maoyan.com,wx.maoyan.com,api.m.jd.com,bdsp-x.jd.com,dsp-x.jd.com,jd.com,jdread-api.jd.com,ms.jr.jd.com,router-app-api.jdcloud.com,www.jd.com,dynamicad.kfc.com.cn,orders.kfc.com.cn,res.kfc.com.cn,m.ctrip.com,ma-adx.ctrip.com,amap-aos-info-nogw.amap.com,m*.amap.com,optimus-ads.amap.com,render-oss-cdn.amap.com,sns.amap.com,y.gtimg.cn,api.douban.com,client.app.coc.10086.cn,clientaccess.10086.cn,gd.10086.cn,gx.10086.cn,m.sd.10086.cn,wap.js.10086.cn,api.pinduoduo.com,common.diditaxi.com.cn,conf.diditaxi.com.cn,api.dangdang.com,e.dangdang.com,mapi.dangdang.com,elemecdn.com,fuss10.elemecdn.com,ads-img-al.xhscdn.com
