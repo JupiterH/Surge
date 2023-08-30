@@ -21,6 +21,7 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/wmapi\.meituan\.com\/api\/v\d\/(openscreen\?ad|loadInfo\?|startpicture)" - reject
 "^https?:\/\/wmapi\.meituan\.com\/api\/v\d\/startpicture" - reject
 "^https?:\/\/www\.meituan\.com\/api\/v\d\/appstatus\?" - reject
+"^https?:\/\/img\.meituan\.net\/(adunion|display|midas)\/\w+\.(gif|jpg|jpg\.webp)$" - reject
 # 自如
 "^https?:\/\/ztoread\.ziroom\.com\/ymerApi\/v\d\/index\/open" - reject
 # 网易
@@ -115,6 +116,7 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.o2o\.ad\.gateway\.get\/" - reject
 "^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.idle\.home\.welcome\/" - reject
 "^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.trip\.activity\.querytmsresources\/" - reject
+"^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.guoguo\.nbnetflow\.ads\.(show|mshow)\.cn\/" - reject
 # 猫眼
 "^https:\/\/ad\.maoyan\.com\/api\/position\/detail" - reject
 "^https:\/\/api\.maoyan\.com\/sns\/common\/feed\/channel\/v2\/list\.json" - reject
@@ -148,6 +150,7 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/m\.ctrip\.com\/restapi\/[\w\/]+tripAds" - reject
 "^https?:\/\/m\.ctrip\.com\/restapi\/soa2\/\d+\/json\/getAdsList" - reject
 "^https?:\/\/ma-adx\.ctrip\.com\/_ma\.gif" - reject
+"^https:\/\/mbd\.baidu\.com\/newspage\/api\/getmobads\?page\=landingshare" - reject
 # 高德
 "^https?://m\d\.amap\.com/ws/shield/scene/recommend" - reject
 "^https?:\/\/m5\.amap\.com\/ws\/valueadded\/" - reject
@@ -160,6 +163,7 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash" - reject
 "^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash_show" - reject
 # 10086
+"^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/init\/startInit" - reject
 "^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/explorePage\/getAdverList" - reject
 "^https?:\/\/clientaccess\.10086\.cn\/biz-orange\/DN\/init\/startInit" - reject
 "^https?:\/\/gd\.10086\.cn\/gmccapp\/serv\/\?servicename=GMCCAPP_704_002_001_001" - reject
@@ -169,6 +173,12 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/api\.(pinduoduo|yangkeduo)\.com\/api\/cappuccino\/splash" - reject
 # 滴滴
 "^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v1\/core" - reject
+"^https?:\/\/ct\.xiaojukeji\.com\/agent\/v3\/feeds" - reject
+"^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=cms\.htw\.delivery" - reject
+"^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.combineHomepageInfo" - reject
+"^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.mallRecommend" - reject
+"^https?://res\.xiaojukeji\.com\/resapi\/activity\/mget" - reject
+"^https?:\/\/res\.xiaojukeji\.com\/resapi\/activity\/get(Ruled|Preload|PasMultiNotices)" - reject
 # 当当图书
 "^https?:\/\/api\.dangdang\.com\/mapi\d\/mobile\/init" - reject
 "^https?:\/\/e\.dangdang\.com\/media\/api.+?\?action=getDeviceStartPage" - reject
@@ -178,6 +188,10 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 "^https?:\/\/elemecdn\.com\/.+?\/sitemap" - reject
 "^https?:\/\/fuss10\.elemecdn\.com\/.+?\.mp4" - reject
 "^https?:\/\/fuss10\.elemecdn\.com\/.+?\/w\/640\/h\/\d{3,4}" - reject
+"https?:\/\/fuss10.elemecdn.com\/.+\/w\/640\/h\/\d{3,4}" - reject
+"https?:\/\/fuss10.elemecdn.com\/.+\/w\/750\/h\/\d{3,4}" - reject
+"https?:\/\/fuss10.elemecdn.com\/.+.mp4" - reject
+"https?:\/\/www1.elecfans.com\/www\/delivery\/" - reject
 # 爱奇艺
 "^https?:\/\/act\.vip\.iqiyi\.com\/interact\/api\/show\.do" - reject
 "^https?:\/\/act\.vip\.iqiyi\.com\/interact\/api\/v2\/show" - reject
@@ -189,14 +203,18 @@ force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
 # WPS
 "^https?:\/\/ios\.wps\.cn\/ad-statistics-service" - reject
 "^https?:\/\/\w+\.kingsoft-office-service\.com\/ad" - reject
+# 得物
+"^https:\/\/app\.dewu\.com\/api\/v1\/app\/advertisement\/" - reject
+# 下厨房
+"^https:\/\/api\.xiachufang\.com\/v\d\/ad/" - reject
 
 
 
-[Script
-美团外卖 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/wmapi\.meituan\.com\/api\/v\d+\/loadInfo?",requires-body=1
-京东_开屏去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/hd\.mina\.mi\.com\/splashscreen\/alert",requires-body=1
-爱奇艺_开屏去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/(t7z|kjp)\.cupid\.iqiyi\.com\/mixer\?",requires-body=1
-
-
+[Script]
+美团外卖_去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/wmapi\.meituan\.com\/api\/v\d+\/loadInfo?",requires-body=1
+京东_去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/hd\.mina\.mi\.com\/splashscreen\/alert",requires-body=1
+爱奇艺_去广告 = type=http-response,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.js,pattern="^https?:\/\/(t7z|kjp)\.cupid\.iqiyi\.com\/mixer\?",requires-body=1
+12306_去广告 = http-request,script-path=https://github.com/ddgksf2013/Scripts/raw/master/12306.js,pattern="^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList",requires-body=1
+百度地图_去广告 = type=http-response,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/baidumap.js,pattern="^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads",requires-body=1
 [MITM]
-hostname = %APPEND% act.vip.iqiyi.com,*cupid.iqiyi.com,*.cupid.iqiyi.com,iface.iqiyi.com,iface2.iqiyi.com,intl.iqiyi.com,u*.iqiyipic.com,ios.wps.cn,*.kingsoft-office-service.com,yanxuan.nosdn.127.net,easyreadfs.nosdn.127.net,apimobile.meituan.com,flowplus.meituan.net,img.meituan.net,p*.meituan.net,peisongapi.meituan.com,s3plus.meituan.net,wmapi.meituan.com,www.meituan.com,ztoread.ziroom.com,appconf.mail.163.com,c.m.163.com,client.mail.163.com,interface*.music.163.com,m.you.163.com,p.du.163.com,support.you.163.com,www.icourse163.org,you.163.com,afd.baidu.com,appwk.baidu.com,issuecdn.baidupcs.com,mbd.baidu.com,mime.baidu.com,newclient.map.baidu.com,pan.baidu.com,zhidao.baidu.com,*.tc.qq.com,3gimg.qq.com,4gimg.map.qq.com,api.gameplus.qq.com,bgw.xinyue.qq.com,btrace.qq.com,djcapp.game.qq.com,iphone.ac.qq.com,mi.gdt.qq.com,mlol.qt.qq.com,mp.weixin.qq.com,news.ssp.qq.com,newsso.map.qq.com,otheve.beacon.qq.com,qt.qq.com,r.inews.qq.com,ssl.kohsocialapp.qq.com,us.l.qq.com,video.dispatch.tc.qq.com,vv.video.qq.com,weixin110.qq.com,wx.wxqqurl.cn,wxa.wxs.qq.com,wxs-weixin.sd.zhumanggroup.com,*.google.cn,google.cn,edith.xiaohongshu.com,pages.xiaohongshu.com,referee.xiaohongshu.com,www.xiaohongshu.com,alittle-tea.oss-cn-shanghai.aliyuncs.com,api.aliyundrive.com,asp.cntv.myalicdn.com,g.alicdn.com,gw.alicdn.com,heic.alicdn.com,mgw.mpaas.cn-hangzhou.aliyuncs.com,sdk.alibaba.com.ailbaba.me,sto-customer-app.oss-cn-shanghai.aliyuncs.co,sto-customer-app.oss-cn-shanghai.aliyuncs.com,tracker-download.oss-cn-beijing.aliyuncs.com,zconfig.alibabausercontent.com,acs.m.taobao.com,taobao.com,ad.maoyan.com,api.maoyan.com,vod-movie.maoyan.com,wx.maoyan.com,api.m.jd.com,bdsp-x.jd.com,dsp-x.jd.com,jd.com,jdread-api.jd.com,ms.jr.jd.com,router-app-api.jdcloud.com,www.jd.com,dynamicad.kfc.com.cn,orders.kfc.com.cn,res.kfc.com.cn,m.ctrip.com,ma-adx.ctrip.com,amap-aos-info-nogw.amap.com,m*.amap.com,optimus-ads.amap.com,render-oss-cdn.amap.com,sns.amap.com,y.gtimg.cn,api.douban.com,client.app.coc.10086.cn,clientaccess.10086.cn,gd.10086.cn,gx.10086.cn,m.sd.10086.cn,wap.js.10086.cn,api.pinduoduo.com,common.diditaxi.com.cn,conf.diditaxi.com.cn,api.dangdang.com,e.dangdang.com,mapi.dangdang.com,elemecdn.com,fuss10.elemecdn.com,ads-img-al.xhscdn.com
+hostname = %APPEND% api.xiachufang.com,www1.elecfans.com,app.dewu.com,ct.xiaojukeji.com,htwkop.xiaojukeji.com,res.xiaojukeji.com,mbd.baidu.com,newclient.map.baidu.com,act.vip.iqiyi.com,*cupid.iqiyi.com,*.cupid.iqiyi.com,iface.iqiyi.com,iface2.iqiyi.com,intl.iqiyi.com,u*.iqiyipic.com,ad.12306.cn,ios.wps.cn,*.kingsoft-office-service.com,yanxuan.nosdn.127.net,easyreadfs.nosdn.127.net,apimobile.meituan.com,flowplus.meituan.net,img.meituan.net,p*.meituan.net,peisongapi.meituan.com,s3plus.meituan.net,wmapi.meituan.com,www.meituan.com,ztoread.ziroom.com,appconf.mail.163.com,c.m.163.com,client.mail.163.com,interface*.music.163.com,m.you.163.com,cn-acs.m.cainiao.com,p.du.163.com,support.you.163.com,www.icourse163.org,you.163.com,afd.baidu.com,appwk.baidu.com,issuecdn.baidupcs.com,mbd.baidu.com,mime.baidu.com,newclient.map.baidu.com,pan.baidu.com,zhidao.baidu.com,*.tc.qq.com,3gimg.qq.com,4gimg.map.qq.com,api.gameplus.qq.com,bgw.xinyue.qq.com,btrace.qq.com,djcapp.game.qq.com,iphone.ac.qq.com,mi.gdt.qq.com,mlol.qt.qq.com,mp.weixin.qq.com,news.ssp.qq.com,newsso.map.qq.com,otheve.beacon.qq.com,qt.qq.com,r.inews.qq.com,ssl.kohsocialapp.qq.com,us.l.qq.com,video.dispatch.tc.qq.com,vv.video.qq.com,weixin110.qq.com,wx.wxqqurl.cn,wxa.wxs.qq.com,wxs-weixin.sd.zhumanggroup.com,*.google.cn,google.cn,edith.xiaohongshu.com,pages.xiaohongshu.com,referee.xiaohongshu.com,www.xiaohongshu.com,alittle-tea.oss-cn-shanghai.aliyuncs.com,api.aliyundrive.com,asp.cntv.myalicdn.com,g.alicdn.com,gw.alicdn.com,heic.alicdn.com,mgw.mpaas.cn-hangzhou.aliyuncs.com,sdk.alibaba.com.ailbaba.me,sto-customer-app.oss-cn-shanghai.aliyuncs.co,sto-customer-app.oss-cn-shanghai.aliyuncs.com,tracker-download.oss-cn-beijing.aliyuncs.com,zconfig.alibabausercontent.com,acs.m.taobao.com,taobao.com,ad.maoyan.com,api.maoyan.com,vod-movie.maoyan.com,wx.maoyan.com,api.m.jd.com,bdsp-x.jd.com,dsp-x.jd.com,jd.com,jdread-api.jd.com,ms.jr.jd.com,router-app-api.jdcloud.com,www.jd.com,dynamicad.kfc.com.cn,orders.kfc.com.cn,res.kfc.com.cn,m.ctrip.com,ma-adx.ctrip.com,amap-aos-info-nogw.amap.com,m*.amap.com,optimus-ads.amap.com,render-oss-cdn.amap.com,sns.amap.com,y.gtimg.cn,api.douban.com,client.app.coc.10086.cn,clientaccess.10086.cn,gd.10086.cn,gx.10086.cn,m.sd.10086.cn,wap.js.10086.cn,api.pinduoduo.com,common.diditaxi.com.cn,conf.diditaxi.com.cn,api.dangdang.com,e.dangdang.com,mapi.dangdang.com,elemecdn.com,fuss10.elemecdn.com,ads-img-al.xhscdn.com
