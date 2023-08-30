@@ -8,4 +8,4 @@
 CaiXinZhouKanProCrack = type=http-response,pattern=https?:\/\/ipadcms\.caixin\.com\/tmp\/articles,requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/MoYu/raw/master/CaiXinZhouKanProCrack.js
 
 [mitm] 
-hostname=ipadcms.caixin.com
+hostname = %APPEND% ipadcms.caixin.com
