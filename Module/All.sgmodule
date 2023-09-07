@@ -1,5 +1,6 @@
-#!name=All
+#!name=Anti-AD
 #!desc=自用去广告合集
+#!icon=https://raw.githubusercontent.com/deezertidal/private/main/icons/startingad.png
 
 [General]
 force-http-engine-hosts = %APPEND% wmapi.meituan.com,intl.iqiyi.com
