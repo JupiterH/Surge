@@ -1,1 +1,9 @@
-1
+# NAME: 规则修正  PROXY
+# AUTHOR: Xiao
+# UPDATED: 2023-10-13 16:18
+
+DOMAIN-KEYWORD,misakaf,⚡️Xiao
+DOMAIN-SUFFIX,vercel.app,⚡️Xiao
+DOMAIN-SUFFIX,duolingo.cn,⚡️Xiao
+DOMAIN-SUFFIX,duolingo.com,⚡️Xiao
+DOMAIN-KEYWORD,jsdelivr.net,⚡️Xiao
