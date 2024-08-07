@@ -14,7 +14,7 @@
 ^https?:\/\/api-new\.app\.acfun\.cn\/rest\/app\/flash\/screen\/ - reject
 # aihuishou
 ^https?:\/\/gw.aihuishou.com\/app-portal\/home\/getadvertisement - reject
-🆕# aisi
+# aisi
 ^https?:\/\/list-app-m\.i4\.cn\/getopfstadinfo\.xhtml - reject
 # appso
 ^https?:\/\/sso.ifanr.com\/jiong\/IOS\/appso\/splash\/ - reject
