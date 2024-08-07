@@ -1,5 +1,6 @@
-#!name= 微博去广告
-#!desc= 去除微博轮播图等广告
+#!name= 𝑾𝒆𝒊𝒃𝒐
+#!desc= 去除微博广告
+#!category=𝑨𝒏𝒕𝒊-𝑨𝑫
 # https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Weibo.conf
 
 [Rule]
