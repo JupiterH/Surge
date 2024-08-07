@@ -1,5 +1,6 @@
 #!name= 𝑩𝒂𝒊𝒅𝒖
 #!desc= 去除百度系广告
+#!category=𝑨𝒏𝒕𝒊-𝑨𝑫
 
 [Rule]
 RULE-SET,https://raw.githubusercontent.com/app2smile/rules/master/rule/tieba-ad.list,REJECT-DROP
