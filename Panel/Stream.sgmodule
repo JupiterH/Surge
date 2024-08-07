@@ -1,5 +1,6 @@
-#!name=Stream-all
+#!name=𝑺𝒕𝒓𝒆𝒂𝒎𝒊𝒏𝒈 𝑻𝒆𝒔𝒕
 #!desc=流媒体检测
+#!category=𝑷𝒂𝒏𝒆𝒍
 
 [Panel]
 stream-all = script-name=stream-all,title=流媒体解锁检测,content=请刷新面板,update-interval=3600
