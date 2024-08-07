@@ -1,8 +1,6 @@
-#!name=滴滴出行
-#!desc=Didichuxing
-#!author=怎么肥事
-#!update=2024-06-20 23:19
-#!ps=需要分流禁用掉 
+#!name=𝑫𝒊𝑫𝒊
+#!desc=去除滴滴出行广告
+#!category=𝑨𝒏𝒕𝒊-𝑨𝑫
   
 [RULE]
 DOMAIN,gwp.xiaojukeji.com,REJECT
