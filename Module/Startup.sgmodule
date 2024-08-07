@@ -1,7 +1,7 @@
 #!name= 𝑺𝒕𝒂𝒓𝒕 𝒖𝒑
 #!desc= 去除大部份软件开屏广告
 #!category=𝑨𝒏𝒕𝒊-𝑨𝑫
-#https://github.com/ddgksf2013/Rewrite/raw/master/AdBlock/Startup.conf
+#https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/StartUp.conf
 
 [URL Rewrite]
 # kanlixiang
