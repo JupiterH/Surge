@@ -1,5 +1,6 @@
-#!name=Network Info Panel
+#!name=𝑵𝒆𝒕𝒘𝒐𝒓𝒌 𝑰𝒏𝒇𝒐
 #!desc=详细的显示你当前的网络信息
+#!category=𝑷𝒂𝒏𝒆𝒍
 
 [Panel]
 NetInfoPanel=title="",content="",style=info,script-name=net-info-panel.js,update-interval=1
