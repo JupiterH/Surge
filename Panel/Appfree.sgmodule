@@ -1,5 +1,6 @@
-#!name=AppStore限免APP
-#!desc=限免App面板。在appCount=后面填上想要显示的条数 不填默认8条
+#!name=𝑨𝒑𝒑𝑺𝒕𝒐𝒓𝒆限免
+#!desc=限免𝑨𝒑𝒑面板。在𝑨𝒑𝒑𝑪𝒐𝒖𝒏𝒕=后面填上想要显示的条数 不填默认8条
+#!category=𝑷𝒂𝒏𝒆𝒍
 
 [Panel]
 appsdoor=script-name=appsdoor
