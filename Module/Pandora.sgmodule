@@ -1,0 +1,11 @@
+#!name=𝑷𝒂𝒏𝒅𝒐𝒓𝒂
+#!desc=Pandora订阅管理会员
+#!category=𝑷𝒂𝒏𝒆𝒍面板
+#!icon=https://raw.githubusercontent.com/deezertidal/private/main/icons/pandora.png
+#!homepage=https://yfamily.ml
+
+[Script]
+Pandora订阅管理=type=http-response,pattern=^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt,requires-body=1,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Pandora.js
+
+[mitm]
+hostname= %APPEND% buy.itunes.apple.com
