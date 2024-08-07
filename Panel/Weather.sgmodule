@@ -1,8 +1,11 @@
-#!name=今日天气
+#!name=𝑾𝒆𝒂𝒕𝒉𝒆𝒓
 #!desc=今日天气
+#!category=𝑷𝒂𝒏𝒆𝒍面板
 #!homepage=https://yfamily.vercel.app
+
 [Panel]
 天气=script-name=天气
+
 [Script]
 天气=type=generic,script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/tianqi.js,argument=icon=sun.max.fill&color=#ffc400&cityId=101020300
 
