@@ -1,5 +1,6 @@
 #!name=𝑪𝒐𝒏𝒏𝒆𝒄𝒕𝒊𝒗𝒊𝒕𝒚 𝑻𝒆𝒔𝒕
 #!desc=连接测试
+#!category=𝑷𝒂𝒏𝒆𝒍面板
 
 [Panel]
 Connectivity_Test = script-name=Connectivity_Test,update-interval=1
