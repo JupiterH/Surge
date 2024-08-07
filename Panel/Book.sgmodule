@@ -1,6 +1,8 @@
-#!name=新书速递
+#!name=𝑵𝒆𝒘 𝑩𝒐𝒐𝒌
 #!desc=新书速递
+#!category=𝑷𝒂𝒏𝒆𝒍
 #!homepage=https://yfamily.vercel.app
+
 [Panel]
 新书速递=script-name=新书速递
 [Script]
