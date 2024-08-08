@@ -3,8 +3,9 @@
 # UPDATED: 2023-10-13 16:18
 
 DOMAIN-KEYWORD,misakaf
+DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,duolingo.cn
 DOMAIN-SUFFIX,duolingo.com
-DOMAIN-KEYWORD,jsdelivr.net
 DOMAIN-SUFFIX,googleapis.cn
+DOMAIN-KEYWORD,jsdelivr.net
