@@ -1,7 +1,7 @@
-#!name=𝑨𝒍𝒎𝒂𝒏𝒂𝒄
-#!desc=今日黄历
-#!category=𝑷𝒂𝒏𝒆𝒍
-#!homepage=https://github.com/TributePaulWalker
+#!name = 𝑨𝒍𝒎𝒂𝒏𝒂𝒄
+#!desc = 今日黄历
+#!category = 𝑷𝒂𝒏𝒆𝒍
+#!homepage = https://github.com/TributePaulWalker
 
 [Panel]
 今日黄历 = script-name=今日黄历,title=今日黄历,content=请刷新,style=info,update-interval=86400
