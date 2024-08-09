@@ -1,8 +1,8 @@
-#!name=𝑯𝒊𝒔𝒕𝒐𝒓𝒚
-#!desc=𝑯𝒊𝒔𝒕𝒐𝒓𝒚面板 显示条数由𝒄𝒐𝒖𝒏𝒕定义。若𝒄𝒐𝒖𝒏𝒕=𝟖 则显示𝟖条。不填默认𝟓条
-#!category=𝑷𝒂𝒏𝒆𝒍
+#!name = 𝑯𝒊𝒔𝒕𝒐𝒓𝒚
+#!desc = 𝑯𝒊𝒔𝒕𝒐𝒓𝒚 面板，显示条数由𝒄𝒐𝒖𝒏𝒕定义。若𝒄𝒐𝒖𝒏𝒕=𝟖 则显示𝟖条。不填默认𝟓条
+#!category = 𝑷𝒂𝒏𝒆𝒍
 
 [Panel]
-Histoday=script-name=Histoday
+Histoday = script-name=Histoday
 [Script]
-Histoday= type=generic,script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js,argument=icon=calendar&color=#bf2f24&count=5
+Histoday = type=generic,script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js,argument=icon=calendar&color=#bf2f24&count=5
