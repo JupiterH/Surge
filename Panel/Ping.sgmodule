@@ -1,0 +1,13 @@
+#!name = 𝑷𝒊𝒏𝒈 𝑮𝑰𝑭 面板
+#!desc = 根据网络延迟生成柱状图可自定义
+#!category = 𝑷𝒂𝒏𝒆𝒍
+#!arguments = script-update:-1 ,update-interval: 1, Size:17, cnUrl:"", usUrl:""
+#!arguments-desc = 脚本更新频率: script-update \nGIF更新频率: update-interval \n\n国内测试URL: cnUrl \n国外测试URL: usUrl \n\n如果一行放不下可自定义每行显示个数: Size \nMini机型大概13左右 6.1寸机型17左右
+
+[Script]
+CNPing = type=generic,timeout=5,script-path=https://raw.githubusercontent.com/Keywos/rule/main/script/ping/js/cn.js , script-update-interval={{{script-update}}},argument=Size={{{Size}}}&cnUrl={{{cnUrl}}}
+USPing = type=generic,timeout=5,script-path=https://raw.githubusercontent.com/Keywos/rule/main/script/ping/js/us.js , script-update-interval={{{script-update}}},argument=Size={{{Size}}}&usUrl={{{usUrl}}}
+
+[Panel]
+CNPing = script-name=CNPing,update-interval={{{update-interval}}}
+USPing = script-name=USPing,update-interval={{{update-interval}}}
