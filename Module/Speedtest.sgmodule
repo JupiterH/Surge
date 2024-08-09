@@ -1,6 +1,6 @@
-#!name = 𝙎𝙥𝙚𝙚𝙙 𝙏𝙚𝙨𝙩
+#!name = 𝑺𝒑𝒆𝒆𝒅 𝑻𝒆𝒔𝒕
 #!desc = 快速测试下行速率与延迟
-#!category = 𝙋𝙖𝙣𝙚𝙡
+#!category = 𝑷𝒂𝒏𝒆𝒍
 
 [Panel]
 Speed = script-name=Speed,update-interval=-1
