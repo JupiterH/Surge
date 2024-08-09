@@ -1,6 +1,8 @@
 #!name = 𝑫𝒊𝒔𝒏𝒆𝒚+
 #!desc = 𝑫𝒊𝒔𝒏𝒆𝒚+ 剧集页显示评分
 #!category = 𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
+#!arguments = 脚本引擎:jsc,调试模式:0
+#!arguments-desc = 脚本引擎：jsc/webview/auto，默认jsc。\n\n调试模式：1/0，开启/关闭。
 
 [Script]
 DisneyRating = type=http-response,pattern=^https:\/\/disney\.api\.edge\.bamgrid\.com\/explore\/v\d\.\d\/page\/entity-,requires-body=1,max-size=0,binary-body-mode=0,debug={{{调试模式}}},script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Disney/DisneyRating.js,engine={{{脚本引擎}}}
