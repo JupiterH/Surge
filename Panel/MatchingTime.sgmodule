@@ -1,6 +1,6 @@
-#!name = Rule Macthing Time
+#!name = 𝑹𝒖𝒍𝒆 𝑴𝒂𝒄𝒕𝒉𝒊𝒏𝒈 𝑻𝒊𝒎𝒆
 #!desc = 统计实际请求的规则匹配时间
-#!category = Panel
+#!category = 𝑷𝒂𝒏𝒆𝒍
 #!arguments = cronExp:0 * * * *,updateInterval:3600
 #!arguments-desc = - cronExp: 定义 Cron 表达式，默认每小时运行\n- updateInterval: 定义 Panel 更新间隔，默认 3600 s
 
