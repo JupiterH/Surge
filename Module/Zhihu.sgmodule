@@ -1,7 +1,7 @@
-#!name=𝒁𝒉𝒊𝒉𝒖
-#!desc=去除知乎广告
-#!category=𝑨𝒏𝒕𝒊-𝑨𝑫
-#!homepage=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js
+#!name = 𝒁𝒉𝒊𝒉𝒖
+#!desc = 去除知乎广告
+#!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
+#!homepage = https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js
 
 [URL Rewrite]
 ^https?:\/\/api\.zhihu\.com\/ad-style-service\/request - reject
