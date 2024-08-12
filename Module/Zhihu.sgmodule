@@ -1,7 +1,7 @@
 #!name=𝒁𝒉𝒊𝒉𝒖
 #!desc=去除知乎广告
 #!category=𝑨𝒏𝒕𝒊-𝑨𝑫
-#!homepage=https://github.com/ddgksf2013/ddgksf2013
+#!homepage=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js
 
 [URL Rewrite]
 ^https?:\/\/api\.zhihu\.com\/ad-style-service\/request - reject
@@ -15,78 +15,113 @@
 [Map Local]
 # 拦截DNS解析
 ^https?:\/\/118\.89\.204\.198 data-type=text data="{}" status-code=200
+
 ^https?:\/\/103\.41\.167\.237 data-type=text data="{}" status-code=200
+
 ^https?:\/\/2402:4e00:1200:ed00:0:9089:6dac:96b6 data-type=text data=" " status-code=200
 
 # 屏蔽远程配置
 ^https?:\/\/api\.zhihu\.com\/ab\/api\/v1\/products\/zhihu\/platforms\/ios\/config data-type=text data="{}" status-code=200
+
 # 品牌提问广告
 ^https?:\/\/api\.zhihu\.com\/brand\/question\/\d+/card\? data-type=text data="{}" status-code=200
+
 ^https?:\/\/www\.zhihu\.com\/api\/v\d+\/brand\/question/\d+/card\? data-type=text data="{}" status-code=200
+
 # 去除底部标签页关注人角标
 ^https?:\/\/api\.zhihu\.com\/moments\/tab_v2 data-type=text data="{}" status-code=200
+
 # 去除消息通知角标
 ^https?:\/\/api\.zhihu\.com\/(notifications\/v\d\/count) data-type=text data="{}" status-code=200
+
 # 拦截回答下的卡片广告
 ^https?:\/\/www\.zhihu\.com\/api\/v\d\/answers\/\d+\/recommendations data-type=text data="{}" status-code=200
+
 # 拦截应用内弹窗
 ^https?:\/\/api\.zhihu\.com\/me\/guides data-type=text data="{}" status-code=200
+
 # 去除关注页最常访问
 ^https?:\/\/api\.zhihu\.com\/moments\/recent data-type=text data="{}" status-code=200
+
 # 拦截推荐页顶部广告
 ^https?:\/\/api\.zhihu\.com\/api\/v4\/ecom_data\/config data-type=text data="{}" status-code=200
+
 # 底栏加号的广告
 ^https?:\/\/api\.zhihu\.com\/content-distribution-core\/bubble\/common\/settings data-type=text data="{}" status-code=200
+
 # 推荐页搜索栏左侧图标
 ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/current_reading data-type=text data="{}" status-code=200
+
 # 疑似推荐页内容更新红点
 ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/tag_config data-type=text data="{}" status-code=200
+
 # 暂不清楚作用
 ^https?:\/\/api\.zhihu\.com\/commercial_api\/banners_v3\/app_topstory_banner data-type=text data="{}" status-code=200
+
 # 文章页去除底部广告
 ^https?:\/\/www\.zhihu\.com\/api\/v\d\/articles\/\d+\/recommendation data-type=text data="{}" status-code=200
+
 # 我的页面下方内容
 ^https?:\/\/api\.zhihu\.com\/api\/v4\/profile\/cards data-type=text data="{}" status-code=200
+
 # 回答页面相关搜索词
 ^https?:\/\/www\.zhihu\.com\/api\/v4\/search\/related_queries\/answer\/ data-type=text data="{}" status-code=200
+
 # 首页左侧图标
 ^https?:\/\/api\.zhihu\.com\/root\/window data-type=text data="{}" status-code=200
+
 # 我的页面底部
 ^https?:\/\/www\.zhihu\.com\/appview\/v\d\/zhmore data-type=text data=" " status-code=200
 
 [Script]
 # 我的页面开通会员CARD
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/unlimited/go/my_card, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 开屏广告
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/commercial_api.*launch_v2, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 用户信息
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/people/self$, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 推荐信息流去广告
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/topstory\/recommend, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 搜索页去除推广
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/search\/preset_words, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
-# 猜你想搜下面条目['猜你想搜'四个字无法去除]
+
+# 猜你想搜下面条目
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/search\/recommend_query, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 删除会员页面会员购
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/bazaar\/vip_tab\/tabs, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 热榜页去除广告
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/v2\/topstory\/hot-lists, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 会员页面顶部处理
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/bazaar\/vip_tab\/header, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 回答信息流去广告
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/next-data, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 问题回答列表
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/(v4\/)?questions\/\d+\/feeds, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 回答内容优化
 zhihu = type=http-response, pattern=^https?:\/\/www\.zhihu\.com\/appview\/v2\/answer\/, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 会员页面购物处理
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/bazaar\/vip_tab\/modules, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 修改用户盐值
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/user-credit\/basis, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 消息页
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/notifications\/v3\/(message|timeline\/entry\/system_message), script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 关注页面去除今日话题和为您推荐
 zhihu = type=http-response, pattern=^https?:\/\/api\.zhihu\.com\/moments_v3, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
+
 # 搜索发现
 zhihu = type=http-response, pattern=https://api.zhihu.com/search/hot_search, script-path=https://gist.githubusercontent.com/ddgksf2013/d43179d848586d561dbb968dee93bae8/raw/zhihu.js, requires-body=true, max-size=-1, timeout=60
 
