@@ -3,77 +3,107 @@
 #!category=𝑨𝒏𝒕𝒊-𝑨𝑫
 # https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Weibo.conf
 
+
 [Rule]
 DOMAIN,sdkapp.uve.weibo.com,DIRECT
-DOMAIN-KEYWORD,adashxgc.ut,REJECT // Added for: adashxgc.ut.taobao.com:443
-DOMAIN-KEYWORD,adashbc.ut,REJECT // Added for: adashbc.ut.taobao.com:443
 
 [URL Rewrite]
-# 微博_应用内弹窗广告
+# 应用内弹窗广告
 ^https?:\/\/(preload-click|preload-impression)\.uve\.weibo\.com\/(interface\/wbpullad\/wbpullad_click\.php|wbapplua\/get_wbpullad_log\.lua) - reject
-# 微博_屏蔽sdkconfig请求
+# 屏蔽sdkconfig请求
 ^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php - reject
 
 [Map Local]
-# 微博_AD_Preload
+# AD_Preload
 ^https?:\/\/api\.weibo\.cn\/\d\/ad\/preload data-type=text data="{}" status-code=200
-# 微博国际版_趋势页热门影片
+
+# 趋势页热门影片
 ^https?:\/\/api\.weibo\.cn\/\d\/cardlist\?v_f=.*Weibo_intl data-type=text data="{}" status-code=200
-# 微博_用户推荐弹窗
+
+# 用户推荐弹窗
 ^https?:\/\/api\.weibo\.cn\/\d\/profile\/recommend_popuser data-type=text data="{}" status-code=200
-# 微博_每日一次的开屏广告请求
+
+# 每日一次的开屏广告请求
 ^https?:\/\/boot.*weibo\.com\/v\d\/ad\/realtime data-type=text data=" " status-code=200
-# 微博_去除底部超话栏表层浮icon及tips
+
+# 去除底部超话栏表层浮icon及tips
 ^https?:\/\/api\.weibo\.cn\/\d\/!\/huati\/discovery_home_bottom_getdotinfo data-type=text data="{}" status-code=200
-# 微博_屏蔽首页左上角每日的弹窗tips
+
+# 屏蔽首页左上角每日的弹窗tips
 ^https?:\/\/m?api\.weibo\.c(n|om)\/\d/push/daily data-type=text data="{}" status-code=200
-# 微博_Spotlight
+
+# Spotlight
 ^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/hot\/hours_spotlight data-type=text data="{}" status-code=200
-# 微博国际版_屏蔽hotsearch
+
+# 屏蔽hotsearch
 ^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php\?a=hot_search_users data-type=text data="{}" status-code=200
-# 微博国际版_屏蔽热推荐
+
+# 屏蔽热推荐
 ^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
-# 微博国际版_屏蔽searching_info@shiro
+
+# 屏蔽searching_info
 ^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*a=get_searching_info data-type=file data="https://github.com/ddgksf2013/Scripts/raw/master/weibo_search_info.json"
-# 微博国际版_屏蔽search_topic@shiro
+
+# 屏蔽search_topic
 ^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*feed&a=search_topic data-type=file data="https://github.com/ddgksf2013/Scripts/raw/master/weibo_search_topic.json"
 
 [Script]
-# 微博_首页顶部homeExtend
+# 首页顶部homeExtend
 weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_帖子下方广告banner
+
+# 帖子下方广告banner
 weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_开屏广告预加载处理
+
+# 开屏广告预加载处理
 weibo_json = type=http-response, pattern=^https?:\/\/boot.*weibo\.com\/v\d\/ad\/preload, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_未登陆状态下首页信息流处理
+
+# 未登陆状态下首页信息流处理
 weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/\w{5}\/(statuses_unread_hot_timeline|timeline), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_视频信息处理
+
+# 视频信息处理
 weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_mid_detail, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_屏蔽发现页面搜索框热词
+
+# 屏蔽发现页面搜索框热词
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/\w{5}\/cardlist, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_自定义tab皮肤
+
+# 自定义tab皮肤
 weibo_json = type=http-response, pattern=^https://api.weibo.cn/2/!/client/light_skin, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_非会员设置tab皮肤
+
+# 非会员设置tab皮肤
 weibo_json = type=http-response, pattern=^https://new.vip.weibo.cn/littleskin/preview, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博_去广告以及去除各部分推广模块
+
+# 去广告以及去除各部分推广模块
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/(searchall|page\?|messageflow), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/statuses/(unread_)?friends(/|_)timeline, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/groups/timeline, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/statuses/(container_timeline|unread_hot_timeline|extend|video_mixtimeline|unread_topic_timeline), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/profile/(me|container_timeline), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/video/(community_tab|remind_info|tiny_stream_video_list), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/search/(finder|container_timeline|container_discover), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/(checkin/show|\!/live/media_homelist|comments/build_comments|container/get_item), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+
 weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/cardlist, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_屏蔽开屏广告 
+
+# 屏蔽开屏广告 
 weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*get_coopen_ads, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_屏蔽sdkad
+
+# 屏蔽sdkad
 weibo_json = type=http-response, pattern=^https?://(sdk|wb)app\.uve\.weibo\.com(/interface/sdk/sdkad.php|/wbapplua/wbpullad.lua), script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_趋势顶部Card去广告
+
+# 趋势顶部Card去广告
 weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*a=trends, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_屏蔽用户VIP栏
+
+# 屏蔽用户VIP栏
 weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-# 微博国际版_热搜处理
+
+# 热搜处理
 weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=search_topic, script-path=https://github.com/ddgksf2013/Scripts/raw/master/weibo_json.js, requires-body=true, max-size=-1, timeout=60
 
 [MITM]
