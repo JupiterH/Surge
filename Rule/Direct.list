@@ -1,27 +1,76 @@
-# NAME: 规则修正  DIRECT
+# NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2023-10-13 16:18
+# UPDATED: 2024-08-17
+# https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 
 # Fix
 DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
 DOMAIN,fourier.taobao.com
-# Steam
+
+# > Download
+PROCESS-NAME,aria2c
+PROCESS-NAME,fdm
+PROCESS-NAME,Folx
+PROCESS-NAME,NetTransport
+PROCESS-NAME,Thunder
+PROCESS-NAME,Transmission
+PROCESS-NAME,uTorrent
+PROCESS-NAME,WebTorrent
+PROCESS-NAME,WebTorrent Helper
+PROCESS-NAME,BitComet
+PROCESS-NAME,qbittorrent
+PROCESS-NAME,DownloadService
+PROCESS-NAME,Weiyun
+PROCESS-NAME,baidunetdisk
+PROCESS-NAME,UUBooster
+DOMAIN-SUFFIX,qbittorrent.org
+DOMAIN-SUFFIX,smtp
+DOMAIN-SUFFIX,xunlei.com
+DOMAIN-KEYWORD,thunder
+DOMAIN-KEYWORD,xlliveud
+DOMAIN-KEYWORD,yunpan
+DOMAIN-KEYWORD,aria2
+DOMAIN-KEYWORD,announce
+DOMAIN-KEYWORD,torrent
+DOMAIN-KEYWORD,tracker
+URL-REGEX,(Subject|HELO|SMTP)
+URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
+URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
+URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
+
+# NAME: Steam
+DOMAIN,csgo.wmsj.cn
+DOMAIN,dl.steam.clngaa.com
+DOMAIN,dl.steam.ksyna.com
+DOMAIN,dota2.wmsj.cn
+DOMAIN,st.dl.bscstorage.net
+DOMAIN,st.dl.eccdnx.com
+DOMAIN,st.dl.pinyuncloud.com
+DOMAIN,steampipe.steamcontent.tnkjmec.com
+DOMAIN,steampowered.com.8686c.com
+DOMAIN,steamstatic.com.8686c.com
+DOMAIN,wmsjsteam.com
+DOMAIN,xz.pphimalayanrt.com
 DOMAIN,steamstat.com
 DOMAIN,steamgames.com
 DOMAIN,akamaihd.net
 DOMAIN,steamstat.us
+DOMAIN,steamstat.com
+DOMAIN,steamgames.com
+DOMAIN,akamaihd.net
 DOMAIN,cdn.steampowered.com
 DOMAIN,steamusercontent.com
-DOMAIN,steamcontent.com
-DOMAIN,steamstatic.com
 DOMAIN,steam-chat.com
-DOMAIN,api.steampowered.com
-DOMAIN-KEYWORD,cm.steampowered.com
-DOMAIN-KEYWORD,steamserver.net
-DOMAIN-KEYWORD,steamcontent.com
-DOMAIN-KEYWORD,cm.steampowered.com
+DOMAIN-SUFFIX,rmbgame.net
+DOMAIN-SUFFIX,steamstatic.com
+DOMAIN-SUFFIX,steamserver.net
+DOMAIN-SUFFIX,cm.steampowered.com
+DOMAIN-SUFFIX,steamchina.com
+DOMAIN-SUFFIX,api.steampowered.com
+DOMAIN-SUFFIX,test.steampowered.com
+DOMAIN-SUFFIX,steamusercontent.com
 IP-CIDR,103.10.124.0/24,no-resolve
 IP-CIDR,103.10.125.0/24,no-resolve
 IP-CIDR,103.28.54.0/24,no-resolve
