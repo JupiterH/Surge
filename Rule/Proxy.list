@@ -7,9 +7,10 @@ DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,duolingo.cn
 DOMAIN-SUFFIX,duolingo.com
-DOMAIN-SUFFIX,googleapis.cn
-DOMAIN,sevices.googleapis.com
 DOMAIN-KEYWORD,jsdelivr.net
+DOMAIN-SUFFIX,googleapis.cn
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,sevices.googleapis.com
 
 # Google CN
 IP-CIDR,120.232.181.162/32,no-resolve
