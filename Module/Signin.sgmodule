@@ -3,20 +3,14 @@
 #!category = 𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
 
 [Script]
-# 微博超话签到
-# 微博超话获取Cookie = type=http-request,pattern=^https?://m?api\.weibo\.c(n|om)\/2\/(cardlist|page\/button),script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/weibo/weibotalk.cookie.js
-# 微博超话 = type=cron,cronexp=5 0  * * *,script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/weibo/weibotalk.js
 # 阿里云盘签到
 https://auth.alipan.com/v2/account/token
 阿里云盘签到cookie = requires-body=1,type=http-response,pattern=https:\/\/auth.(aliyundrive|alipan).com\/v2\/account\/token,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
 阿里云盘签到 = type=cron,cronexp="0 10 0 * * ?",wake-system=1,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
-# hifini签到
-# hifini签到cookie = type=http-request,pattern=https:\/\/www.hifini.com\/my.htm,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/hifini/hifiniSign.js
-# hifini签到 = type=cron,cronexp="0 10 0 * * ?",wake-system=1,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/hifini/hifiniSign.js
 # Bing积分
 Bing积分cookie = requires-body=0,type=http-request,pattern=https:\/\/rewards\.bing\.com,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/bing/bingPoint.js
 Bing积分 = type=cron,cronexp="0 10 0 * * ?",wake-system=1,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/bing/bingPoint.js
 
 
 [MITM]
-hostname = %APPEND% auth.alipan.com, *.hifini.com, rewards.bing.com, api.weibo.cn
+hostname = %APPEND% auth.alipan.com, rewards.bing.com
