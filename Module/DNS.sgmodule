@@ -683,3 +683,7 @@ home.arpa = server:system
 *.168.192.in-addr.arpa = server:system
 254.169.in-addr.arpa = server:system
 *.254.169.in-addr.arpa = server:system
+# Google Dl
+dl.google.com = server:119.29.29.29
+dl.l.google.com = server:119.29.29.29
+update.googleapis.com = server:119.29.29.29
