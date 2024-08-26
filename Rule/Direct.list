@@ -7,9 +7,13 @@
 # Fix
 DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
+
 # 直播源
+DOMAIN-SUFFIX,hndt.com
 DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
+DOMAIN-SUFFIX,appwuhan.com
+
 # 终点站 Emby
 DOMAIN,emby.wtf
 DOMAIN,pub1back.emby.wtf
