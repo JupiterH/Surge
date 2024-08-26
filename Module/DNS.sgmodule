@@ -3,6 +3,12 @@
 #!category = 𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
 
 [Host]
+
+# 𝙁𝙞𝙧𝙚𝙗𝙖𝙨𝙚 𝘾𝙡𝙤𝙪𝙙 𝙈𝙚𝙨𝙨𝙖𝙜𝙞𝙣𝙜
+mtalk.google.com = 108.177.125.188
+# 𝙏𝙚𝙨𝙩𝙁𝙡𝙞𝙜𝙝𝙩
+*testflight.apple.com = server:8.8.4.4
+
 dns.alidns.com = 223.5.5.5, 223.6.6.6, 2400:3200:baba::1, 2400:3200::1
 uc.cn = server:quic://dns.alidns.com:853
 *.uc.cn = server:quic://dns.alidns.com:853
