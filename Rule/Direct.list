@@ -7,7 +7,7 @@
 # Fix
 DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
-DOMAIN,fourier.taobao.com
+DOMAIN-SUFFIX,ottdns.com
 
 # > Download
 PROCESS-NAME,aria2c
