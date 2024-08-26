@@ -9,6 +9,7 @@ DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
 
 # 直播源
+PROCESS-NAME,APTV
 DOMAIN-SUFFIX,hndt.com
 DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
