@@ -8,6 +8,12 @@
 DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
 
+# VPS
+DOMAIN-SUFFIX,wepc.au
+DOMAIN-SUFFIX,yxvm.com
+DOMAIN-SUFFIX,misaka.io
+DOMAIN-SUFFIX,sharon.io
+
 # 直播源
 PROCESS-NAME,APTV
 DOMAIN-SUFFIX,hndt.com
