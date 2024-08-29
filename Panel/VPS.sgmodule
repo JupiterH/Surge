@@ -2,10 +2,11 @@
 #!desc = 监控VPS流量信息和处理器、内存占用情况
 #!category = 𝑷𝒂𝒏𝒆𝒍
 #!author = 整点猫咪
+#!homepage = https://surge.ga/09/2549/
 #!howto = 将模块内容复制到本地后根据自己VPS IP地址及端口修改 http://127.0.0.1:49155/traffic 部分进行使用ddl=后面接你的VPS到期时间，total=输入你的VPS每月流量数目
 
 [Panel]
 𝙔𝙭𝙑𝙈 = script-name = 𝙔𝙭𝙑𝙈
 
 [Script]
-𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/CatVPS.js, argument = url=http://46.3.109.93:49155/traffic&title=𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=2024-09-28&total=1TB
+𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:49155/traffic&title=𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=2024-09-28&total=1TB
