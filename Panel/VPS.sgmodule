@@ -9,4 +9,4 @@
 𝙔𝙭𝙑𝙈 = script-name = 𝙔𝙭𝙑𝙈
 
 [Script]
-𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:49155/traffic&title=𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=2024-09-28&total=1TB
+𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:23633/traffic&title=𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=2024-09-28&total=1TB
