@@ -1,0 +1,11 @@
+#!name = 𝙑𝙋𝙎
+#!desc = 监控VPS流量信息和处理器、内存占用情况
+#!author = 整点猫咪
+# https://github.com/getsomecat/GetSomeCats/blob/Surge/%E8%87%AA%E5%B7%B1%E9%83%A8%E7%BD%B2%E4%B8%80%E4%B8%AAVPS%E6%B5%81%E9%87%8F%E7%9B%91%E6%8E%A7Surge%E9%9D%A2%E6%9D%BF.md
+#!howto = 将模块内容复制到本地后根据自己VPS IP地址及端口修改 http://127.0.0.1:49155/traffic 部分进行使用ddl=后面接你的VPS到期时间，total=输入你的VPS每月流量数目
+
+[Panel]
+𝙔𝙭𝙑𝙈 = script-name = CatVPS
+
+[Script]
+𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/CatVPS.js, argument = url=http://46.3.109.93:49155/traffic&title=Cat VPS&icon=bolt.horizontal.icloud.fill&low=#06D6A0&mid=#FFD166&high=#EF476F&ddl=20240-09-28&total=1TB
