@@ -59,6 +59,7 @@ DOMAIN-KEYWORD,developerprofiles
 DOMAIN-KEYWORD,generativelanguage
 
 # other
+DOMAIN,cdn.usefathom.com
 DOMAIN,gateway.ai.cloudflare.com
 DOMAIN-SUFFIX,x.ai
 DOMAIN-SUFFIX,perplexity.ai
