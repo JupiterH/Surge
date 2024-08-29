@@ -11,6 +11,17 @@ DOMAIN-KEYWORD,jsdelivr.net
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-SUFFIX,sevices.googleapis.com
 
+# Bing
+DOMAIN-SUFFIX,bing.com
+DOMAIN-SUFFIX,bing.com.cn
+DOMAIN-SUFFIX,bing.net
+DOMAIN-SUFFIX,bingads.com
+DOMAIN-SUFFIX,bingagencyawards.com
+DOMAIN-SUFFIX,bingapistatistics.com
+DOMAIN-SUFFIX,bingsandbox.com
+DOMAIN-SUFFIX,bingvisualsearch.com
+DOMAIN-SUFFIX,bingworld.com
+
 # Google CN
 IP-CIDR,120.232.181.162/32,no-resolve
 IP-CIDR,120.241.147.226/32,no-resolve
