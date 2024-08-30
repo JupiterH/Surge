@@ -9,5 +9,5 @@
 𝙎𝙖𝙠𝙪𝙧𝙖 = script-name= 𝙎𝙖𝙠𝙪𝙧𝙖,update-interval=3600
 
 [Script]
-𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/serverinfo.js, argument = url=http://46.3.109.93:7122&name=🇭🇰 𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill
-𝙎𝙖𝙠𝙪𝙧𝙖 = type=generic,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/serverinfo.js, argument = url=http://109.176.203.26:7122&name=🇭🇰 𝙎𝙖𝙠𝙪𝙧𝙖&icon=party.popper
+𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:7122&name=🇭🇰 𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill
+𝙎𝙖𝙠𝙪𝙧𝙖 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://109.176.203.26:7122&name=🇭🇰 𝙎𝙖𝙠𝙪𝙧𝙖&icon=party.popper
