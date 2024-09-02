@@ -1,18 +1,9 @@
-#!name=墨鱼去广告模块
-#!desc=融合版[由GithubAction自动更新]，包括墨鱼去开屏2.0、喜马拉雅、哔哩哔哩、微博、KEEP、知乎、百度网盘、百度贴吧、高德地图、小红书、网易云、什么值得买、菜鸟、彩云天气、豆瓣网页
-#!author=ddgksf2013
-#!contributor=@blackmatrix7, @app2smile
-#!logtime=2024-09-02 09:19:47
-#!homepage=https://github.com/ddgksf2013
-#!tgchannel=https://t.me/ddgksf2021
-#!moduleurl=https://github.com/ddgksf2013/Modules/raw/main/Adblock.sgmodule
-
-
-
-
-[General]
-
-
+#!name = 𝑨𝒏𝒕𝒊-𝑨𝑫 𝟏.𝟎
+#!desc = 去广告 𝟏.𝟎版
+#!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
+#!desc = 融合版[由GithubAction自动更新]，包括墨鱼去开屏2.0、喜马拉雅、哔哩哔哩、微博、KEEP、知乎、百度网盘、百度贴吧、高德地图、小红书、网易云、什么值得买、菜鸟、彩云天气、豆瓣网页
+#!logtime = 2024-09-02
+#!homepage = https://github.com/ddgksf2013
 
 [Rule]
 RULE-SET,https://raw.githubusercontent.com/app2smile/rules/master/rule/tieba-ad.list,REJECT-DROP
