@@ -21,20 +21,6 @@ DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
 DOMAIN-SUFFIX,appwuhan.com
 
-# Emby
-# Magpie
-DOMAIN-KEYWORD,magpie
-# MisakaF
-DOMAIN-KEYWORD,misakaf
-# 终点站
-DOMAIN,emby.wtf
-DOMAIN,pub1back.emby.wtf
-DOMAIN,pub2back.emby.wtf
-DOMAIN,pub3back.emby.wtf
-DOMAIN,pub1.emby.wtf
-DOMAIN,pub2.emby.wtf
-DOMAIN,pub3.emby.wtf
-
 # Download
 PROCESS-NAME,BitComet
 PROCESS-NAME,BitComet.exe
