@@ -11,20 +11,6 @@ DOMAIN-SUFFIX,duolingo.com
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-SUFFIX,sevices.googleapis.com
 
-# Emby
-# Magpie
-DOMAIN-KEYWORD,magpie
-# MisakaF
-DOMAIN-KEYWORD,misakaf
-# 终点站
-DOMAIN,emby.wtf
-DOMAIN,pub1.emby.wtf
-DOMAIN,pub2.emby.wtf
-DOMAIN,pub3.emby.wtf
-DOMAIN,pub1back.emby.wtf
-DOMAIN,pub2back.emby.wtf
-DOMAIN,pub3back.emby.wtf
-
 # Bing
 DOMAIN-SUFFIX,bing.com
 DOMAIN-SUFFIX,bing.com.cn
