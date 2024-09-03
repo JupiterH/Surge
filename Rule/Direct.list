@@ -5,7 +5,6 @@
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 
 # Fix
-DOMAIN-KEYWORD,misakaf
 DOMAIN-KEYWORD,alibaba
 
 # VPS
@@ -22,7 +21,12 @@ DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
 DOMAIN-SUFFIX,appwuhan.com
 
-# 终点站 Emby
+# Emby
+# Magpie
+DOMAIN-KEYWORD,magpie
+# MisakaF
+DOMAIN-KEYWORD,misakaf
+# 终点站
 DOMAIN,emby.wtf
 DOMAIN,pub1back.emby.wtf
 DOMAIN,pub2back.emby.wtf
