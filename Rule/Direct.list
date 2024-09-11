@@ -7,9 +7,6 @@
 # Fix
 DOMAIN-KEYWORD,alibaba
 
-# Magpie
-DOMAIN-KEYWORD,magpie
-
 # VPS
 DOMAIN-SUFFIX,wepc.au
 DOMAIN-SUFFIX,yxvm.com
