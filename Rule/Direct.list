@@ -1,6 +1,6 @@
 # NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2024-09-03
+# UPDATED: 2024-09-11
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 
@@ -13,13 +13,12 @@ DOMAIN-KEYWORD,magpie
 # MisakaF
 DOMAIN-KEYWORD,misakaf
 # 终点站
-DOMAIN,emby.wtf
 DOMAIN,pub1.emby.wtf
 DOMAIN,pub2.emby.wtf
 DOMAIN,pub3.emby.wtf
-DOMAIN,pub1back.emby.wtf
-DOMAIN,pub2back.emby.wtf
-DOMAIN,pub3back.emby.wtf
+DOMAIN,pub1.term.wtf
+DOMAIN,pub2.term.wtf
+DOMAIN,pub3.term.wtf
 
 # VPS
 DOMAIN-SUFFIX,wepc.au
