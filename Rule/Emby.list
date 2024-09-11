@@ -18,3 +18,7 @@ DOMAIN-SUFFIX,magpie.bond
 
 # MisakaF
 DOMAIN-SUFFIX,misakaf.org
+
+# PROCESS
+PROCESS-NAME,Emby
+PROCESS-NAME,Infuse
