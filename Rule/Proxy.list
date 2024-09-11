@@ -1,6 +1,14 @@
 # NAME: Proxy
 # AUTHOR: Xiao
-# UPDATED: 2024-09-03
+# UPDATED: 2024-09-11
+
+# Emby
+# MisakaF
+DOMAIN-KEYWORD,misakaf
+# Terminus
+DOMAIN,pub1cf.emby.wtf
+DOMAIN,pub2cf.emby.wtf
+DOMAIN,pub3cf.emby.wtf
 
 # Fix
 DOMAIN-SUFFIX,boxjs.com
