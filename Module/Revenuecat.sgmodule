@@ -1,12 +1,16 @@
-#!name=𝑹𝒆𝒗𝒆𝒏𝒖𝒆𝑪𝒂𝒕
-#!desc=今天也要吸猫猫吖
-#!category=𝑽𝑰𝑷 𝑼𝒏𝒍𝒐𝒄𝒌
-# ScriptURL=https://gist.githubusercontent.com/ddgksf2013/dbb1695cd96743eef18f3fac5c6fe227/raw/revenuecat.js
+#!name = 𝘾𝙧𝙖𝙘𝙠
+#!desc = 今天也要吸猫猫吖！
+#!category = 𝑽𝑰𝑷 𝑼𝒏𝒍𝒐𝒄𝒌
+#!icon = https://raw.githubusercontent.com/Tartarus2014/For-own-use/master/Color/EMBY.png
+#!homepage = https://yfamily.ml
+# ScriptURL = https://gist.githubusercontent.com/ddgksf2013/dbb1695cd96743eef18f3fac5c6fe227/raw/revenuecat.js
 
 [Script]
 
 RevenueCatVip = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), script-path=https://gist.githubusercontent.com/ddgksf2013/dbb1695cd96743eef18f3fac5c6fe227/raw/revenuecat.js, requires-body=true, max-size=-1, timeout=60
 RevenueCatDeleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/deleteHeader.js, timeout=60
+emby=type = http-response,pattern=^https:\/\/mb3admin\.com\/admin\/service(\/registration\/validateDevice|\/appstore\/register|\/registration\/validate|\/registration\/getStatus|\/supporter\/retrievekey),requires-body=1,max-size=0, script-path=https://subweb.s3.fr-par.scw.cloud/Script/embycrack.js
+Pandora = type=http-response,pattern=^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt,requires-body=1,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Pandora.js
 
 [MITM]
-hostname = %APPEND% api.revenuecat.com
+hostname = %APPEND% api.revenuecat.com, mb3admin.com, buy.itunes.apple.com
