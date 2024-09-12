@@ -9,7 +9,7 @@
 
 RevenueCatVip = type = http-response, pattern = ^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), script-path = https://gist.githubusercontent.com/ddgksf2013/dbb1695cd96743eef18f3fac5c6fe227/raw/revenuecat.js, requires-body = true, max-size = -1, timeout = 60
 RevenueCatDeleteHeader = type = http-request, pattern = ^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path = https://raw.githubusercontent.com/ddgksf2013/Scripts/master/deleteHeader.js, timeout = 60
-emby = type = http-response,pattern = ^https:\/\/mb3admin\.com\/admin\/service(\/registration\/validateDevice|\/appstore\/register|\/registration\/validate|\/registration\/getStatus|\/supporter\/retrievekey),requires-body = 1,max-size = 0, script-path = https://subweb.s3.fr-par.scw.cloud/Script/embycrack.js
+EmbyPremiere = type = http-response,script-path = https://raw.githubusercontent.com/rartv/SurgeScript/main/EmbyPremiere/EmbyPremiere.js,pattern = ^https?:\/\/mb3admin.com\/admin\/service\/registration\/validateDevice,max-size = 131072,requires-body = true,timeout = 10,enable = true
 Pandora = type = http-response,pattern = ^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt,requires-body = 1,script-path = https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Pandora.js
 
 [MITM]
