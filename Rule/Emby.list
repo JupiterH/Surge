@@ -1,6 +1,6 @@
 # NAME: Emby
 # AUTHOR: Xiao
-# UPDATED: 2024-09-11
+# UPDATED: 2024-09-14
 
 # Terminus
 DOMAIN,pub1.emby.wtf
@@ -18,6 +18,9 @@ DOMAIN-SUFFIX,magpie.bond
 
 # MisakaF
 DOMAIN-SUFFIX,misakaf.org
+
+# Other
+IP-CIDR,34.96.255.226/32,no-resolve
 
 # PROCESS
 PROCESS-NAME,Emby
