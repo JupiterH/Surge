@@ -14,6 +14,7 @@ DOMAIN,pub2cf.emby.wtf
 DOMAIN,pub3cf.emby.wtf
 
 # Magpie
+DOMAIN-SUFFIX,023168.xyz
 DOMAIN-SUFFIX,magpie.bond
 
 # MisakaF
