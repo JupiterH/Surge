@@ -1,14 +1,10 @@
 # NAME: Emby
 # AUTHOR: Xiao
-# UPDATED: 2024-09-14
+# UPDATED: 2024-09-18
 
 # Terminus
-DOMAIN,pub1.emby.wtf
-DOMAIN,pub2.emby.wtf
-DOMAIN,pub3.emby.wtf
-DOMAIN,pub1.term.wtf
-DOMAIN,pub2.term.wtf
-DOMAIN,pub3.term.wtf
+DOMAIN-SUFFIX,emby.wtf
+DOMAIN-SUFFIX,term.wtf
 
 # Magpie
 DOMAIN-SUFFIX,023168.xyz
