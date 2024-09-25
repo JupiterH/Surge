@@ -13,6 +13,7 @@ DOMAIN-SUFFIX,yxvm.com
 DOMAIN-SUFFIX,vkvm.info
 DOMAIN-SUFFIX,misaka.io
 DOMAIN-SUFFIX,sharon.io
+DOMAIN-SUFFIX,spartanhost.org
 
 # 直播源
 PROCESS-NAME,APTV
