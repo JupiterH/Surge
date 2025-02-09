@@ -5,10 +5,10 @@
 #!howto = 将模块内容复制到本地后根据自己VPS IP地址及端口修改 http://127.0.0.1:7122/traffic 部分进行使用ddl=后面接你的VPS到期时间，total=输入你的VPS每月流量数目
 
 [Panel]
-# 𝘾𝙡𝙖𝙬 = script-name= 𝘾𝙡𝙖𝙬,update-interval=3600
+𝙎𝙝𝙖𝙧𝙤𝙣 = script-name= 𝙎𝙝𝙖𝙧𝙤𝙣,update-interval=3600
 𝙔𝙭𝙑𝙈 = script-name= 𝙔𝙭𝙑𝙈,update-interval=3600
 
 [Script]
-# 𝘾𝙡𝙖𝙬 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://47.243.77.155:7122&name=🇭🇰 𝘾𝙡𝙖𝙬&icon=party.popper
+𝙎𝙝𝙖𝙧𝙤𝙣 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.162:7122&name=🇭🇰 𝙎𝙝𝙖𝙧𝙤𝙣&icon=party.popper
 𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:7122&name=🇭🇰 𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill
 
