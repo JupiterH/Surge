@@ -6,6 +6,7 @@
 
 # Fix
 DOMAIN,open.daraz.com
+DOMAIN,dns.weibo.cn
 
 # VPS
 DOMAIN-SUFFIX,wepc.au
