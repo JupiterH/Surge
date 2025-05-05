@@ -1,0 +1,10 @@
+#!name = 𝙎𝙖𝙢'𝙨
+#!desc = 山姆会员商店去开屏广告
+#!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
+#!logtime = 2025-05-05
+
+[Map Local]
+^https:\/\/api-sams\.walmartmobile\.cn\/api\/v1\/sams\/channel\/portal\/AdgroupData\/queryAdgroup data-type=text data="{}" status-code=200
+
+[MitM]
+hostname = %APPEND% api-sams.walmartmobile.cn
