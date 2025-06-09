@@ -1,13 +1,12 @@
 #!name = 𝑨𝒏𝒕𝒊-𝑨𝑫 𝟏.𝟎
 #!desc = 去广告 𝟏.𝟎版
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!logtime = 2025-05-15
+#!logtime = 2025-06-07
 #!moduleurl = https://github.com/ddgksf2013/Modules/raw/main/Adblock.sgmodule
 # 包含墨鱼去开屏2.0、喜马拉雅、哔哩哔哩、微博、KEEP、知乎、百度网盘、百度贴吧、高德地图、小红书、网易云、什么值得买、菜鸟、彩云天气、豆瓣网页
 
 [URL Rewrite]
 
-^https?:\/\/2025.06.02/c382/v2.0.597 - reject
 ^http:\/\/.*babytree\.com/(plough\.do|go_search\/api\/mobile_search_new\/get_multi_search_default_keywords) - reject
 ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/amdc\/mobileDispatch - reject
 ^http:\/\/ads.?s?ervice(retry)?\.(kugou|kglink).(com|cn)\/v\d\/ - reject
