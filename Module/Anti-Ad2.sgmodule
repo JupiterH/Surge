@@ -2,7 +2,7 @@
 #!desc=去除各种繁杂广告 𝟐.𝟎版
 #!category=𝑨𝒏𝒕𝒊-𝑨𝑫
 # 更新时间: 20245-10-13
-# 目前包括：微信小程序，芒果，百度，银行，美团，闲鱼，什么值得买等
+# 目前包括：微信小程序，芒果，百度，银行，美团，闲鱼等
 # 高德地图需要卸载重装 & 重启手机 才会生效
 
 
@@ -69,9 +69,6 @@ DOMAIN,adui.tg.meitu.com,REJECT,extended-matching,pre-matching
 DOMAIN,acdn.adnxs.com,REJECT,extended-matching,pre-matching
 DOMAIN,mediation.adnxs.com,REJECT,extended-matching,pre-matching
 DOMAIN,sin3-ib.adnxs.com,REJECT,extended-matching,pre-matching
-
-#>什么值得买
-DOMAIN,api.zuihuimai.com,REJECT,extended-matching,pre-matching
 
 #>数字联盟
 DOMAIN-SUFFIX,shuzilm.cn,REJECT,extended-matching,pre-matching
