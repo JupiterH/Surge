@@ -1,110 +1,54 @@
-#!name= 𝑾𝒆𝒊𝒃𝒐
-#!desc= 去除微博广告
-#!category=𝑨𝒏𝒕𝒊-𝑨𝑫
+#!name = 𝑾𝒆𝒊𝒃𝒐
+#!desc = 去除微博广告
+#!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 # https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Weibo.conf
 
 
 [Rule]
-DOMAIN,sdkapp.uve.weibo.com,DIRECT
-
-[URL Rewrite]
-# 应用内弹窗广告
-^https?:\/\/(preload-click|preload-impression)\.uve\.weibo\.com\/(interface\/wbpullad\/wbpullad_click\.php|wbapplua\/get_wbpullad_log\.lua) - reject
-# 屏蔽sdkconfig请求
-^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php - reject
+DOMAIN-SUFFIX,uve.weibo.com,DIRECT,extended-matching
+DOMAIN,huodong.weibo.cn,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,biz.weibo.com,REJECT,extended-matching,pre-matching
 
 [Map Local]
-# AD_Preload
-^https?:\/\/api\.weibo\.cn\/\d\/ad\/preload data-type=text data="{}" status-code=200
-
-# 趋势页热门影片
-^https?:\/\/api\.weibo\.cn\/\d\/cardlist\?v_f=.*Weibo_intl data-type=text data="{}" status-code=200
-
-# 用户推荐弹窗
-^https?:\/\/api\.weibo\.cn\/\d\/profile\/recommend_popuser data-type=text data="{}" status-code=200
-
-# 每日一次的开屏广告请求
-^https?:\/\/boot.*weibo\.com\/v\d\/ad\/realtime data-type=text data=" " status-code=200
-
-# 去除底部超话栏表层浮icon及tips
-^https?:\/\/api\.weibo\.cn\/\d\/!\/huati\/discovery_home_bottom_getdotinfo data-type=text data="{}" status-code=200
-
-# 屏蔽首页左上角每日的弹窗tips
-^https?:\/\/m?api\.weibo\.c(n|om)\/\d/push/daily data-type=text data="{}" status-code=200
-
-# Spotlight
-^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/hot\/hours_spotlight data-type=text data="{}" status-code=200
-
-# 屏蔽hotsearch
-^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php\?a=hot_search_users data-type=text data="{}" status-code=200
-
-# 屏蔽热推荐
-^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/ad\/weibointl\? data-type=text data="{}" status-code=200
-
-# 屏蔽searching_info
-^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*a=get_searching_info data-type=file data="https://github.com/ddgksf2013/Scripts/raw/master/weibo_search_info.json"
-
-# 屏蔽search_topic
-^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*feed&a=search_topic data-type=file data="https://github.com/ddgksf2013/Scripts/raw/master/weibo_search_topic.json"
+^https:\/\/api\.weibo\.cn\/2\/(?:ug\/checkin\/list|push\/daily|push\/info) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/live\/media_homelist\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/comments\/bullet_screens\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/photo\/info\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:container_positive|push_info) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/vote\/get_vote_detail\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/chaohua\/discovery\/home_bottom\/switch\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/huati\/(?:discovery_home_bottom_getdotinfo|mobile_discovery_searchchange) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/wbox\/\w+\/(?:home_bottom_modal|interest_category) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/search\/container_discover\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/hot\/hours_spotlight\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/video\/redpacket\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/!\/(sug\/list\/finderchange|was\/finder\/searchbarchange)\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/video\/tiny_video_info_show\? data-type=text data="{}" status-code=200
+^https:\/\/bootrealtime\.uve\.weibo\.com\/v[23]\/ad\/realtime data-type=text data="{}" status-code=200
+^https:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/(?:get-lbs-cell-info\.php|sdkconfig\.php) data-type=text data="{}" status-code=200
+^https:\/\/card\.weibo\.com\/article\/m\/aj\/(?:reward|uvead) data-type=text data="{}" status-code=200
+^https:\/\/weibo\.com\/ttarticle\/x\/m\/aj\/(?:reward|uvead) data-type=text data="{}" status-code=200
 
 [Script]
-# 首页顶部homeExtend
-weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 帖子下方广告banner
-weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=open_app, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 开屏广告预加载处理
-weibo_json = type=http-response, pattern=^https?:\/\/boot.*weibo\.com\/v\d\/ad\/preload, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 未登陆状态下首页信息流处理
-weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/\w{5}\/(statuses_unread_hot_timeline|timeline), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 视频信息处理
-weibo_json = type=http-response, pattern=^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_mid_detail, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 屏蔽发现页面搜索框热词
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/\w{5}\/cardlist, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 自定义tab皮肤
-weibo_json = type=http-response, pattern=^https://api.weibo.cn/2/!/client/light_skin, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 非会员设置tab皮肤
-weibo_json = type=http-response, pattern=^https://new.vip.weibo.cn/littleskin/preview, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 去广告以及去除各部分推广模块
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/(searchall|page\?|messageflow), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/statuses/(unread_)?friends(/|_)timeline, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/groups/timeline, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/statuses/(container_timeline|unread_hot_timeline|extend|video_mixtimeline|unread_topic_timeline), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/profile/(me|container_timeline), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/video/(community_tab|remind_info|tiny_stream_video_list), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/search/(finder|container_timeline|container_discover), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/(checkin/show|\!/live/media_homelist|comments/build_comments|container/get_item), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-weibo_json = type=http-response, pattern=^https?:\/\/m?api\.weibo\.c(n|om)\/\d\/cardlist, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 屏蔽开屏广告 
-weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*get_coopen_ads, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 屏蔽sdkad
-weibo_json = type=http-response, pattern=^https?://(sdk|wb)app\.uve\.weibo\.com(/interface/sdk/sdkad.php|/wbapplua/wbpullad.lua), script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 趋势顶部Card去广告
-weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php.*a=trends, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 屏蔽用户VIP栏
-weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
-
-# 热搜处理
-weibo_json = type=http-response, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=search_topic, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/weibo_json.js, requires-body=true, max-size=-1, timeout=60
+移除首页推广 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:checkin\/show|client\/publisher_list|push\/active), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除首页顶部标签 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/groups\/allgroups\/v2\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除信息流广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:cardlist|page), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除评论区广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/comments\/build_comments\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除个人微博详情页广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:container\/asyn|flowlist|flowpage), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除关注、取消关注弹窗 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/friendships\/(?:create|destroy), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除个人主页广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/profile\/(?:container_timeline|dealatt|me|statuses\/tab|userinfo), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除超话搜索页广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/shproxy\/chaohua\/discovery\/searchactive\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除信息流广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:container_timeline(?:_hot|_topic|_topicpage|_unread)?|repost_timeline|unread_hot_timeline), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除微博详情页广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:extend|show), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除视频流广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/video\/(?:full_screen_stream|tiny_stream_mid_detail|tiny_stream_video_list)\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除超话顶部标签 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/!\/huati\/discovery_home_bottom_channels\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除消息页列表广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/direct_messages\/user_list\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除消息页提醒 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/messageflow\/notice\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除热门微博信息流广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/search\/(?:container_timeline|finder), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除发现页搜索结果广告 = type=http-response, pattern=^https:\/\/api\.weibo\.cn\/2\/searchall\?, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除开屏广告 preload = type=http-response, pattern=^https:\/\/bootpreload\.uve\.weibo\.com\/v[12]\/ad\/preload, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除开屏广告 sdkad = type=http-response, pattern=^https:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkad\.php, script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
+移除开屏广告 wbapplua = type=http-response, pattern=^https:\/\/wbapp\.uve\.weibo\.com\/(?:preload\/get_ad|wbapplua\/wbpullad\.lua), script-path=https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js, requires-body=true
 
 [MITM]
-hostname = %APPEND% api.weibo.*, *.api.weibo.*, mapi.weibo.*, *.uve.weibo.com, new.vip.weibo.cn, boot.biz.weibo.com
+hostname = %APPEND% *.weibo.cn, *.weibo.com, weibo.com
