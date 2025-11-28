@@ -1,6 +1,6 @@
 # NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2025-10-02
+# UPDATED: 2025-11-29
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 
@@ -25,50 +25,6 @@ DOMAIN-SUFFIX,hndt.com
 DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
 DOMAIN-SUFFIX,appwuhan.com
-
-# Download
-PROCESS-NAME,BitComet
-PROCESS-NAME,BitComet.exe
-PROCESS-NAME,BitComet_x64.exe
-PROCESS-NAME,DownloadService
-PROCESS-NAME,DownloadService.exe
-PROCESS-NAME,Folx
-PROCESS-NAME,Folx.exe
-PROCESS-NAME,NetTransport
-PROCESS-NAME,NetTransport.exe
-PROCESS-NAME,Thunder
-PROCESS-NAME,Thunder.exe
-PROCESS-NAME,Transmission
-PROCESS-NAME,Transmission.exe
-PROCESS-NAME,WebTorrent
-PROCESS-NAME,WebTorrent.exe
-PROCESS-NAME,WebTorrentHelper
-PROCESS-NAME,WebTorrentHelper.exe
-PROCESS-NAME,Weiyun
-PROCESS-NAME,Weiyun.exe
-PROCESS-NAME,aria2c
-PROCESS-NAME,aria2c.exe
-PROCESS-NAME,baidunetdisk.exe
-PROCESS-NAME,fdm
-PROCESS-NAME,fdm.exe
-PROCESS-NAME,qbittorrent
-PROCESS-NAME,qbittorrent.exe
-PROCESS-NAME,uTorrent
-PROCESS-NAME,uTorrent.exe
-DOMAIN-SUFFIX,qbittorrent.org
-DOMAIN-SUFFIX,smtp
-DOMAIN-SUFFIX,xunlei.com
-DOMAIN-KEYWORD,thunder
-DOMAIN-KEYWORD,xlliveud
-DOMAIN-KEYWORD,yunpan
-DOMAIN-KEYWORD,aria2
-DOMAIN-KEYWORD,announce
-DOMAIN-KEYWORD,torrent
-DOMAIN-KEYWORD,tracker
-URL-REGEX,(Subject|HELO|SMTP)
-URL-REGEX,(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
-URL-REGEX,(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com
-URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
 
 # Steam
 DOMAIN,csgo.wmsj.cn
@@ -101,49 +57,4 @@ DOMAIN-SUFFIX,steamchina.com
 DOMAIN-SUFFIX,api.steampowered.com
 DOMAIN-SUFFIX,test.steampowered.com
 DOMAIN-SUFFIX,steamusercontent.com
-IP-CIDR,103.10.124.0/24,no-resolve
-IP-CIDR,103.10.125.0/24,no-resolve
-IP-CIDR,103.28.54.0/24,no-resolve
-IP-CIDR,146.66.152.0/24,no-resolve
-IP-CIDR,146.66.155.0/24,no-resolve
-IP-CIDR,153.254.86.0/24,no-resolve
-IP-CIDR,155.133.224.0/23,no-resolve
-IP-CIDR,155.133.226.0/24,no-resolve
-IP-CIDR,155.133.227.0/24,no-resolve
-IP-CIDR,155.133.230.0/24,no-resolve
-IP-CIDR,155.133.232.0/24,no-resolve
-IP-CIDR,155.133.233.0/24,no-resolve
-IP-CIDR,155.133.234.0/24,no-resolve
-IP-CIDR,155.133.236.0/23,no-resolve
-IP-CIDR,155.133.238.0/24,no-resolve
-IP-CIDR,155.133.239.0/24,no-resolve
-IP-CIDR,155.133.240.0/23,no-resolve
-IP-CIDR,155.133.245.0/24,no-resolve
-IP-CIDR,155.133.246.0/24,no-resolve
-IP-CIDR,155.133.248.0/24,no-resolve
-IP-CIDR,155.133.249.0/24,no-resolve
-IP-CIDR,155.133.250.0/24,no-resolve
-IP-CIDR,155.133.251.0/24,no-resolve
-IP-CIDR,155.133.252.0/24,no-resolve
-IP-CIDR,155.133.253.0/24,no-resolve
-IP-CIDR,155.133.254.0/24,no-resolve
-IP-CIDR,155.133.255.0/24,no-resolve
-IP-CIDR,162.254.192.0/24,no-resolve
-IP-CIDR,162.254.193.0/24,no-resolve
-IP-CIDR,162.254.194.0/23,no-resolve
-IP-CIDR,162.254.195.0/24,no-resolve
-IP-CIDR,162.254.196.0/24,no-resolve
-IP-CIDR,162.254.197.0/24,no-resolve
-IP-CIDR,162.254.198.0/24,no-resolve
-IP-CIDR,162.254.199.0/24,no-resolve
-IP-CIDR,185.25.182.0/24,no-resolve
-IP-CIDR,185.25.183.0/24,no-resolve
-IP-CIDR,190.217.33.0/24,no-resolve
-IP-CIDR,192.69.96.0/22,no-resolve
-IP-CIDR,205.185.194.0/24,no-resolve
-IP-CIDR,205.196.6.0/24,no-resolve
-IP-CIDR,208.64.200.0/24,no-resolve
-IP-CIDR,208.64.201.0/24,no-resolve
-IP-CIDR,208.64.202.0/24,no-resolve
-IP-CIDR,208.64.203.0/24,no-resolve
-IP-CIDR,208.78.164.0/22,no-resolve
+
