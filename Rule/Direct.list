@@ -1,8 +1,9 @@
 # NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2025-11-29
+# UPDATED: 2025-12-17
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
+# steam下载登录直连，vps官网直连等
 
 # Fix
 DOMAIN,open.daraz.com
@@ -20,11 +21,11 @@ DOMAIN-SUFFIX,bagevm.com
 DOMAIN-SUFFIX,spartanhost.org
 
 # 直播源
-PROCESS-NAME,APTV
 DOMAIN-SUFFIX,hndt.com
 DOMAIN-SUFFIX,51zmt.top
 DOMAIN-SUFFIX,ottdns.com
 DOMAIN-SUFFIX,appwuhan.com
+DOMAIN-SUFFIX,miguvideo.com
 
 # Steam
 DOMAIN,csgo.wmsj.cn
