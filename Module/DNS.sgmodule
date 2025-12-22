@@ -1,14 +1,9 @@
 #!name = 𝑳𝒐𝒄𝒂𝒍 𝑫𝑵𝑺 𝑴𝒂𝒑𝒑𝒊𝒏𝒈
 #!desc = 𝑫𝑵𝑺 分流
 #!category = 𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
+# https://ruleset.skk.moe/Modules/sukka_local_dns_mapping.sgmodule
 
 [Host]
-
-# 𝙁𝙞𝙧𝙚𝙗𝙖𝙨𝙚 𝘾𝙡𝙤𝙪𝙙 𝙈𝙚𝙨𝙨𝙖𝙜𝙞𝙣𝙜
-mtalk.google.com = 108.177.125.188
-# 𝙏𝙚𝙨𝙩𝙁𝙡𝙞𝙜𝙝𝙩
-*testflight.apple.com = server:8.8.4.4
-# skk.moe
 dns.alidns.com = 223.5.5.5, 223.6.6.6, 2400:3200:baba::1, 2400:3200::1
 dot.pub = server:119.29.29.29
 doh.pub = server:119.29.29.29
@@ -26,6 +21,7 @@ RULE-SET:https://ruleset.skk.moe/Modules/Rules/sukka_local_dns_mapping/hotspot_c
 injections.adguard.org = server:system
 local.adguard.org = server:system
 *.bogon = server:system
+*.local = server:null
 127.0.0.1.sslip.io = 127.0.0.1
 127.atlas.skk.moe = 127.0.0.1
 RULE-SET:https://ruleset.skk.moe/Modules/Rules/sukka_local_dns_mapping/lan_without_real_ip.conf = server:system
