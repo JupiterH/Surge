@@ -10,5 +10,5 @@
 
 [Script]
 𝙎𝙝𝙖𝙧𝙤𝙣 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.57:7122&name=🇭🇰 𝙎𝙝𝙖𝙧𝙤𝙣&icon=party.popper
-𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.109.93:7122&name=🇭🇰 𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill
+𝙔𝙭𝙑𝙈 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://46.3.105.55:7122&name=🇭🇰 𝙔𝙭𝙑𝙈&icon=bolt.horizontal.icloud.fill
 
