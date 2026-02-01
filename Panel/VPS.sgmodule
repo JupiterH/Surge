@@ -6,8 +6,10 @@
 
 [Panel]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = script-name= 𝙋𝙚𝙚𝙠𝙖𝙗𝙤,update-interval=3600
+𝙍𝙁𝘾𝙃𝙤𝙨𝙩 = script-name= 𝙍𝙁𝘾𝙃𝙤𝙨𝙩,update-interval=3600
 𝘿𝙈𝙄𝙏 = script-name= 𝘿𝙈𝙄𝙏,update-interval=3600
 
 [Script]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.57:7122&name=🇭🇰 𝙋𝙚𝙚𝙠𝙖𝙗𝙤&icon=party.popper
+𝙍𝙁𝘾𝙃𝙤𝙨𝙩 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://82.40.33.139:7122&name=🇯🇵 𝙍𝙁𝘾𝙃𝙤𝙨𝙩&icon=party.popper
 𝘿𝙈𝙄𝙏 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://69.63.204.52:7122&name=🇺🇸 𝘿𝙈𝙄𝙏&icon=party.popper
