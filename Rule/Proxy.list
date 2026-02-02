@@ -1,11 +1,12 @@
 # NAME: Proxy
 # AUTHOR: Xiao
-# UPDATED: 2025-12-17
+# UPDATED: 2026-02-02
 
 # Fix
 DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,duolingo.cn
+DOMAIN-SUFFIX,rfchost.com
 DOMAIN-KEYWORD,ultramobile
 DOMAIN-SUFFIX,jsdelivr.net
 DOMAIN-SUFFIX,duolingo.com
