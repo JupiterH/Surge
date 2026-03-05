@@ -3,6 +3,7 @@
 # UPDATED: 2026-02-02
 
 # Fix
+DOMAIN-SUFFIX,trakt.tv
 DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,duolingo.cn
