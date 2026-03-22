@@ -9,6 +9,9 @@
 DOMAIN,open.daraz.com
 DOMAIN-SUFFIX,aliyundrive.cloud
 
+# 小姨子
+DOMAIN-SUFFIX,emby.yun
+
 #Lily
 DOMAIN,cdn.lilyemby.com
 
