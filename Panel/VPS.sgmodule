@@ -10,4 +10,4 @@
 
 [Script]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.57:7122&name=🇭🇰 𝙋𝙚𝙚𝙠𝙖𝙗𝙤&icon=party.popper
-𝘿𝙈𝙄𝙏 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://64.186.243.62:7122&name=🇺🇸 𝘿𝙈𝙄𝙏&icon=party.popper
+𝘿𝙈𝙄𝙏 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://64.186.255.64:7122&name=🇺🇸 𝘿𝙈𝙄𝙏&icon=party.popper
