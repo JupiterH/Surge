@@ -6,6 +6,10 @@
 
 [Panel]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = script-name= 𝙋𝙚𝙚𝙠𝙖𝙗𝙤,update-interval=3600
+𝙑.𝙋𝙎 = script-name= 𝙑.𝙋𝙎,update-interval=3600
+
 
 [Script]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.57:7122&name=🇭🇰 𝙋𝙚𝙚𝙠𝙖𝙗𝙤&icon=party.popper
+𝙑.𝙋𝙎 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://45.139.193.125:7122&name=🇺🇸 𝙑.𝙋𝙎&icon=party.popper
+
