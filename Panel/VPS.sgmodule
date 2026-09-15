@@ -7,9 +7,10 @@
 [Panel]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = script-name= 𝙋𝙚𝙚𝙠𝙖𝙗𝙤,update-interval=3600
 𝟲𝟲𝟲 = script-name= 𝟲𝟲𝟲,update-interval=3600
+𝙑𝙈𝙄𝙎𝙎 = script-name= 𝙑𝙈𝙄𝙎𝙎,update-interval=3600
 
 
 [Script]
 𝙋𝙚𝙚𝙠𝙖𝙗𝙤 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://157.254.32.57:7122&name=🇭🇰 𝙋𝙚𝙚𝙠𝙖𝙗𝙤&icon=party.popper
 𝟲𝟲𝟲 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://154.36.136.24:7122&name=🇺🇸 𝟲𝟲𝟲&icon=party.popper
-
+𝙑𝙈𝙄𝙎𝙎 = type=generic,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/VPS.js, argument = url=http://38.207.166.137:7122&name=🇺🇸 𝙑𝙈𝙄𝙎𝙎&icon=party.popper
