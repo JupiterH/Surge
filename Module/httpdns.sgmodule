@@ -1,5 +1,5 @@
 #!name = HTTPDNS 拦截器
-#!desc = 此插件是所有去广告插件的依赖，拦截常见的HTTPDNS服务，以确保这些请求都能够在Loon的DNS框架下工作。
+#!desc = 拦截常见的HTTPDNS服务
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-09-27
 
