@@ -108,3 +108,7 @@ IP-CIDR,208.64.201.0/24,no-resolve
 IP-CIDR,208.64.202.0/24,no-resolve
 IP-CIDR,208.64.203.0/24,no-resolve
 IP-CIDR,208.78.164.0/22,no-resolve
+# 淘宝
+IP-CIDR,155.102.0.0/16,no-resolve
+IP-CIDR,47.246.0.0/16,no-resolve
+IP-CIDR,23.32.0.0/16,no-resolve
