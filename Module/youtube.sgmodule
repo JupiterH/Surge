@@ -2,6 +2,8 @@
 #!desc = 𝒀𝒐𝒖𝒕𝒖𝒃𝒆去广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!author=Maasea[https://github.com/Maasea], VirgilClyne[https://github.com/VirgilClyne], Choler[https://github.com/Choler], DivineEngine[https://github.com/DivineEngine], app2smile[https://github.com/app2smile]
+#!arguments=blockUpload:false,blockShorts:false,blockImmersive:false,captionLang:"zh-Hans",debug:false
+
 
 [Script]
 YouTube去广告 = type=http-response, pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch|log_event|config))(\?(.*))?$, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JavaScript/Kelee/YouTube_remove_ads/kelee.one_YouTube_remove_ads_response.js, requires-body=true, binary-body-mode=true, argument="[{{{blockUpload}}},{{{blockShorts}}},{{{blockImmersive}}},{{{captionLang}}},{{{debug}}}]"
