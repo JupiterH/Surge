@@ -6,9 +6,9 @@
 # steam下载登录，VPS官网，Emby直连等
 
 # 禾苗
-DOMAIN-SUFFIX,sprocomm.com,DIRECT
-DOMAIN-SUFFIX,qiye.aliyun.com,DIRECT
-DOMAIN-SUFFIX,mxhichina.com,DIRECT
+DOMAIN-SUFFIX,sprocomm.com
+DOMAIN-SUFFIX,qiye.aliyun.com
+DOMAIN-SUFFIX,mxhichina.com
 
 # VPS
 DOMAIN-SUFFIX,wepc.au
