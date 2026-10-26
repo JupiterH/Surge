@@ -219,4 +219,4 @@ DOMAIN,httpdns.zybang.com,REJECT
 ^https:\/\/gw-cn\.jiaoliuqu\.com\/taqu-im-broadcast-srv\/v\d\/Comet\/get\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
 [MITM]
-hostname = %APPEND% appconf.mail.163.com, msglb.91160.com, ucdc2-upaas.uc.cn, gw-cn.jiaoliuqu.com
+hostname = %APPEND% appconf.mail.163.com, msglb.91160.com, ucdc*-upaas.uc.cn, gw-cn.jiaoliuqu.com, gslbali.ximalaya.com
