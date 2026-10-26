@@ -1,0 +1,18 @@
+#!name=Apple天气增强
+#!desc=解锁Apple天气的全部功能、替换空气质量数据源、添加下一小时降水数据、添加天气数据。（由 Loon 插件转换）
+#!category=𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
+#!arguments=Weather.Provider:ColorfulClouds,NextHour.Provider:ColorfulClouds,AirQuality.Calculate.Algorithm:EU_EAQI,API.ColorfulClouds.Token:,API.QWeather.Host:devapi.qweather.com,API.QWeather.Token:,API.WAQI.Token:,Storage:Argument,LogLevel:WARN
+#!arguments-desc=Weather.Provider：[天气]数据源，可选 ColorfulClouds / WeatherKit / QWeather\nNextHour.Provider：[未来一小时降水强度]数据源，可选 ColorfulClouds / WeatherKit / QWeather\nAirQuality.Calculate.Algorithm：AQI 算法，可选 EU_EAQI / None / UBA / WAQI_InstantCast_US / WAQI_InstantCast_CN / WAQI_InstantCast_CN_25_DRAFT\nAPI.ColorfulClouds.Token：彩云天气 API 令牌\nAPI.QWeather.Host：和风天气 API 主机名\nAPI.QWeather.Token：和风天气 API 令牌\nAPI.WAQI.Token：WAQI API 令牌，填写后自动使用 WAQI 高级 API\nStorage：配置类型，可选 Argument / PersistentStore / database\nLogLevel：日志等级，可选 WARN / OFF / ERROR / INFO / DEBUG / ALL
+
+[Rule]
+DOMAIN,weather-analytics-events.apple.com,REJECT-DROP
+DOMAIN,tether.edge.apple,REJECT-DROP
+DOMAIN-SUFFIX,tthr.apple.com,REJECT-DROP
+AND,((OR,((IP-ASN,714,no-resolve),(IP-ASN,6185,no-resolve))),(PROTOCOL,QUIC)),REJECT-DROP
+
+[Script]
+天气可用性响应 = type=http-response, pattern=^https?:\/\/weatherkit\.apple\.com\/api\/v1\/availability\/, requires-body=1, script-path=https://github.com/NSRingo/WeatherKit/releases/download/v3.1.0/response.bundle.js, argument="Weather.Provider={{{Weather.Provider}}}&NextHour.Provider={{{NextHour.Provider}}}&AirQuality.Calculate.Algorithm={{{AirQuality.Calculate.Algorithm}}}&API.ColorfulClouds.Token={{{API.ColorfulClouds.Token}}}&API.QWeather.Host={{{API.QWeather.Host}}}&API.QWeather.Token={{{API.QWeather.Token}}}&API.WAQI.Token={{{API.WAQI.Token}}}&Storage={{{Storage}}}&LogLevel={{{LogLevel}}}"
+天气响应 = type=http-response, pattern=^https?:\/\/weatherkit\.apple\.com\/api\/v2\/weather\/, requires-body=1, binary-body-mode=1, script-path=https://github.com/NSRingo/WeatherKit/releases/download/v3.1.0/response.bundle.js, argument="Weather.Provider={{{Weather.Provider}}}&NextHour.Provider={{{NextHour.Provider}}}&AirQuality.Calculate.Algorithm={{{AirQuality.Calculate.Algorithm}}}&API.ColorfulClouds.Token={{{API.ColorfulClouds.Token}}}&API.QWeather.Host={{{API.QWeather.Host}}}&API.QWeather.Token={{{API.QWeather.Token}}}&API.WAQI.Token={{{API.WAQI.Token}}}&Storage={{{Storage}}}&LogLevel={{{LogLevel}}}"
+
+[MITM]
+hostname = %APPEND% weatherkit.apple.com
