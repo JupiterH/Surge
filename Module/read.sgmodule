@@ -4,8 +4,6 @@
 #!logtime = 2026-10-26
 # 包含 快看漫画，七猫小说，微信阅读，番茄，纵横
 
-
-
 [Rule]
 # 快看漫画
 DOMAIN,ad.v3mh.com,REJECT,extended-matching,pre-matching
