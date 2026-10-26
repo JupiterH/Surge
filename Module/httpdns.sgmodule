@@ -1,5 +1,5 @@
 #!name = HTTPDNS 拦截器
-#!desc = 所有去广告模块的依赖，拦截常见的HTTPDNS服务，以确保这些请求都能够在Surge的DNS框架下工作。
+#!desc = 拦截常见HTTPDNS服务，需置顶
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-10-26
 

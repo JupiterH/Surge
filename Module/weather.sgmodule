@@ -1,5 +1,5 @@
 #!name=Apple天气增强
-#!desc=解锁Apple天气的全部功能、替换空气质量数据源、添加下一小时降水数据、添加天气数据。
+#!desc = 增强Apple天气数据与功能
 #!category=𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
 #!arguments=Weather.Provider:ColorfulClouds,NextHour.Provider:ColorfulClouds,AirQuality.Calculate.Algorithm:EU_EAQI,API.ColorfulClouds.Token:"",API.QWeather.Host:devapi.qweather.com,API.QWeather.Token:"",API.WAQI.Token:"",Storage:Argument,LogLevel:WARN
 #!arguments-desc=Weather.Provider：[天气]数据源，可选 ColorfulClouds / WeatherKit / QWeather\nNextHour.Provider：[未来一小时降水强度]数据源，可选 ColorfulClouds / WeatherKit / QWeather\nAirQuality.Calculate.Algorithm：AQI 算法，可选 EU_EAQI / None / UBA / WAQI_InstantCast_US / WAQI_InstantCast_CN / WAQI_InstantCast_CN_25_DRAFT\nAPI.ColorfulClouds.Token：彩云天气 API 令牌\nAPI.QWeather.Host：和风天气 API 主机名\nAPI.QWeather.Token：和风天气 API 令牌\nAPI.WAQI.Token：WAQI API 令牌，填写后自动使用 WAQI 高级 API\nStorage：配置类型，可选 Argument / PersistentStore / database\nLogLevel：日志等级，可选 WARN / OFF / ERROR / INFO / DEBUG / ALL
