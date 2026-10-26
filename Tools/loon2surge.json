@@ -1,0 +1,38 @@
+{
+  "loon_plugin_dir": "/Library/Application Support/com.loon.Loon/remotePlugin",
+  "modules": {
+    "Module/antiads.sgmodule": [{"plugin": "广告平台拦截器"}],
+    "Module/httpdns.sgmodule": [{"plugin": "HTTPDNS拦截器"}],
+    "Module/zhihu.sgmodule": [{"plugin": "知乎去广告"}],
+    "Module/xianyu.sgmodule": [{"plugin": "闲鱼去广告"}],
+    "Module/xiaohongshu.sgmodule": [{"plugin": "小红书去广告", "prefix": "小红书"}],
+    "Module/pdd.sgmodule": [{"plugin": "拼多多去广告", "prefix": "拼多多"}],
+    "Module/xiaoheihe.sgmodule": [{"plugin": "小黑盒去广告"}],
+    "Module/Weibo.sgmodule": [{"plugin": "微博去广告", "prefix": "微博"}],
+    "Module/didi.sgmodule": [{"plugin": "滴滴去广告"}],
+    "Module/gaode.sgmodule": [
+      {"plugin": "高德地图去广告", "fixes": [
+        {"from": ".data.custom_consultdata.widget_guide", "to": ".data.custom_consult, .data.widget_guide"}
+      ]}
+    ],
+    "Module/weather.sgmodule": [{"plugin": "Apple天气增强"}],
+    "Module/baidu.sgmodule": [
+      {"plugin": "百度贴吧去广告", "label": "贴吧"},
+      {"plugin": "百度网盘去广告", "label": "网盘"}
+    ],
+    "Module/read.sgmodule": [
+      {"plugin": "番茄小说去广告", "label": "番茄小说", "rule_suffix": ",extended-matching,pre-matching"}
+    ],
+    "Module/open.sgmodule": [
+      {"plugin": "小米音箱去广告", "label": "小米音箱"},
+      {"plugin": "淘宝去广告", "label": "淘宝"},
+      {"plugin": "盒马去广告", "label": "盒马"},
+      {"plugin": "菜鸟去广告", "label": "菜鸟"},
+      {"plugin": "得物去广告", "label": "得物"},
+      {"plugin": "京东去广告", "label": "京东"},
+      {"plugin": "彩云天气去广告", "label": "彩云天气"},
+      {"plugin": "小象超市去广告", "label": "小象超市"},
+      {"plugin": "豆瓣去广告", "label": "豆瓣"}
+    ]
+  }
+}
