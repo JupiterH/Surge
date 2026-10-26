@@ -1,90 +1,35 @@
-var tlist = {
-  1: ["劳动节", "2026-05-01"],
-  2: ["老爸生日", "2026-05-13"],
-  3: ["周年&520", "2026-05-20"],
-  4: ["端 午", "2026-06-19"],
-  5: ["父亲节", "2026-06-21"],
-  6: ["宝宝生日", "2026-06-25"],
-  7: ["生 日", "2026-08-17"],
-  8: ["七 夕", "2026-08-19"],
-  9: ["中 秋", "2026-09-25"],
-  10: ["国 庆", "2026-10-01"],
-  11: ["老妈生日", "2026-10-16"],
-  12: ["平安夜", "2026-12-24"],
-  13: ["圣 诞", "2026-12-25"],
-  14: ["元 旦", "2027-01-01"],
-  15: ["小 年", "2027-01-30"],
-  16: ["除 夕", "2027-02-05"],
-  17: ["春 节", "2027-02-06"],
-  18: ["元 宵", "2027-02-20"],
-  19: ["妇女节", "2027-03-08"],
-  20: ["清 明", "2027-04-05"],
-  21: ["劳动节", "2027-05-01"],
-  22: ["老爸生日", "2027-05-03"],
-  23: ["周年&520", "2027-05-20"],
-  24: ["端 午", "2027-06-09"],
-  25: ["宝宝生日", "2027-06-15"],
-  
-};
-let tnow = new Date();
-let tnowf =
-  tnow.getFullYear() + "-" + (tnow.getMonth() + 1) + "-" + tnow.getDate();
-
-/* 计算2个日期相差的天数，不包含今天，如：2016-12-13到2016-12-15，相差2天
- * @param startDateString
- * @param endDateString
- * @returns
+/**
+ * 节假日 / 纪念日规则：脚本每次运行时按规则推算日期，自动滚动显示未来一年内的节日，无需每年手动更新
+ * 格式：[显示名称, 类型, 规则]
+ *   solar  公历固定日期        "MM-DD"
+ *   lunar  农历固定日期        "MM-DD"（30 日遇小月自动取 29 日，所以除夕写 "12-30"）
+ *   term   二十四节气          序号 1~24，从小寒=1 算起（清明=7、冬至=24）
+ *   week   某月第 N 个星期几    "MM-N-W"，W 为 0~6，0=周日（母亲节 "05-2-0"、父亲节 "06-3-0"）
+ * 顺序无所谓，运行时会按日期排序
  */
-function dateDiff(startDateString, endDateString) {
-  var separator = "-"; //日期分隔符
-  var startDates = startDateString.split(separator);
-  var endDates = endDateString.split(separator);
-  var startDate = new Date(startDates[0], startDates[1] - 1, startDates[2]);
-  var endDate = new Date(endDates[0], endDates[1] - 1, endDates[2]);
-  return parseInt(
-    (endDate - startDate) / 1000 / 60 / 60 / 24
-  ).toString();
-}
-
-//计算输入序号对应的时间与现在的天数间隔
-function tnumcount(num) {
-  let dnum = num;
-  return dateDiff(tnowf, tlist[dnum][1]);
-}
-
-//获取最接近的日期
-function now() {
-  for (var i = 1; i <= Object.getOwnPropertyNames(tlist).length; i++) {
-    if (Number(dateDiff(tnowf, tlist[i.toString()][1])) >= 0) {
-      //console.log("最近的日期是:" + tlist[i.toString()][0]);
-      //console.log("列表长度:" + Object.getOwnPropertyNames(tlist).length);
-      //console.log("时间差距:" + Number(dateDiff(tnowf, tlist[i.toString()][1])));
-      return i;
-    }
-  }
-}
-
-//如果是0天，发送emoji;
-let nowlist = now();
-function today(day) {
-  let daythis = day;
-  if (daythis == "0") {
-    datenotice();
-    return "🎉";
-  } else {
-    return daythis;
-  }
-}
-
-//提醒日当天发送通知
-function datenotice() {
-  if ($persistentStore.read("timecardpushed") != tlist[nowlist][1] && tnow.getHours() >= 6) {
-    $persistentStore.write(tlist[nowlist][1], "timecardpushed");
-    $notification.post("假日祝福","", "今天是" + tlist[nowlist][1] + "日 " + tlist[nowlist][0] + "   🎉")
-  } else if ($persistentStore.read("timecardpushed") == tlist[nowlist][1]) {
-    //console.log("当日已通知");
-  }
-}
+const EVENTS = [
+  ["元 旦", "solar", "01-01"],
+  ["小 年", "lunar", "12-24"],
+  ["除 夕", "lunar", "12-30"],
+  ["春 节", "lunar", "01-01"],
+  ["元 宵", "lunar", "01-15"],
+  ["妇女节", "solar", "03-08"],
+  ["清 明", "term", 7],
+  ["劳动节", "solar", "05-01"],
+  ["母亲节", "week", "05-2-0"],
+  ["老爸生日", "lunar", "03-27"],
+  ["周年&520", "solar", "05-20"],
+  ["端 午", "lunar", "05-05"],
+  ["父亲节", "week", "06-3-0"],
+  ["宝宝生日", "lunar", "05-11"],
+  ["生 日", "lunar", "07-05"],
+  ["七 夕", "lunar", "07-07"],
+  ["中 秋", "lunar", "08-15"],
+  ["国 庆", "solar", "10-01"],
+  ["老妈生日", "lunar", "09-07"],
+  ["平安夜", "solar", "12-24"],
+  ["圣 诞", "solar", "12-25"],
+];
 
 //>图标依次切换乌龟、兔子、闹钟、礼品盒
 function icon_now(num){
@@ -98,6 +43,7 @@ function icon_now(num){
     return "tortoise"
   }
 }
+
 
 /**
  * @日历算法来源 https://github.com/jjonline/calendar.js/blob/master/calendar.js
@@ -767,6 +713,72 @@ const calendar = {
     }
 };
 
+const DAY = 86400000;
+const tnow = new Date();
+//今天零点，统一用 UTC 时间戳计算天数差，避免时区和夏令时影响
+const today0 = Date.UTC(tnow.getFullYear(), tnow.getMonth(), tnow.getDate());
+
+function pad(n) {
+  return (n < 10 ? "0" : "") + n;
+}
+
+function fmt(t) {
+  const d = new Date(t);
+  return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+}
+
+//计算规则在 y 年（农历规则为农历 y 年）对应的公历日期，返回 UTC 零点时间戳，无效返回 null
+function resolve(type, rule, y) {
+  if (type === "solar") {
+    const [m, d] = rule.split("-").map(Number);
+    const t = Date.UTC(y, m - 1, d);
+    return new Date(t).getUTCMonth() === m - 1 ? t : null; //平年没有 2-29
+  }
+  if (type === "lunar") {
+    const [m, d] = rule.split("-").map(Number);
+    const r = calendar.lunar2solar(y, m, Math.min(d, calendar.monthDays(y, m)));
+    return r === -1 ? null : Date.UTC(r.cYear, r.cMonth - 1, r.cDay);
+  }
+  if (type === "term") {
+    const d = calendar.getTerm(y, rule);
+    return d === -1 ? null : Date.UTC(y, Math.ceil(rule / 2) - 1, d);
+  }
+  if (type === "week") {
+    const [m, n, w] = rule.split("-").map(Number);
+    const first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay();
+    return Date.UTC(y, m - 1, 1 + ((w - first + 7) % 7) + (n - 1) * 7);
+  }
+  return null;
+}
+
+//取每个规则从今天起的下一次日期，按日期排序，得到未来一年内的节日列表
+function upcoming() {
+  const y = tnow.getFullYear();
+  const list = [];
+  EVENTS.forEach(([name, type, rule], idx) => {
+    let next = null;
+    //农历年与公历年错开，前一农历年的腊月会落在今年年初
+    for (let i = y - 1; i <= y + 1; i++) {
+      const t = resolve(type, rule, i);
+      if (t !== null && t >= today0 && (next === null || t < next)) next = t;
+    }
+    if (next !== null) list.push({ name, date: fmt(next), days: (next - today0) / DAY, idx });
+  });
+  return list.sort((a, b) => a.days - b.days || a.idx - b.idx);
+}
+
+const tlist = upcoming();
+
+//提醒日当天发送通知
+function datenotice() {
+  const todays = tlist.filter((e) => e.days === 0);
+  const tday = fmt(today0);
+  if (todays.length && $persistentStore.read("timecardpushed") != tday && tnow.getHours() >= 6) {
+    $persistentStore.write(tday, "timecardpushed");
+    $notification.post("假日祝福", "", "今天是" + tday + "日 " + todays.map((e) => e.name).join("、") + "   🎉");
+  }
+}
+
 var lunar = calendar.solar2lunar();
 //var nowsolar = lunar.cYear + '年' +lunar.cMonth +  '月' + lunar.cDay +'日（'+lunar.astro+'）';
 var nowsolar = lunar.cMonth +  '月' + lunar.cDay +'日（'+lunar.astro+'）';
@@ -790,9 +802,11 @@ function title_random(num){
   return num==0?"节日快乐，万事大吉":dic[r]
 }
 
+datenotice();
+
 $done({
-title:title_random(tnumcount(Number(nowlist))),
-icon:icon_now(tnumcount(Number(nowlist))),
+title:title_random(tlist[0].days),
+icon:icon_now(tlist[0].days),
 'icon-color': "#5AC8FA",
-content:tlist[nowlist][0]+"  :  "+today(tnumcount(nowlist))+"天\n"+tlist[Number(nowlist) + Number(1)][0] +"  :  "+ tnumcount(Number(nowlist) + Number(1))+ "天\n"+tlist[Number(nowlist) + Number(2)][0]+"  :  "+tnumcount(Number(nowlist) + Number(2))+"天"
+content:tlist.slice(0, 3).map((e) => e.name + "  :  " + (e.days === 0 ? "🎉" : e.days) + "天").join("\n")
 })
