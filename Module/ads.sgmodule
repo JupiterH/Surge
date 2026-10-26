@@ -2,45 +2,21 @@
 #!desc = 去广告合集
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-10-26
-#! 包含两步路，高德
+#! 包含两步路
 
 [Body Rewrite]
 # 两步路
 http-response-jq ^https:\/\/helper\.2bulu\.com\/getAppEntranceConfig\? '.configData=(.configData|fromjson|del(.adPlatform,.adIntertitialShowType,.adsConfig,.adIntertitialDisplayedLimit,.adSplashShowTypeWhenHotStart,.adIntertitialDayDisplayedMaxCount,.od_adsType,.showMeBaiHeAdView)|tojson)'
-#  高德
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? 'del(.data.adStatementConfig, .data.adCustomerRetainArchitecture, .data.adImEntryConfig, .data.adVenueConfig, .data.adPerfSwitch, .data.EndNaviC3AdCard, .data.infoCpcReport, .data.hotsaleConfig, .data.marketing_resource_config, .data.coupon_risk_asac, .data.commonCouponSceneLog, .data.sug_coupon_opt, .data.giftEntryConfig, .data.splashscreen, .data.SplashScreenControl, .data.splashview_config, .data.feedback_banner, .data.TrainOrderBanner, .data.nearby_business_popup, .data.shortcut_popup_frequency, .data.tel_retention_popup, .data.hotel_activity, .data.taxi_activity, .data.hotel_privilege, .data.sportsActivityConfig, .data.activity_qingke_contry_control, .data["920bestwishes"], .data.custom_consult, .data.widget_guide, .data.free_ride, .data.homepage_resource_config, .data.home_message_guide, .data.hotel_tipsicon, .data.sur_bar, .data.nearby_map_entry_guide, .data.comment_info, .data.small_biz_index, .data.small_biz_fun, .data.setpagesearch, .data.wallet)'
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? jq-path="https://kelee.one/Resource/JQLang/Amap/updatable.jq"
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaasv3\? 'del(.data.tipData, .data.wallet) | .data.cardList |= map(select(.dataKey == "MineNewFootprintCard" or .dataKey == "MineNewBEntranceCardV4")) | (.data.cardList[] | select(.dataKey == "MineNewBEntranceCardV4") | .content.entranceList_1) |= map(select(.id == 7 or .id == 8 or .id == 10 or .id == 17)) | (.data.cardList[] | select(.dataKey == "MineNewBEntranceCardV4") | .content.entranceList_2) |= map(select(.id == 32 or .id == 4 or .id == 9 or .id == 16 or .id == 14))'
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? 'del(.data.shadingWords)'
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? '.data.toolsRecommend.data.default |= map(select(.id == 102 or .id == 103 or .id == 106 or .id == 151))'
-http-response-jq ^https:\/\/sns\.amap\.com\/ws\/opc\/tools\/list\? '(if (type == "object") and ((.data | type) == "object") and ((.data.category | type) == "array") then (.data.category[] | select(type == "object") | .tools | select(type == "array") | .[] | select(type == "object")) |= del(.tips) else . end) | (if (type == "object") and ((.data | type) == "object") and ((.data.category | type) == "array") then (.data.category[] | select(type == "object") | .tools | select(type == "array")) |= map(select(if type == "object" then (((.id | type) == "string" and .id == "547") or ((.id | type) == "number" and .id == 547)) | not else true end)) else . end)'
-http-response-jq ^https:\/\/info\.amap\.com\/ws\/c3frontend\/af-search\/search\? 'if (try (.data.modules.quickLink.data.list | type) catch null) == "array" then .data.modules.quickLink.data.list |= map(if type == "object" and (.badge | type) == "object" and (.badge | has("text")) then .badge.text = "" else . end) else . end'
-http-response-jq ^https:\/\/m5-zb\.amap\.com\/ws\/boss\/car\/order\/content_info\? 'del(.data.lubanData.skin, .data.lubanData.kingToolBoxBubble, .data.lubanData.popup)'
-http-response-jq ^https:\/\/m5-zb\.amap\.com\/ws\/boss\/car\/order\/content_info\? 'def on_path($p; $t; f): if (try (getpath($p) | type == $t) catch false) then getpath($p) |= f else . end; (on_path(["data","lubanData","kingToolSort","dataList"]; "array"; map(if type == "object" then (if ((try (.biz | type) catch null) == "object" and (.biz | has("kingToolIdList"))) then (.biz.kingToolIdList |= (if type == "array" then map(select(IN("dache_toolbox_GDIntercity","dache_toolbox_hitch","dache_toolbox_chauffeur","dache_toolbox_quality","dache_toolbox_charterCar"))) else . end)) else . end) else . end))) | on_path(["data","lubanData","kingToolBox","dataList"]; "array"; map(select(if type == "object" then ((try (.biz | type) catch null) == "object" and (try (.biz.id | IN("dache_toolbox_GDIntercity","dache_toolbox_hitch","dache_toolbox_chauffeur","dache_toolbox_quality","dache_toolbox_charterCar")) catch false)) else false end)))'
-http-response-jq ^https:\/\/m5-zb\.amap\.com\/ws\/amap\/hitch\/passenger\/content_info\? 'del(.data.lubanData.banner)'
-http-response-jq ^https:\/\/center\.amap\.com\/ws\/amc\/server\/conv\/raise_list\? 'def on_path($p; $t; f): if (try (getpath($p) | type == $t) catch false) then getpath($p) |= f else . end; on_path(["data","dataList"]; "array"; map(select(if type == "object" then (has("categoryId") or ((.data | type) == "object" and .data.id == "M_100007")) else false end)))'
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? '(if (try (.data.shadingWords.data.regions.content | type == "array") catch false) then .data.shadingWords.data.regions.content |= map(select(IN("quickLink","history","searchFind"))) else . end) | (if (try (.data.shadingWords.data.modules | type == "object") catch false) then .data.shadingWords.data.modules |= with_entries(select(.key == "searchFind")) else . end)'
-http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search_business\/process\/middleLayer\/sug\? '.tip_list |= map(select(.tip.task_tag == "common_content_general" or .tip.task_tag == "sp"))'
-http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search\/poi\/detail\? 'del(.data.modules.combineReviews.data.write_comment.btnRightTag, .data.modules.combineReviews.data.write_comment.title)'
-http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search\/poi\/detail\? jq-path="https://kelee.one/Resource/JQLang/Amap/search_poi_detail.jq"
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/smartui\/near_recommend\? 'del(.data.operation_activity)'
 
 [Map Local]
 # 两步路
 ^https:\/\/helper\.2bulu\.com\/search\/searchHotKeyList\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 ^https:\/\/helper\.2bulu\.com\/promote\/getAppUserModule\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 ^https:\/\/helper\.2bulu\.com\/proSpecial\/allData\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-# 高德
-^https:\/\/m5\.amap\.com\/ws\/valueadded\/alimama\/splash_screen\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/main-page-assets\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/main-page-aiqs\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/ai\.amap\.com\/v1\/ai_rec\/home_qs\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/m5-zb\.amap\.com\/ws\/promotion-web\/resource(\/home)?\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/m5\.amap\.com\/ws\/info_bff\/rankingCard\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
-^https:\/\/m5\.amap\.com\/ws\/shield\/search_business\/process\/marketingOperationStructured\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
 
 [MITM]
-hostname = %APPEND% helper.2bulu.com, m5.amap.com, sns.amap.com, ai.amap.com, info.amap.com, m5-zb.amap.com, center.amap.com
+hostname = %APPEND% helper.2bulu.com
 
 
 
