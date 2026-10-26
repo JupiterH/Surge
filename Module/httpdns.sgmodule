@@ -2,7 +2,6 @@
 #!desc = 所有去广告模块的依赖，拦截常见的HTTPDNS服务，以确保这些请求都能够在Surge的DNS框架下工作。
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-10-26
-#!homepage = https://hub.kelee.one
 
 [Rule]
 DOMAIN-KEYWORD,httpdns,REJECT

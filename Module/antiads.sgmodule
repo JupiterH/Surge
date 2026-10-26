@@ -2,7 +2,6 @@
 #!desc = 所有去广告模块的依赖，只针对广告平台的广告请求处理，需搭配其他去广告模块使用，并确保此模块始终排序在顶部。
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-10-26
-#!homepage = https://hub.kelee.one
 
 [Rule]
 DOMAIN-KEYWORD,adstrategy,REJECT
