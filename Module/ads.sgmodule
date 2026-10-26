@@ -3,3 +3,14 @@
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!date = 2026-10-26
 #! 包含两步路，
+
+[Body Rewrite]
+http-response-jq ^https:\/\/helper\.2bulu\.com\/getAppEntranceConfig\? '.configData=(.configData|fromjson|del(.adPlatform,.adIntertitialShowType,.adsConfig,.adIntertitialDisplayedLimit,.adSplashShowTypeWhenHotStart,.adIntertitialDayDisplayedMaxCount,.od_adsType,.showMeBaiHeAdView)|tojson)'
+
+[Map Local]
+^https:\/\/helper\.2bulu\.com\/search\/searchHotKeyList\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/helper\.2bulu\.com\/promote\/getAppUserModule\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/helper\.2bulu\.com\/proSpecial\/allData\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
+[MITM]
+hostname = %APPEND% helper.2bulu.com
