@@ -32,4 +32,3 @@ http-response-jq ^https:\/\/m5\.amap\.com\/ws\/smartui\/near_recommend\? 'del(.d
 
 [MITM]
 hostname = %APPEND% m5.amap.com, sns.amap.com, ai.amap.com, info.amap.com, m5-zb.amap.com, center.amap.com
-
