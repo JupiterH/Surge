@@ -11,7 +11,8 @@
 - 每个模块的开头（#!name、#!desc、#!category 等）原样保留，内容有变化时只更新日期。
 - 配置里带 label 的插件，内容写在各段的 "# label" 分组下；没有 label 的插件，内容写在各段最前面、不加分组注释。
 - 各段里不属于任何插件的 "# 分组"（手写内容）原样保留；没有分组注释的内容视为转换结果，每次重新生成。
-- [MITM] 只增不删：保留原有域名，补上插件里新增的域名。
+- [MITM] 只增不删：保留原有域名，补上插件里新增的域名；插件漏掉的域名写在配置的 extra_hosts 里。
+- 配置里的 fixes 在每次转换后做文字替换，rule_suffix 给域名类拦截规则加后缀。
 - 遇到不认识的 Loon 写法会报错退出，不会写入或推送任何文件。
 """
 import argparse
@@ -66,9 +67,16 @@ def norm_rule(line):
 
 
 def jq_path(p):
+    """Loon 的 a.b[0].c 写法 -> jq 路径 .a.b[0].c；不是标识符的键写成 ["键"]。"""
     out = ''
-    for k in (p[2:] if p.startswith('$.') else p).split('.'):
-        out += '.' + k if re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', k) else '[' + json.dumps(k, ensure_ascii=False) + ']'
+    for seg in (p[2:] if p.startswith('$.') else p).split('.'):
+        m = re.fullmatch(r'(.*?)((?:\[\d+\])*)', seg)
+        key, idx = m.group(1), m.group(2)
+        if re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', key):
+            out += '.' + key
+        elif key:
+            out += ('' if out else '.') + '[' + json.dumps(key, ensure_ascii=False) + ']'
+        out += idx if out else '.' + idx
     return out
 
 
@@ -220,9 +228,9 @@ def check_jq(lines):
         m = re.match(r"^http-\w+-jq \S+ '(.*)'$", line)
         if not m:
             continue
-        r = subprocess.run(['jq', '-n', m.group(1)], capture_output=True, text=True)
-        if 'compile' in r.stderr or 'syntax error' in r.stderr:
-            raise ConvertError('jq 语法错误：' + line[:120] + '\n' + r.stderr.strip())
+        r = subprocess.run(['jq', m.group(1)], input='{}', capture_output=True, text=True)
+        if any(s in r.stderr for s in ('compile', 'syntax error', 'Invalid path expression')):
+            raise ConvertError('jq 表达式有问题：' + line[:120] + '\n' + r.stderr.strip())
 
 
 # ---------- 合并进现有模块 ----------
@@ -344,6 +352,7 @@ def build_module(path, entries, plugins, today):
         prefix = e.get('prefix', e.get('label'))
         sections, hosts, args, meta = convert_plugin(e['plugin'], text, prefix)
         apply_tweaks(e, sections)
+        hosts = dedupe(hosts + e.get('extra_hosts', []))
         converted.append((e.get('label'), (sections, hosts, args, meta)))
     unlabeled = [lab for lab, _ in converted if lab is None]
     if unlabeled and len(converted) > 1:
@@ -364,9 +373,10 @@ def build_module(path, entries, plugins, today):
     header = merge_arguments(header, plugin_args)
 
     names = [s for s, _ in sections]
-    for s in CONTENT_SECTIONS:
+    for i, s in enumerate(CONTENT_SECTIONS):
         if s not in names and any(c[0][s] for _, c in converted):
-            pos = names.index('[MITM]') if '[MITM]' in names else len(names)
+            later = [n for n in CONTENT_SECTIONS[i + 1:] + ['[MITM]'] if n in names]
+            pos = names.index(later[0]) if later else len(names)
             sections.insert(pos, (s, []))
             names.insert(pos, s)
 
@@ -457,8 +467,8 @@ def main():
     if not os.path.isdir(loon_dir):
         sys.exit(f'找不到 Loon 插件缓存目录：{loon_dir}')
 
-    if git('status', '--porcelain', '--untracked-files=no').strip():
-        sys.exit('仓库里有没提交的改动，请先处理（git status 查看）')
+    if git('status', '--porcelain', '--', 'Module').strip():
+        sys.exit('Module 目录里有没提交的改动，请先处理（git status 查看）')
     if not opts.dry_run:
         print('拉取最新代码…')
         git('pull', '--ff-only')
