@@ -1,7 +1,7 @@
 #!name=Peekabo
 #!desc = 监控VPS流量信息和处理器、内存占用情况
 #!category= 𝑷𝒂𝒏𝒆𝒍
-#!arguments=id,token,icon:xserve,icon-color:3B82F6,ip-mode:mask,daily-notify:true
+#!arguments=id:"",token:"",icon:xserve,icon-color:3B82F6,ip-mode:mask,daily-notify:true
 #!arguments-desc=官网: gigo.peekabo.io\n\nServer ID 获取方式: \n    ├ 1.进入 control panel\n    └ 2.网页链接“/sever/”后的内容即为ID\nAPI Token 获取方式: \n    ├ 1.进入 control panel\n    ├ 2.点击左上角“Account”\n    └ 3.点击第二行“API”\nip-mode: \n    ├ full\n    ├ mask\n    └ hide\ndaily-notify: 每日 09:00 推送流量日报(默认开启)\n    ├ true\n    └ false
 
 [Panel]

@@ -12,8 +12,10 @@
 
 const ARGS = parseArgs($argument || "");
 
-const API_TOKEN = ARGS.token;
-const SERVER_ID = ARGS.id;
+// 模块参数默认值为空(""), 部分版本可能原样传入引号, 统一去掉
+const unquote = (v) => String(v || "").trim().replace(/^(["'])(.*)\1$/, "$2").trim();
+const API_TOKEN = unquote(ARGS.token);
+const SERVER_ID = unquote(ARGS.id);
 
 const GEO_CACHE_TTL = 24 * 60 * 60; // 24h
 const NOTIFY_DAYS = 5; // 剩余天数 <= 5 时发送到期提醒
@@ -220,7 +222,7 @@ function fail(msg) {
   try {
     if (!API_TOKEN || !SERVER_ID) {
       if (IS_CRON) return $done(); // 定时任务静默失败, 不打扰
-      return fail("缺少 id / token 参数");
+      return fail(`请在模块参数中填写 ${!SERVER_ID ? "id" : "token"}`);
     }
 
     const res = await httpGet(
