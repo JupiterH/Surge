@@ -325,7 +325,8 @@ def set_date(header, today):
         if m:
             header[i] = m.group(1) + today
             return header
-    return header + [f'#!date = {today}']
+    last_meta = max((i for i, l in enumerate(header) if l.startswith('#!')), default=len(header) - 1)
+    return header[:last_meta + 1] + [f'#!date = {today}'] + header[last_meta + 1:]
 
 
 def source_line(entry, meta, url):
