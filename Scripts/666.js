@@ -11,8 +11,10 @@
 
 const ARGS = parseArgs($argument || "");
 
-const SERVICE_ID = String(ARGS.id || "").trim();
-const COOKIE = ARGS.cookie || $persistentStore.read("666clouds_cookie") || "";
+// 模块参数默认值为空(""), 部分版本可能原样传入引号, 统一去掉
+const unquote = (v) => String(v || "").trim().replace(/^(["'])(.*)\1$/, "$2").trim();
+const SERVICE_ID = unquote(ARGS.id);
+const COOKIE = unquote(ARGS.cookie) || $persistentStore.read("666clouds_cookie") || "";
 const MANUAL_IP = String(ARGS.ip || "").trim();
 const PAGE_URL = `https://666clouds.com/portal/services/${encodeURIComponent(SERVICE_ID)}`;
 
@@ -184,8 +186,9 @@ function fail(msg) {
 
 (async () => {
   try {
+    if (!SERVICE_ID) return fail("请在模块参数中填写 id");
     if (!/^\d+$/.test(SERVICE_ID)) return fail("实例 ID 无效");
-    if (!COOKIE || COOKIE === "PASTE_COOKIE_HERE") return fail("请先在模块参数中配置 Cookie");
+    if (!COOKIE || COOKIE === "PASTE_COOKIE_HERE") return fail("请在模块参数中填写 cookie");
 
     const res = await httpGet(
       PAGE_URL,

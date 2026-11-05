@@ -1,7 +1,7 @@
 #!name=666Clouds
 #!desc = 监控六六云 VPS 剩余流量、已用流量和重置时间
 #!category= 𝑷𝒂𝒏𝒆𝒍
-#!arguments=id,cookie,icon:xserve,icon-color:3B82F6,ip-mode:mask
+#!arguments=id:"",cookie:"",icon:xserve,icon-color:3B82F6,ip-mode:mask
 #!arguments-desc=官网: 666clouds.com\n\n实例 ID 获取方式: \n    ├ 1.登录控制台进入实例详情\n    └ 2.网页链接“/portal/services/”后的数字即为ID\nCookie 获取方式: \n    ├ 1.浏览器登录 666clouds.com\n    ├ 2.打开开发者工具 → 网络，刷新实例详情页\n    └ 3.复制请求头中的 Cookie 整段\n    Cookie 只填在本机模块参数里，不要提交到仓库；留空则读取本机存储 666clouds_cookie\nicon: SF Symbol 名称\nicon-color: 6位HEX(不含#)\nip-mode: \n    ├ full\n    ├ mask\n    └ hide
 
 [Panel]
