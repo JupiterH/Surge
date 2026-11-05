@@ -1,8 +1,0 @@
-#!name = 𝑪𝒐𝒏𝒏𝒆𝒄𝒕𝒊𝒗𝒊𝒕𝒚 𝑻𝒆𝒔𝒕
-#!desc = 连接测试
-#!category = 𝑷𝒂𝒏𝒆𝒍
-
-[Panel]
-Connectivity_Test = script-name=Connectivity_Test,update-interval=1
-[Script]
-Connectivity_Test = type=generic,timeout=3,script-path=https://raw.githubusercontent.com/getsomecat/GetSomeCats/Surge/script/ConnectivityTest.js,argument=title=Connectivity Test&icon=icloud.and.arrow.down&color=#FF9F0A&server=false
