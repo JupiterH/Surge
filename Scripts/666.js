@@ -1,7 +1,7 @@
 /*
   六六云 666Clouds VPS 流量信息 (Surge 面板)
   面板样式与 peekabo.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 重置
-  依赖参数(argument): id=<实例ID>&cookie=<登录 Cookie>&ip=<可选, 留空自动识别>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
+  依赖参数(argument): id=<实例ID>&cookie=<登录 Cookie>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
   cookie 留空时读取本机 $persistentStore 的 666clouds_cookie
   数据来源: 实例详情页 https://666clouds.com/portal/services/<id>
     - 服务端渲染的 HTML ("剩余流量" / "已用 x / y")
@@ -218,7 +218,7 @@ function fail(msg) {
     }
 
     const ip = MANUAL_IP || findIp(s);
-    if (!ip) console.log("[666Clouds] 页面中未识别到 IP, 可在模块参数 ip 中手动填写");
+    if (!ip) console.log("[666Clouds] 页面中未识别到 IP");
     // 地区反查(带缓存, 失败不阻塞)
     const region = ip ? await getGeo(ip) : null;
 
