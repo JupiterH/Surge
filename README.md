@@ -1,6 +1,6 @@
 # Surge
 
-自用的 Surge 配置、分流规则、模块和面板。Clash（mihomo）也直接引用这里的规则，见 [JupiterH/Clash](https://github.com/JupiterH/Clash)。
+自用的 Surge 配置与分流规则。Clash（mihomo）也直接引用这里的规则，见 [JupiterH/Clash](https://github.com/JupiterH/Clash)。
 
 ## 目录
 
@@ -8,10 +8,7 @@
 |---|---|
 | `Xiao.conf` | 主配置（`[General]`、策略组、分流规则） |
 | `Rule/` | 自维护的规则集，Surge 与 Clash 共用 |
-| `Module/` | 功能模块与去广告模块 |
-| `Panel/` | 面板模块 |
-| `Scripts/` | 面板和模块用到的自维护脚本 |
-| `Tools/` | Loon 插件转 Surge 模块的工具 |
+| `Scripts/` | 自维护脚本 |
 
 ## 主配置
 
@@ -39,69 +36,10 @@
 
 规则统一写成 `类型,值`，逗号后不加空格；每个文件开头的 `# UPDATED:` 改动时一起更新。
 
-## 模块
+## 免责声明
 
-功能模块：
-
-| 模块 | 说明 |
-|---|---|
-| `General.sgmodule` | 增强设置 |
-| `DNS.sgmodule` | 本地 DNS 映射 |
-| `Signin.sgmodule` | 签到脚本合集 |
-| `weather.sgmodule` | Apple 天气增强 |
-
-去广告模块：
-
-| 模块 | 说明 |
-|---|---|
-| `Antiads.sgmodule` | 拦截各广告平台请求，需置顶 |
-| `Httpdns.sgmodule` | 拦截常见 HTTPDNS 服务，需置顶 |
-| `ads.sgmodule` | 合集：两步路、小米音箱、淘宝、盒马、菜鸟、得物、京东、彩云天气、小象超市、豆瓣、掌上英雄联盟、12306、什么值得买 |
-| `baidu.sgmodule` | 百度贴吧、百度网盘 |
-| `read.sgmodule` | 番茄小说等阅读类 |
-| `didi.sgmodule` | 滴滴 |
-| `gaode.sgmodule` | 高德地图 |
-| `keep.sgmodule` | Keep |
-| `pdd.sgmodule` | 拼多多 |
-| `weibo.sgmodule` | 微博 |
-| `weixin.sgmodule` | 微信小程序 |
-| `xianyu.sgmodule` | 闲鱼 |
-| `xiaoheihe.sgmodule` | 小黑盒 |
-| `xiaohongshu.sgmodule` | 小红书（含去水印） |
-| `youtube.sgmodule` | YouTube |
-| `zhihu.sgmodule` | 知乎 |
-
-去广告模块里的 MITM 和脚本需要在 Surge 中开启 MITM 并信任证书。
-
-## 面板
-
-| 面板 | 说明 |
-|---|---|
-| `10086.sgmodule` | 中国移动话费流量 |
-| `Almanac.sgmodule` | 今日黄历 |
-| `Appfree.sgmodule` | App Store 限免 |
-| `Book.sgmodule` | 新书速递 |
-| `Connectivity.sgmodule` | 连通性测试 |
-| `History.sgmodule` | 历史上的今天 |
-| `Holiday.sgmodule` | 节假日倒计时（`Scripts/Timecard.js`） |
-| `MatchingTime.sgmodule` | 规则匹配耗时统计 |
-| `NetInfo.sgmodule` | 当前网络信息 |
-| `Ping.sgmodule` | 延迟柱状图 |
-| `Rates.sgmodule` | 汇率（`Scripts/Rates.js`） |
-| `Speedtest.sgmodule` | 下行速率与延迟测试 |
-| `Stream.sgmodule` | 流媒体解锁检测 |
-| `VPS.sgmodule` | VPS 流量与负载（`Scripts/VPS.js`） |
-| `Weather.sgmodule` | 今日天气 |
-| `interface-info.sgmodule` | 网络接口网速和流量 |
-
-## Loon 插件转换工具
-
-`Tools/loon2surge.py` 把 Loon 本地缓存的插件转换成本仓库的 Surge 模块，然后提交并推送。模块和插件的对应关系写在 `Tools/loon2surge.json`。
-
-在 macOS 上、仓库根目录运行：
-
-```bash
-python3 Tools/loon2surge.py --dry-run
-```
-
-`--dry-run` 只转换并显示改动；不加参数会直接提交并推送。手写的分组内容会保留，转换规则见脚本开头的说明。
+- 本仓库内容仅供个人学习与研究网络技术使用，不提供任何形式的担保，请勿用于商业或任何违法用途。
+- 使用者应自行遵守所在国家或地区的法律法规，因使用本仓库内容产生的任何后果（包括但不限于数据丢失、账号异常、设备故障）由使用者自行承担，作者不承担任何责任。
+- 本仓库中部分规则、模块和脚本来自或改编自第三方项目，版权归原作者所有，已尽量在文件内注明来源。如有侵权，请通过 Issue 联系，核实后会及时删除。
+- 规则与脚本可能随上游或目标服务的变化而失效，作者不保证其准确性、完整性和时效性。
+- 引用、下载或使用本仓库任何内容，即视为已阅读并同意以上声明。
