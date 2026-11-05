@@ -9,6 +9,7 @@
 
 规则：
 - 每个模块的开头（#!name、#!desc、#!category 等）原样保留，内容有变化时只更新日期。
+- 开头的 "# 来源" 行由脚本维护：插件名、作者和订阅链接（从 Loon 配置里按缓存文件名找回）。
 - 配置里带 label 的插件，内容写在各段的 "# label" 分组下；没有 label 的插件，内容写在各段最前面、不加分组注释。
 - 各段里不属于任何插件的 "# 分组"（手写内容）原样保留；没有分组注释的内容视为转换结果，每次重新生成。
 - [MITM] 只增不删：保留原有域名，补上插件里新增的域名；插件漏掉的域名写在配置的 extra_hosts 里。
@@ -20,6 +21,7 @@ import base64
 import datetime
 import fnmatch
 import glob
+import hashlib
 import json
 import os
 import re
@@ -30,6 +32,7 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG = os.path.join(REPO, 'Tools', 'loon2surge.json')
 DEFAULT_LOON_DIR = '/Library/Application Support/com.loon.Loon/remotePlugin'
+DEFAULT_LOON_CONF = '/Library/Application Support/com.loon.Loon/config/Loon.conf'
 CONTENT_SECTIONS = ['[Rule]', '[Body Rewrite]', '[Map Local]', '[Script]']
 JSON_HDR = 'header="Content-Type:application/json"'
 MIME = {'json': 'application/json', 'text': 'text/plain', 'html': 'text/html'}
@@ -325,6 +328,18 @@ def set_date(header, today):
     return header + [f'#!date = {today}']
 
 
+def source_line(entry, meta, url):
+    """# 来源 注释：插件名、作者、订阅链接；合并模块里注明对应的分组。"""
+    authors = '、'.join(re.sub(r'\[[^\]]*\]', '', a).strip() for a in meta.get('author', '').split(',') if a.strip())
+    text = entry['plugin'] + (f' by {authors}' if authors else '') + (f' {url}' if url else '')
+    return f'# 来源（{entry["label"]}）：{text}' if entry.get('label') else f'# 来源：{text}'
+
+
+def set_sources(header, lines):
+    """去掉开头旧的 # 来源 行，把新的接在开头最后。"""
+    return [l for l in header if not l.startswith('# 来源')] + lines
+
+
 def apply_tweaks(entry, sections):
     """配置里的手动修正：fixes 做文字替换，rule_suffix 给域名类拦截规则加后缀。"""
     for fix in entry.get('fixes', []):
@@ -344,16 +359,17 @@ def apply_tweaks(entry, sections):
 
 def build_module(path, entries, plugins, today):
     """返回新的文件内容（没有变化时和原文件一样）。"""
-    converted = []
+    converted, sources = [], []
     for e in entries:
         if e['plugin'] not in plugins:
             raise ConvertError(f'Loon 缓存里找不到插件「{e["plugin"]}」，请先在 Loon 里更新一次插件')
-        _, text = plugins[e['plugin']]
+        _, text, url = plugins[e['plugin']]
         prefix = e.get('prefix', e.get('label'))
         sections, hosts, args, meta = convert_plugin(e['plugin'], text, prefix)
         apply_tweaks(e, sections)
         hosts = dedupe(hosts + e.get('extra_hosts', []))
         converted.append((e.get('label'), (sections, hosts, args, meta)))
+        sources.append(source_line(e, meta, url))
     unlabeled = [lab for lab, _ in converted if lab is None]
     if unlabeled and len(converted) > 1:
         raise ConvertError(f'{path}：有多个插件时每个都要写 label')
@@ -370,7 +386,7 @@ def build_module(path, entries, plugins, today):
         sections = []
 
     plugin_args = [a for _, c in converted for a in c[2]]
-    header = merge_arguments(header, plugin_args)
+    header = set_sources(merge_arguments(header, plugin_args), sources)
 
     names = [s for s, _ in sections]
     for i, s in enumerate(CONTENT_SECTIONS):
@@ -444,7 +460,20 @@ def git(*args, check=True):
     return subprocess.run(['git', '-C', REPO, *args], check=check, capture_output=True, text=True).stdout
 
 
-def load_plugins(loon_dir):
+def load_plugin_urls(loon_conf):
+    """Loon 的缓存文件名是订阅链接的 MD5，借此从 Loon 配置里找回每个插件的链接。"""
+    urls = {}
+    if os.path.exists(loon_conf):
+        for line in open(loon_conf, encoding='utf-8', errors='replace'):
+            url = line.split(',')[0].strip()
+            if re.match(r'^https?://', url):
+                urls[hashlib.md5(url.encode('utf-8')).hexdigest()] = url
+    return urls
+
+
+def load_plugins(loon_dir, loon_conf):
+    """-> {插件名: (缓存路径, 内容, 订阅链接或 None)}。"""
+    urls = load_plugin_urls(loon_conf)
     plugins = {}
     for path in sorted(glob.glob(os.path.join(loon_dir, '*'))):
         try:
@@ -453,7 +482,8 @@ def load_plugins(loon_dir):
             continue
         m = re.search(r'^#!name\s*=\s*(.+?)\s*$', text, re.M)
         if m:
-            plugins[m.group(1)] = (path, text)
+            key = os.path.splitext(os.path.basename(path))[0]
+            plugins[m.group(1)] = (path, text, urls.get(key))
     return plugins
 
 
@@ -473,7 +503,7 @@ def main():
         print('拉取最新代码…')
         git('pull', '--ff-only')
 
-    plugins = load_plugins(loon_dir)
+    plugins = load_plugins(loon_dir, config.get('loon_config', DEFAULT_LOON_CONF))
     today = datetime.date.today().isoformat()
     results = {}
     try:
