@@ -1,7 +1,8 @@
 #!name = 高德地图去广告
 #!desc = 移除高德地图开屏广告及各页面推广
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：高德地图去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/Amap_remove_ads.lpx
 
 [Body Rewrite]
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? 'del(.data.adStatementConfig, .data.adCustomerRetainArchitecture, .data.adImEntryConfig, .data.adVenueConfig, .data.adPerfSwitch, .data.EndNaviC3AdCard, .data.infoCpcReport, .data.hotsaleConfig, .data.marketing_resource_config, .data.coupon_risk_asac, .data.commonCouponSceneLog, .data.sug_coupon_opt, .data.giftEntryConfig, .data.splashscreen, .data.SplashScreenControl, .data.splashview_config, .data.feedback_banner, .data.TrainOrderBanner, .data.nearby_business_popup, .data.shortcut_popup_frequency, .data.tel_retention_popup, .data.hotel_activity, .data.taxi_activity, .data.hotel_privilege, .data.sportsActivityConfig, .data.activity_qingke_contry_control, .data["920bestwishes"], .data.custom_consult, .data.widget_guide, .data.free_ride, .data.homepage_resource_config, .data.home_message_guide, .data.hotel_tipsicon, .data.sur_bar, .data.nearby_map_entry_guide, .data.comment_info, .data.small_biz_index, .data.small_biz_fun, .data.setpagesearch, .data.wallet)'

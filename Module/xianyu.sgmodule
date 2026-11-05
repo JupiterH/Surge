@@ -1,7 +1,8 @@
 #!name = 闲鱼去广告
 #!desc = 移除闲鱼开屏及信息流广告，精简我的页面
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：闲鱼去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/FleaMarket_remove_ads.lpx
 
 [Body Rewrite]
 http-response-jq ^https:\/\/acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlehome\.home\.nextfresh\/ '.data.homeTopList |= map(select(.sectionType == "kingkongDo")) | .data.sections |= map(select(.data.clickParam.args.cardType as $ct | $ct != "homeMultiBanner" and $ct != "mamaAD")) | .data.sections |= map(select((.template.name|type=="string")and(.template.name=="idlefish_home_new_commodity_card"or(.template.name|contains("fish_home_tags_item_card")))))'

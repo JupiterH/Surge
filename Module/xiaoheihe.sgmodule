@@ -1,7 +1,8 @@
 #!name = 小黑盒去广告
 #!desc = 移除小黑盒开屏及信息流广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：小黑盒去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/XiaoHeiHe_remove_ads.lpx
 
 [Body Rewrite]
 http-response-jq ^https:\/\/api\.xiaoheihe\.cn\/bbs\/app\/feeds\/news '.result.links |= map(if .content_type == 27 then del(.title, .ad_pm, .img_gif, .idea_id, .ad_report, .label, .source, .intranet_only, .ad_cm, .content_type, .PROTOCOL, .img, .ad_ratio) else . end)'

@@ -1,7 +1,8 @@
 #!name = HTTPDNS 拦截器
 #!desc = 拦截常见HTTPDNS服务，需置顶
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：HTTPDNS拦截器 by 可莉🅥、VirgilClyne https://kelee.one/Tool/Loon/Lpx/Block_HTTPDNS.lpx
 
 [Rule]
 DOMAIN-KEYWORD,httpdns,REJECT

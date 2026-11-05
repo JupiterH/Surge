@@ -1,7 +1,8 @@
 #!name = 小红书去广告
 #!desc = 移除小红书信息流广告及图片视频水印
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：小红书去广告 by RuCu6、fmz200 https://kelee.one/Tool/Loon/Lpx/RedPaper_remove_ads.lpx
 
 [Rule]
 AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,xiaohongshu.com)),REJECT

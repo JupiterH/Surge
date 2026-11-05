@@ -1,7 +1,8 @@
 #!name = 微信小程序去广告
 #!desc = 移除常用微信小程序广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-28
+#!date = 2026-11-05
+# 来源：微信小程序去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/WexinMiniPrograms_Remove_ads.lpx
 
 [Rule]
 DOMAIN,wxsnsdy.wxs.qq.com,REJECT

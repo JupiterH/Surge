@@ -1,9 +1,11 @@
 #!name = 𝑩𝒂𝒊𝒅𝒖
 #!desc = 移除百度网盘，百度贴吧广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date=2026-10-26
+#!date=2026-11-05
 #!arguments=per_filter_video_thread:true
 #!arguments-desc=per_filter_video_thread：是否拦截首页推荐标签下的视频帖，填 true 或 false
+# 来源（贴吧）：百度贴吧去广告 by 可莉🅥、app2smile https://kelee.one/Tool/Loon/Lpx/Tieba_remove_ads.lpx
+# 来源（网盘）：百度网盘去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/BaiduNetDisk_remove_ads.lpx
 
 [Rule]
 # 贴吧

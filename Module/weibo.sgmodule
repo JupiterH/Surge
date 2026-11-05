@@ -1,7 +1,8 @@
 #!name = 𝑾𝒆𝒊𝒃𝒐
 #!desc = 移除微博广告及推广模块
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：微博去广告 by RuCu6、zmqcherish https://kelee.one/Tool/Loon/Lpx/Weibo_remove_ads.lpx
 
 [Rule]
 DOMAIN-SUFFIX,uve.weibo.com,DIRECT

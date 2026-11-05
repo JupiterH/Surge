@@ -1,7 +1,8 @@
 #!name = 广告平台拦截器
 #!desc = 拦截各广告平台请求，需置顶
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-26
+#!date = 2026-11-05
+# 来源：广告平台拦截器 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx
 
 [Rule]
 DOMAIN-KEYWORD,adstrategy,REJECT

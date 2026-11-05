@@ -1,8 +1,21 @@
 #!name = 𝘼𝙣𝙩𝙞-𝙖𝙙𝙨
 #!desc = 去广告合集
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-10-28
+#!date = 2026-11-05
 #! 包含两步路、小米音箱、淘宝、盒马、菜鸟、得物、京东、彩云天气、小象超市、豆瓣、掌上英雄联盟、12306、什么值得买
+# 来源（两步路）：两步路户外助手去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/2bulu_remove_ads.lpx
+# 来源（小米音箱）：小米音箱去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/XiaomiSpeaker_remove_ads.lpx
+# 来源（淘宝）：淘宝去广告 by RuCu6 https://kelee.one/Tool/Loon/Lpx/Taobao_remove_ads.lpx
+# 来源（盒马）：盒马去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/MrHema_remove_ads.lpx
+# 来源（菜鸟）：菜鸟去广告 by 小白脸 https://kelee.one/Tool/Loon/Lpx/Cainiao_remove_ads.lpx
+# 来源（得物）：得物去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/Dewu_remove_ads.lpx
+# 来源（京东）：京东去广告 by RuCu6、Maasea https://kelee.one/Tool/Loon/Lpx/JD_remove_ads.lpx
+# 来源（彩云天气）：彩云天气去广告 by RuCu6 https://kelee.one/Tool/Loon/Lpx/ColorfulClouds_remove_ads.lpx
+# 来源（小象超市）：小象超市去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/iMaiCai_remove_ads.lpx
+# 来源（豆瓣）：豆瓣去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/DouBan_remove_ads.lpx
+# 来源（掌上英雄联盟）：掌上英雄联盟去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/LOL_Bible_remove_ads.lpx
+# 来源（12306）：12306去广告 by RuCu6、可莉🅥 https://kelee.one/Tool/Loon/Lpx/12306_remove_ads.lpx
+# 来源（什么值得买）：什么值得买去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/smzdm_remove_ads.lpx
 
 [Rule]
 # 淘宝
