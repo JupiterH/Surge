@@ -3,7 +3,7 @@
   逻辑参考: xream/scripts → surge/modules/sub-store-scripts/sub-info/peekabo.js
   依赖参数(argument): id=<服务器ID>&token=<API Token>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>&daily-notify=<true|false>
   双模式(同一脚本):
-    - Panel (type=generic): 面板展示服务器名称/IP/地区/已用/剩余/到期
+    - Panel (type=generic): 面板展示 IP/地区/已用/剩余流量/上下行/重置(与 666.js 一致)
     - Daily (type=cron):    每日定时推送流量日报; 剩余<=5天时改为到期提醒(均按天去重)
   "已续费请忽略" 类提示仅在剩余 <= NOTIFY_DAYS(5) 天时出现, >5 天不出现
   已用流量按服务器出站流量(tx)统计, 与 Peekabo 计费口径一致
@@ -289,19 +289,18 @@ function fail(msg) {
     // 剩余 <= NOTIFY_DAYS 天时发送到期通知(按天去重)
     notifyExpiring(daysLeft, planName, expire);
 
-    const ipText = IP_MODE === "hide" ? null : `IP: ${IP_MODE === "mask" ? maskIp(ip) : ip}`;
+    // 面板样式与 666.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 重置
+    const rx = traffic?.rx; // 入站流量
+    const leftText = formatBytes(Math.max(0, total - used));
     // 快到期时标注"已续费请忽略": currentMonthlyPeriod 为流量周期, 续费后需等新周期开始才会刷新
-    const expireText =
-      daysLeft <= NOTIFY_DAYS
-        ? `到期: ${formatDate(expire)} (已续费请忽略)`
-        : `到期: ${formatDate(expire)}`;
+    const resetTip = daysLeft <= NOTIFY_DAYS ? ", 已续费请忽略" : "";
     const content = [
-      `服务器: ${planName}`,
-      ip ? ipText : null,
+      IP_MODE === "hide" ? null : `IP: ${ip ? (IP_MODE === "mask" ? maskIp(ip) : ip) : "未知"}`,
       `地区: ${region || "未知"}`,
       `已用: ${usedText} / ${totalText} (${percent}%)`,
-      `剩余: ${daysLeft} 天`,
-      expireText,
+      `剩余: ${leftText}`,
+      Number.isFinite(rx) && rx >= 0 ? `上下行: ↓ ${formatBytes(rx)} ↑ ${usedText}` : null,
+      `重置: ${formatDate(expire)} (${daysLeft} 天后${resetTip})`,
     ]
       .filter(Boolean)
       .join("\n");
