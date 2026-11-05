@@ -2,9 +2,8 @@
   Peekabo 服务器流量信息 (Surge 面板)
   逻辑参考: xream/scripts → surge/modules/sub-store-scripts/sub-info/peekabo.js
   依赖参数(argument): id=<服务器ID>&token=<API Token>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
-  面板样式与 666.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 重置
+  面板样式与 666.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 到期
   已用流量按服务器出站流量(tx)统计, 与 Peekabo 计费口径一致
-  重置日期剩余 <= RENEW_TIP_DAYS 天时标注 "已续费请忽略"
   地区: ip-api.com 反查(中文), 失败回退 ipwho.is, 成功结果经 $persistentStore 缓存 24h
 */
 
@@ -17,7 +16,6 @@ const SERVER_ID = unquote(ARGS.id);
 
 const HTTP_TIMEOUT = 5; // 单个请求超时(秒), Surge $httpClient 的 timeout 单位为秒
 const GEO_CACHE_TTL = 24 * 60 * 60 * 1000; // 24h
-const RENEW_TIP_DAYS = 5; // 剩余天数 <= 5 时标注 "已续费请忽略"
 const PANEL_TITLE = "Peekabo Server"; // 面板标题
 const PANEL_ICON = ARGS.icon || "xserve"; // 面板图标(SF Symbol), 模块参数可配置
 const ERROR_ICON = "exclamationmark.triangle.fill"; // 错误态图标
@@ -182,8 +180,6 @@ function fail(msg) {
     const usedText = formatBytes(used);
     const percent = ((used / total) * 100).toFixed(2);
     const daysLeft = Math.max(0, Math.ceil((resetAt - Date.now()) / 86400000));
-    // currentMonthlyPeriod 为流量周期, 续费后需等新周期开始才会刷新, 快到期时标注
-    const renewTip = daysLeft <= RENEW_TIP_DAYS ? ", 已续费请忽略" : "";
 
     const content = [
       IP_MODE === "hide" ? null : `IP: ${ip ? (IP_MODE === "mask" ? maskIp(ip) : ip) : "未知"}`,
@@ -191,7 +187,7 @@ function fail(msg) {
       `已用: ${usedText} / ${formatBytes(total)} (${percent}%)`,
       `剩余: ${formatBytes(Math.max(0, total - used))}`,
       Number.isFinite(rx) && rx >= 0 ? `上下行: ↓ ${formatBytes(rx)} ↑ ${usedText}` : null,
-      `重置: ${formatTime(resetAt)} (${daysLeft} 天后${renewTip})`,
+      `到期: ${formatTime(resetAt)} (剩余 ${daysLeft} 天)`,
     ]
       .filter(Boolean)
       .join("\n");
