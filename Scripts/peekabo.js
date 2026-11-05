@@ -2,7 +2,8 @@
   Peekabo 服务器流量信息 (Surge 面板)
   逻辑参考: xream/scripts → surge/modules/sub-store-scripts/sub-info/peekabo.js
   依赖参数(argument): id=<服务器ID>&token=<API Token>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
-  面板样式与 666.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 到期
+  面板样式与 666.js 保持一致: IP / 地区 / 已用 / 剩余 / 上下行 / 重置 (+ 暂停提示)
+  续费信息不在 VirtFusion 接口里, 服务器被暂停(suspended)时面板第一行提示, 图标变红
   已用流量按服务器出站流量(tx)统计, 与 Peekabo 计费口径一致
   地区: ip-api.com 反查(中文), 失败回退 ipwho.is, 成功结果经 $persistentStore 缓存 24h
 */
@@ -169,6 +170,7 @@ function fail(msg) {
     const total = limit ? Number(limit[1]) * 1024 ** 3 : NaN;
     const resetAt = Date.parse(data?.currentMonthlyPeriod?.end);
     const ip = data?.network?.primary?.ipv4?.[0]?.address || "";
+    const suspended = data?.suspended === true; // 未续费等原因被暂停
 
     if (!Number.isFinite(used) || used < 0 || !(total > 0) || !Number.isFinite(resetAt)) {
       return fail("API 返回的流量信息不完整");
@@ -182,17 +184,18 @@ function fail(msg) {
     const daysLeft = Math.max(0, Math.ceil((resetAt - Date.now()) / 86400000));
 
     const content = [
+      suspended ? "⚠️ 已暂停, 请检查续费" : null,
       IP_MODE === "hide" ? null : `IP: ${ip ? (IP_MODE === "mask" ? maskIp(ip) : ip) : "未知"}`,
       `地区: ${region || "未知"}`,
       `已用: ${usedText} / ${formatBytes(total)} (${percent}%)`,
       `剩余: ${formatBytes(Math.max(0, total - used))}`,
       Number.isFinite(rx) && rx >= 0 ? `上下行: ↓ ${formatBytes(rx)} ↑ ${usedText}` : null,
-      `到期: ${formatTime(resetAt)} (剩余 ${daysLeft} 天)`,
+      `重置: ${formatTime(resetAt)} (${daysLeft} 天后)`,
     ]
       .filter(Boolean)
       .join("\n");
 
-    finish(PANEL_TITLE, content, PANEL_ICON, PANEL_ICON_COLOR);
+    finish(PANEL_TITLE, content, suspended ? ERROR_ICON : PANEL_ICON, suspended ? ERROR_COLOR : PANEL_ICON_COLOR);
   } catch (e) {
     fail(String((e && e.message) || e));
   }
