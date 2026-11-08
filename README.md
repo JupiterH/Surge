@@ -31,6 +31,7 @@
 | `us.list` | 需要走美国节点的服务（Claude、Muse AI、Ultra Mobile） | 美国 |
 | `adobe.list` | Adobe 全家桶（源自 blackmatrix7） | Adobe 策略组 |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 美国 |
+| `Reject.list` | 拦截修正：芒果TV P2P 信令等 | 拦截（REJECT） |
 | `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未在主配置中引用 |
 | `japan.list` | MetaTube 刮削站点 | 未在主配置中引用 |
 
