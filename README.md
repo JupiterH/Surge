@@ -7,8 +7,13 @@
 | 路径 | 内容 |
 |---|---|
 | `Xiao.conf` | 主配置（`[General]`、策略组、分流规则） |
-| `Rule/` | 自维护的规则集，Surge 与 Clash 共用 |
+| `Rule/` | 自维护的规则集，Surge 与 Clash 共用（`Reject.list` 除外） |
+| `Module/` | Surge 模块：General、DNS 分流，以及各 App 去广告、HTTPDNS 拦截、签到 |
+| `Panel/` | 面板模块：网络接口信息、VPS 流量、汇率、节假日倒计时、规则匹配耗时 |
 | `Scripts/` | 自维护脚本 |
+| `Tools/` | `loon2surge.py`：把 Loon 插件转换成 Surge 模块 |
+
+模块引用地址：`https://raw.githubusercontent.com/JupiterH/Surge/main/Module/<文件名>`（面板把 `Module` 换成 `Panel`）。
 
 ## 主配置
 
@@ -31,7 +36,7 @@
 | `us.list` | 需要走美国节点的服务（Claude、Muse AI、Ultra Mobile） | 美国 |
 | `adobe.list` | Adobe 全家桶（源自 blackmatrix7） | Adobe 策略组 |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 美国 |
-| `Reject.list` | 拦截修正：芒果TV P2P 信令等 | 拦截（REJECT） |
+| `Reject.list` | 拦截修正：芒果TV P2P 信令（防止持续占用上行）等；用了 `DOMAIN-WILDCARD`，仅供 Surge | 拦截（REJECT），需排在 `domestic.conf` 之前 |
 | `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未在主配置中引用 |
 | `japan.list` | MetaTube 刮削站点 | 未在主配置中引用 |
 
