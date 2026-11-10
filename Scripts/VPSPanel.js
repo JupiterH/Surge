@@ -12,7 +12,8 @@
                限速(policy.state 非 normal)或旧快照时提示, 图标变橙
   新增服务商: 在 PROVIDERS 里加一项, fetch() 返回统一结构即可
 
-  地区: ip-api.com 反查(中文), 失败回退 ipwho.is, 成功结果经 $persistentStore 缓存 24h
+  地区: ip-api.com 反查(中文), 失败回退 ipwho.is, 成功结果经 $persistentStore 缓存 30 天;
+        两个接口都失败时沿用过期的旧缓存
 */
 
 const ARGS = parseArgs($argument || "");
@@ -25,7 +26,9 @@ const API_TOKEN = unquote(ARGS.token);
 const MANUAL_IP = unquote(ARGS.ip);
 
 const HTTP_TIMEOUT = 5; // 单个请求超时(秒), Surge $httpClient 的 timeout 单位为秒
-const GEO_CACHE_TTL = 24 * 60 * 60 * 1000; // 24h
+// 地区查询超时(秒): 最坏情况 5 + 3 + 3 = 11s, 留在模块 timeout=15 以内
+const GEO_TIMEOUT = 3;
+const GEO_CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // 30 天, VPS 的 IP 归属地基本不变
 const PANEL_ICON = unquote(ARGS.icon) || "xserve"; // 面板图标(SF Symbol), 模块参数可配置
 const ERROR_ICON = "exclamationmark.triangle.fill"; // 错误 / 警告图标
 // 图标颜色(6位HEX, 不含#), 模块参数可配置
@@ -57,9 +60,9 @@ const PROVIDERS = {
 
       const data = parseJson(res.body)?.data;
       const traffic = data?.state?.network?.primary?.traffic;
-      const limit = String(data?.network?.primary?.limit || "").trim().match(/^(\d+(?:\.\d+)?)\s*GB$/i);
+      const limit = String(data?.network?.primary?.limit || "").trim().match(/^(\d+(?:\.\d+)?)\s*(MB|GB|TB)$/i);
       const used = traffic?.tx; // 出站流量
-      const quota = limit ? Number(limit[1]) * 1024 ** 3 : NaN;
+      const quota = limit ? Number(limit[1]) * 1024 ** { MB: 2, GB: 3, TB: 4 }[limit[2].toUpperCase()] : NaN;
       const resetAt = Date.parse(data?.currentMonthlyPeriod?.end);
       if (!Number.isFinite(used) || used < 0 || !(quota > 0) || !Number.isFinite(resetAt)) {
         throw new Error("API 返回的流量信息不完整");
@@ -171,9 +174,9 @@ function parseJson(body) {
 const authHeaders = () => ({ Accept: "application/json", Authorization: `Bearer ${API_TOKEN}` });
 const num = (v) => (v === null || v === undefined || v === "" ? NaN : Number(v));
 
-function httpGet(url, headers) {
+function httpGet(url, headers, timeout = HTTP_TIMEOUT) {
   return new Promise((resolve, reject) => {
-    $httpClient.get({ url, headers, timeout: HTTP_TIMEOUT }, (error, response, data) => {
+    $httpClient.get({ url, headers, timeout }, (error, response, data) => {
       if (error) reject(new Error(`请求失败: ${error}`));
       else resolve({ status: response.status, body: data });
     });
@@ -228,11 +231,13 @@ function composeRegion(country, regionName, city) {
 
 async function getGeo(ip) {
   const key = `vpspanel_geo_${ip}`;
+  let stale = null; // 过期的旧缓存, 查询失败时兜底
   try {
     const cached = $persistentStore.read(key);
     if (cached) {
       const obj = JSON.parse(cached);
       if (obj.region && Date.now() - obj.ts < GEO_CACHE_TTL) return obj.region;
+      stale = obj.region || null;
     }
   } catch (_) {}
 
@@ -241,7 +246,8 @@ async function getGeo(ip) {
   try {
     const res = await httpGet(
       `http://ip-api.com/json/${encodeURIComponent(ip)}?lang=zh-CN&fields=status,country,regionName,city,query`,
-      { Accept: "application/json" }
+      { Accept: "application/json" },
+      GEO_TIMEOUT
     );
     if (res.status === 200) {
       const geo = JSON.parse(res.body);
@@ -252,7 +258,7 @@ async function getGeo(ip) {
   // 备: ipwho.is (https)
   if (!region) {
     try {
-      const res = await httpGet(`https://ipwho.is/${encodeURIComponent(ip)}`, { Accept: "application/json" });
+      const res = await httpGet(`https://ipwho.is/${encodeURIComponent(ip)}`, { Accept: "application/json" }, GEO_TIMEOUT);
       if (res.status === 200) {
         const geo = JSON.parse(res.body);
         if (geo && geo.success) region = composeRegion(geo.country, geo.region, geo.city);
@@ -264,7 +270,7 @@ async function getGeo(ip) {
   try {
     if (region) $persistentStore.write(JSON.stringify({ region, ts: Date.now() }), key);
   } catch (_) {}
-  return region;
+  return region || stale;
 }
 
 /* ================= 面板 ================= */
