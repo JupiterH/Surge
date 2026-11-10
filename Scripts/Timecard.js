@@ -778,7 +778,7 @@ function datenotice() {
   const tday = fmt(today0);
   if (todays.length && $persistentStore.read("timecardpushed") != tday && tnow.getHours() >= 6) {
     $persistentStore.write(tday, "timecardpushed");
-    $notification.post("假日祝福", "", "今天是" + tday + "日 " + todays.map((e) => e.name).join("、") + "   🎉");
+    $notification.post("假日祝福", "", "今天是 " + tday + "，" + todays.map((e) => e.name).join("、") + " 🎉");
   }
 }
 
@@ -811,5 +811,5 @@ $done({
 title:title_random(tlist[0].days),
 icon:icon_now(tlist[0].days),
 'icon-color': "#5AC8FA",
-content:tlist.slice(0, 3).map((e) => e.name + "  :  " + (e.days === 0 ? "🎉" : e.days) + "天").join("\n")
+content:tlist.slice(0, 3).map((e) => e.name + "  :  " + (e.days === 0 ? "🎉" : e.days + "天")).join("\n")
 })
