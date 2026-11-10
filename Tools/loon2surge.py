@@ -2,8 +2,9 @@
 """把 Loon 本地缓存的插件转换成 Surge 模块，写回本仓库并推送。
 
 用法（在仓库根目录运行）：
-  python3 Tools/loon2surge.py            转换、提交并推送
-  python3 Tools/loon2surge.py --dry-run  只转换并显示改动，不提交
+  python3 Tools/loon2surge.py                转换、提交并推送
+  python3 Tools/loon2surge.py --dry-run      只显示会有哪些改动，不写文件、不提交
+  python3 Tools/loon2surge.py --stale-hosts  列出 [MITM] 里已经没有插件需要的域名（只报告）
 
 模块和插件的对应关系写在 Tools/loon2surge.json。
 
@@ -13,12 +14,14 @@
 - 配置里带 label 的插件，内容写在各段的 "# label" 分组下；没有 label 的插件，内容写在各段最前面、不加分组注释。
 - 各段里不属于任何插件的 "# 分组"（手写内容）原样保留；没有分组注释的内容视为转换结果，每次重新生成。
 - [MITM] 只增不删：保留原有域名，补上插件里新增的域名；插件漏掉的域名写在配置的 extra_hosts 里。
+  插件已经去掉的域名不会自动删除，用 --stale-hosts 查看后手动清理。
 - 配置里的 fixes 在每次转换后做文字替换，rule_suffix 给域名类拦截规则加后缀。
 - 遇到不认识的 Loon 写法会报错退出，不会写入或推送任何文件。
 """
 import argparse
 import base64
 import datetime
+import difflib
 import fnmatch
 import glob
 import hashlib
@@ -359,8 +362,11 @@ def apply_tweaks(entry, sections):
 
 
 def build_module(path, entries, plugins, today):
-    """返回新的文件内容（没有变化时和原文件一样）。"""
-    converted, sources = [], []
+    """返回 (新的文件内容, [(插件名, 插件日期)], [MITM 里已经没有插件需要的域名])。
+
+    没有变化时，文件内容和原文件一样。
+    """
+    converted, sources, stale = [], [], []
     for e in entries:
         if e['plugin'] not in plugins:
             raise ConvertError(f'Loon 缓存里找不到插件「{e["plugin"]}」，请先在 Loon 里更新一次插件')
@@ -405,6 +411,9 @@ def build_module(path, entries, plugins, today):
                 k, _, v = line.partition('=')
                 if k.strip().lower() == 'hostname':
                     hosts += [h.strip() for h in v.replace('%APPEND%', '').split(',') if h.strip()]
+            wanted = [h for _, c in converted for h in c[1]]
+            stale = [x for x in hosts
+                     if not any(x == h or fnmatch.fnmatch(h, x) or fnmatch.fnmatch(x, h) for h in wanted)]
             for _, c in converted:
                 for h in c[1]:
                     if not any(fnmatch.fnmatch(h, x) for x in hosts):
@@ -452,13 +461,22 @@ def build_module(path, entries, plugins, today):
     text = render(header)
     if text != old:
         text = render(set_date(header, today))
-    return text, [(e['plugin'], c[3].get('date', '')) for e, (_, c) in zip(entries, converted)]
+    return text, [(e['plugin'], c[3].get('date', '')) for e, (_, c) in zip(entries, converted)], stale
 
 
 # ---------- 主流程 ----------
 
-def git(*args, check=True):
-    return subprocess.run(['git', '-C', REPO, *args], check=check, capture_output=True, text=True).stdout
+def git(*args):
+    r = subprocess.run(['git', '-C', REPO, *args], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit(f'git {" ".join(args)} 失败：\n' + (r.stderr.strip() or r.stdout.strip()))
+    return r.stdout
+
+
+def unpushed():
+    """本地领先远端的提交数；没有上游分支时返回 0。"""
+    r = subprocess.run(['git', '-C', REPO, 'rev-list', '--count', '@{u}..HEAD'], capture_output=True, text=True)
+    return int(r.stdout.strip() or 0) if r.returncode == 0 else 0
 
 
 def load_plugin_urls(loon_conf):
@@ -490,19 +508,24 @@ def load_plugins(loon_dir, loon_conf):
 
 def main():
     ap = argparse.ArgumentParser(description='把 Loon 插件转换成 Surge 模块并推送')
-    ap.add_argument('--dry-run', action='store_true', help='只写文件并显示改动，不提交、不推送')
+    ap.add_argument('--dry-run', action='store_true', help='只显示会有哪些改动，不写文件、不提交、不推送')
+    ap.add_argument('--stale-hosts', action='store_true',
+                    help='列出模块 [MITM] 里已经没有插件需要的域名（只报告，不改文件）')
     opts = ap.parse_args()
+    read_only = opts.dry_run or opts.stale_hosts
 
     config = json.load(open(CONFIG, encoding='utf-8'))
     loon_dir = config.get('loon_plugin_dir', DEFAULT_LOON_DIR)
     if not os.path.isdir(loon_dir):
         sys.exit(f'找不到 Loon 插件缓存目录：{loon_dir}')
 
-    if git('status', '--porcelain', '--', 'Module').strip():
-        sys.exit('Module 目录里有没提交的改动，请先处理（git status 查看）')
-    if not opts.dry_run:
+    if not read_only:
+        if git('status', '--porcelain', '--', 'Module').strip():
+            sys.exit('Module 目录里有没提交的改动，请先处理（git status 查看）')
         print('拉取最新代码…')
         git('pull', '--ff-only')
+    if not shutil.which('jq'):
+        print('提示：没有安装 jq，跳过 jq 表达式检查（brew install jq）')
 
     plugins = load_plugins(loon_dir, config.get('loon_config', DEFAULT_LOON_CONF))
     today = datetime.date.today().isoformat()
@@ -513,30 +536,51 @@ def main():
     except ConvertError as e:
         sys.exit('转换失败，没有写入任何文件：\n' + str(e))
 
+    if opts.stale_hosts:
+        found = False
+        for path, (_, _, stale) in results.items():
+            if stale:
+                found = True
+                print(f'{path}（{len(stale)} 个）：\n  ' + ', '.join(stale))
+        print('以上域名在对应的插件和 extra_hosts 里都找不到。手写分组用到的域名也会列在这里，删之前请确认。'
+              if found else '没有发现多余的 MITM 域名。')
+        return
+
     changed = []
-    for path, (text, sources) in results.items():
+    for path, (text, sources, _) in results.items():
         full = os.path.join(REPO, path)
-        old = open(full, encoding='utf-8').read() if os.path.exists(full) else None
+        old = open(full, encoding='utf-8').read() if os.path.exists(full) else ''
         if text != old:
-            with open(full, 'w', encoding='utf-8') as f:
-                f.write(text)
-            changed.append((path, sources))
+            changed.append((path, old, text, sources))
 
     if not changed:
         print('所有模块都已是最新，没有改动。')
+        ahead = 0 if opts.dry_run else unpushed()
+        if ahead:
+            print(f'本地有 {ahead} 个提交还没推送，补推中…')
+            git('push', '-q')
+            print('完成：' + git('log', '-1', '--format=%h %s').strip())
         return
     print('有改动的模块：')
-    for path, sources in changed:
+    for path, _, _, sources in changed:
         print(f'  {path}  ←  ' + '、'.join(f'{n}({d[:10]})' for n, d in sources))
-    print(git('diff', '--stat'))
     if opts.dry_run:
-        print('这是试运行，没有提交。查看改动：git diff；放弃改动：git checkout -- Module')
+        for path, old, text, _ in changed:
+            print()
+            print('\n'.join(difflib.unified_diff(old.splitlines(), text.splitlines(),
+                                                 'a/' + path, 'b/' + path, lineterm='', n=1)))
+        print('\n这是试运行，没有写入任何文件。')
         return
 
+    for path, _, text, _ in changed:
+        with open(os.path.join(REPO, path), 'w', encoding='utf-8') as f:
+            f.write(text)
+    paths = [p for p, _, _, _ in changed]
+    git('add', '--', *paths)
+    print(git('diff', '--cached', '--stat', '--', *paths))
     msg = 'Update modules from Loon plugins\n\n' + '\n'.join(
-        f'- {os.path.basename(p)}: ' + ', '.join(n for n, _ in s) for p, s in changed)
-    git('add', '--', *[p for p, _ in changed])
-    git('commit', '-q', '-m', msg)
+        f'- {os.path.basename(p)}: ' + ', '.join(n for n, _ in s) for p, _, _, s in changed)
+    git('commit', '-q', '-m', msg, '--', *paths)
     print('推送中…')
     git('push', '-q')
     print('完成：' + git('log', '-1', '--format=%h %s').strip())
