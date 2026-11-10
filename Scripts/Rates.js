@@ -1,48 +1,75 @@
-const url = "https://api.exchangerate-api.com/v4/latest/CNY";
-const params = getParams($argument);
-$httpClient.get(url, function(error, response, data) {
-  if (error) {
-    $done();
-    return;
+/*
+  汇率面板 (Surge 面板)
+  参数(argument): icon=<SF Symbol>&color=<#HEX>，都可省略
+  数据源: exchangerate-api.com，以人民币为基准，每天更新一次
+*/
+
+const API_URL = "https://api.exchangerate-api.com/v4/latest/CNY";
+const HTTP_TIMEOUT = 8; // 秒
+const TITLE = "🪙当前汇率信息";
+const ERROR_ICON = "exclamationmark.triangle.fill";
+const ERROR_COLOR = "#EF4444";
+
+// [旗帜, 名称, 货币代码, 方向]  toCny: 1 外币兑多少人民币; fromCny: 1 人民币兑多少外币
+const ROWS = [
+  ["🇺🇸", "美元", "USD", "toCny"],
+  ["🇭🇰", "港币", "HKD", "fromCny"],
+  ["🇯🇵", "日元", "JPY", "fromCny"],
+  ["🇰🇷", "韩元", "KRW", "fromCny"],
+  ["🇹🇷", "里拉", "TRY", "fromCny"],
+  ["🇪🇺", "欧元", "EUR", "toCny"],
+  ["🇬🇧", "英镑", "GBP", "toCny"],
+];
+
+const params = parseArgs(typeof $argument === "string" ? $argument : "");
+const ICON = params.icon || "yensign.circle";
+const COLOR = params.color || "#D4AF37";
+
+function parseArgs(str) {
+  const out = {};
+  for (const pair of str.split("&")) {
+    const idx = pair.indexOf("=");
+    if (idx < 0) continue;
+    let value = pair.slice(idx + 1);
+    try {
+      value = decodeURIComponent(value);
+    } catch (_) {}
+    out[pair.slice(0, idx).trim()] = value.trim();
   }
-  const rates = JSON.parse(data).rates;
-  const usdToCny = (1 / rates.USD).toFixed(2);
-  const cnyToHkd = rates.HKD.toFixed(2);
-  const cnyToJpy = rates.JPY.toFixed(2);
-  const cnyToKrw = rates.KRW.toFixed(2);
-  const cnyToTry = rates.TRY.toFixed(2);
-  const eurToCny = (1 / rates.EUR).toFixed(2);
-  const gbpToCny = (1 / rates.GBP).toFixed(2);
-  const timestamp = new Date().toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  });
-
-  const content = `
-🇺🇸1美元兑换 ${usdToCny}🇨🇳人民币
-🇨🇳1人民币兑换 ${cnyToHkd}🇭🇰港币
-🇨🇳1人民币兑换 ${cnyToJpy}🇯🇵日元
-🇨🇳1人民币兑换 ${cnyToKrw}🇰🇷韩元
-🇨🇳1人民币兑换 ${cnyToTry}🇹🇷里拉
-🇪🇺1欧元兑换 ${eurToCny}🇨🇳人民币
-🇬🇧1英镑兑换 ${gbpToCny}🇨🇳人民币
-  `;
-
-  const panel = {
-    title: `🪙当前汇率信息 ${timestamp}`,
-    content: content,
-	        icon: params.icon,
-        "icon-color": params.color
-  };
-
-  $done(panel);
-});
-function getParams(param) {
-  return Object.fromEntries(
-    $argument
-      .split("&")
-      .map((item) => item.split("="))
-      .map(([k, v]) => [k, decodeURIComponent(v)])
-  );
+  return out;
 }
+
+function fail(msg) {
+  $done({ title: TITLE, content: `❌ ${msg}`, icon: ERROR_ICON, "icon-color": ERROR_COLOR });
+}
+
+function formatRow([flag, name, code, direction], rates) {
+  const rate = Number(rates[code]);
+  const ok = Number.isFinite(rate) && rate > 0;
+  if (direction === "toCny") return `${flag}1${name}兑换 ${ok ? (1 / rate).toFixed(2) : "N/A"}🇨🇳人民币`;
+  return `🇨🇳1人民币兑换 ${ok ? rate.toFixed(2) : "N/A"}${flag}${name}`;
+}
+
+$httpClient.get({ url: API_URL, timeout: HTTP_TIMEOUT }, (error, response, data) => {
+  try {
+    if (error) return fail(`请求失败: ${error}`);
+    if (!response || response.status !== 200) return fail(`接口返回 HTTP ${response && response.status}`);
+
+    let rates;
+    try {
+      rates = JSON.parse(data).rates;
+    } catch (_) {}
+    if (!rates || typeof rates !== "object") return fail("接口返回的数据无法解析");
+
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    $done({
+      title: `${TITLE} ${pad(now.getHours())}:${pad(now.getMinutes())}`,
+      content: ROWS.map((row) => formatRow(row, rates)).join("\n"),
+      icon: ICON,
+      "icon-color": COLOR,
+    });
+  } catch (e) {
+    fail(String((e && e.message) || e));
+  }
+});
