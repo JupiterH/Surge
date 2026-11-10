@@ -1,7 +1,8 @@
 /*
   VPS 流量信息 (Surge 面板), 多服务商共用一份脚本
   依赖参数(argument): provider=<peekabo|666>&id=<服务器ID>&token=<API Token>&ip=<可选>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
-  面板内容: [警告] / IP / 地区 / 已用 / 剩余 / 上下行 / 重置
+  面板内容(标题带用量百分比): [警告] / 国旗 地区 · IP / 进度条 已用 / 总量 / 剩余 · 上下行 / 重置
+  图标颜色: 用量 70% 以上变橙, 90% 以上变红, 其余用 icon-color
 
   服务商:
     - peekabo: VirtFusion API (vf-hk.peekabo.io), Bearer Token, id 必填
@@ -16,7 +17,7 @@
         两个接口都失败时沿用过期的旧缓存
 */
 
-const ARGS = parseArgs($argument || "");
+const ARGS = parseArgs(typeof $argument === "string" ? $argument : "");
 
 // 模块参数默认值为空(""), 部分版本可能原样传入引号, 统一去掉
 const unquote = (v) => String(v || "").trim().replace(/^(["'])(.*)\1$/, "$2").trim();
@@ -34,9 +35,9 @@ const ERROR_ICON = "exclamationmark.triangle.fill"; // 错误 / 警告图标
 // 图标颜色(6位HEX, 不含#), 模块参数可配置
 const PANEL_ICON_COLOR = /^#?[0-9a-fA-F]{6}$/.test(unquote(ARGS["icon-color"]))
   ? `#${unquote(ARGS["icon-color"]).replace(/^#/, "")}`
-  : "#3B82F6";
-const WARN_COLOR = "#F59E0B"; // 警告: 限速 / 数据延迟
-const ERROR_COLOR = "#EF4444"; // 错误: 请求失败 / 已暂停
+  : "#22C55E";
+const WARN_COLOR = "#F59E0B"; // 警告: 限速 / 数据延迟 / 用量 ≥ 70%
+const ERROR_COLOR = "#EF4444"; // 错误: 请求失败 / 已暂停 / 用量 ≥ 90%
 // IP 显示模式: full 完整 / mask 后两段打码 / hide 隐藏
 const ipModeRaw = unquote(ARGS["ip-mode"] || "mask").toLowerCase();
 const IP_MODE = ["full", "mask", "hide"].includes(ipModeRaw) ? ipModeRaw : "mask";
@@ -49,6 +50,7 @@ const IP_MODE = ["full", "mask", "hide"].includes(ipModeRaw) ? ipModeRaw : "mask
 const PROVIDERS = {
   peekabo: {
     title: "Peekabo Server",
+    name: "Peekabo",
     requireId: true,
     async fetch() {
       const res = await httpGet(
@@ -88,6 +90,7 @@ const PROVIDERS = {
 
   666: {
     title: "666Clouds Server",
+    name: "666Clouds",
     requireId: false,
     async fetch() {
       if (SERVER_ID && !/^\d+$/.test(SERVER_ID)) throw new Error("服务编号 id 无效");
@@ -214,44 +217,72 @@ function formatBps(bps) {
   return `${Number(v.toFixed(v >= 100 ? 0 : 1))} ${units[i]}`;
 }
 
-// 按北京时间格式化: "2026-11-23 21:34"
+// 按北京时间格式化: "11-23 21:34"
 function formatTime(ms) {
   const d = new Date(ms + 8 * 3600 * 1000);
   const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+  return `${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
 }
 
-function composeRegion(country, regionName, city) {
+// "17.77 / 540 GB": 单位相同时前一个数省略单位
+function formatUsage(used, quota) {
+  const [a, b] = [formatBytes(used), formatBytes(quota)];
+  const unit = b.split(" ")[1];
+  return `${a.endsWith(` ${unit}`) ? a.slice(0, -unit.length - 1) : a} / ${b}`;
+}
+
+// 10 格进度条: 用量大于 0 时至少亮 1 格, 用满才亮满 10 格
+function usageBar(pct) {
+  const filled = Math.min(pct >= 100 ? 10 : 9, Math.max(pct > 0 ? 1 : 0, Math.round(pct / 10)));
+  return "▰".repeat(filled) + "▱".repeat(10 - filled);
+}
+
+const formatPct = (pct) => `${pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`;
+
+// 国家 + 城市 (没有城市时用省/州)
+function composeRegion(country, place) {
   const parts = [];
   if (country) parts.push(country);
-  if (regionName && regionName !== country && !parts.includes(regionName)) parts.push(regionName);
-  if (city && !parts.includes(city)) parts.push(city);
+  if (place && place !== country) parts.push(place);
   return parts.join(" ") || null;
 }
 
+// 两位国家代码 → 国旗 emoji
+function flagOf(code) {
+  if (!/^[A-Za-z]{2}$/.test(code || "")) return "";
+  return String.fromCodePoint(...Array.from(code.toUpperCase()).map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+}
+
+// 返回 { region, flag } 或 null
 async function getGeo(ip) {
-  const key = `vpspanel_geo_${ip}`;
+  const key = `vpspanel_geo2_${ip}`;
   let stale = null; // 过期的旧缓存, 查询失败时兜底
   try {
     const cached = $persistentStore.read(key);
     if (cached) {
       const obj = JSON.parse(cached);
-      if (obj.region && Date.now() - obj.ts < GEO_CACHE_TTL) return obj.region;
-      stale = obj.region || null;
+      if (obj.region) {
+        stale = { region: obj.region, flag: obj.flag || "" };
+        if (Date.now() - obj.ts < GEO_CACHE_TTL) return stale;
+      }
     }
   } catch (_) {}
 
   let region = null;
+  let flag = "";
   // 主: ip-api.com (中文)
   try {
     const res = await httpGet(
-      `http://ip-api.com/json/${encodeURIComponent(ip)}?lang=zh-CN&fields=status,country,regionName,city,query`,
+      `http://ip-api.com/json/${encodeURIComponent(ip)}?lang=zh-CN&fields=status,country,countryCode,regionName,city,query`,
       { Accept: "application/json" },
       GEO_TIMEOUT
     );
     if (res.status === 200) {
       const geo = JSON.parse(res.body);
-      if (geo && geo.status === "success") region = composeRegion(geo.country, geo.regionName, geo.city);
+      if (geo && geo.status === "success") {
+        region = composeRegion(geo.country, geo.city || geo.regionName);
+        flag = flagOf(geo.countryCode);
+      }
     }
   } catch (_) {}
 
@@ -261,16 +292,19 @@ async function getGeo(ip) {
       const res = await httpGet(`https://ipwho.is/${encodeURIComponent(ip)}`, { Accept: "application/json" }, GEO_TIMEOUT);
       if (res.status === 200) {
         const geo = JSON.parse(res.body);
-        if (geo && geo.success) region = composeRegion(geo.country, geo.region, geo.city);
+        if (geo && geo.success) {
+          region = composeRegion(geo.country, geo.city || geo.region);
+          flag = flagOf(geo.country_code);
+        }
       }
     } catch (_) {}
   }
 
   // 只缓存成功结果, 失败下次刷新时重试
   try {
-    if (region) $persistentStore.write(JSON.stringify({ region, ts: Date.now() }), key);
+    if (region) $persistentStore.write(JSON.stringify({ region, flag, ts: Date.now() }), key);
   } catch (_) {}
-  return region || stale;
+  return region ? { region, flag } : stale;
 }
 
 /* ================= 面板 ================= */
@@ -279,24 +313,25 @@ function render(info) {
   const ip = MANUAL_IP || info.ip;
   const lines = info.warnings.map((w) => `⚠️ ${w.text}`);
 
-  if (ip) {
-    if (IP_MODE !== "hide") lines.push(`IP: ${IP_MODE === "mask" ? maskIp(ip) : ip}`);
-    lines.push(`地区: ${info.region || "未知"}`);
-  }
+  const where = [];
+  if (ip && info.geo) where.push(`${info.geo.flag ? `${info.geo.flag} ` : ""}${info.geo.region}`);
+  if (ip && IP_MODE !== "hide") where.push(IP_MODE === "mask" ? maskIp(ip) : ip);
+  if (where.length) lines.push(where.join(" · "));
 
-  if (info.unlimited) lines.push(`已用: ${formatBytes(info.used)} / 不限`);
-  else if (info.quota > 0) {
-    const pct = Number.isFinite(info.usedPercent) ? info.usedPercent : (info.used / info.quota) * 100;
-    lines.push(`已用: ${formatBytes(info.used)} / ${formatBytes(info.quota)} (${pct.toFixed(2)}%)`);
-  } else lines.push(`已用: ${formatBytes(info.used)}`);
+  if (info.unlimited) lines.push(`已用 ${formatBytes(info.used)} · 不限量`);
+  else if (Number.isFinite(info.pct)) lines.push(`${usageBar(info.pct)} ${formatUsage(info.used, info.quota)}`);
+  else lines.push(`已用 ${formatBytes(info.used)}`);
 
-  if (!info.unlimited && Number.isFinite(info.remaining)) lines.push(`剩余: ${formatBytes(Math.max(0, info.remaining))}`);
+  const detail = [];
+  if (!info.unlimited && Number.isFinite(info.remaining)) detail.push(`剩余 ${formatBytes(Math.max(0, info.remaining))}`);
   if (Number.isFinite(info.down) && Number.isFinite(info.up)) {
-    lines.push(`上下行: ↓ ${formatBytes(info.down)} ↑ ${formatBytes(info.up)}`);
+    detail.push(`↓ ${formatBytes(info.down)} ↑ ${formatBytes(info.up)}`);
   }
+  if (detail.length) lines.push(detail.join(" · "));
+
   if (Number.isFinite(info.resetAt)) {
     const days = Math.max(0, Math.ceil((info.resetAt - Date.now()) / 86400000));
-    lines.push(`重置: ${formatTime(info.resetAt)} (${days} 天后)`);
+    lines.push(`${formatTime(info.resetAt)} 重置 · ${days > 0 ? `还有 ${days} 天` : "今天"}`);
   }
   return lines.join("\n");
 }
@@ -317,18 +352,26 @@ function finish(title, content, icon, iconColor) {
     const info = await provider.fetch();
     const ip = MANUAL_IP || info.ip;
     // 地区反查(带缓存, 失败不阻塞)
-    info.region = ip ? await getGeo(ip) : null;
+    info.geo = ip ? await getGeo(ip) : null;
+    // 用量百分比: 优先用接口给的, 否则自己算; 不限量或额度未知时为 NaN
+    info.pct =
+      info.unlimited || !(info.quota > 0)
+        ? NaN
+        : Number.isFinite(info.usedPercent)
+          ? info.usedPercent
+          : (info.used / info.quota) * 100;
 
     const level = info.warnings.some((w) => w.level === "error")
       ? "error"
       : info.warnings.length
         ? "warn"
         : null;
+    const usageColor = info.pct >= 90 ? ERROR_COLOR : info.pct >= 70 ? WARN_COLOR : PANEL_ICON_COLOR;
     finish(
-      title,
+      Number.isFinite(info.pct) ? `${provider.name} · ${formatPct(info.pct)}` : title,
       render(info),
       level ? ERROR_ICON : PANEL_ICON,
-      level === "error" ? ERROR_COLOR : level === "warn" ? WARN_COLOR : PANEL_ICON_COLOR
+      level === "error" ? ERROR_COLOR : level === "warn" ? WARN_COLOR : usageColor
     );
   } catch (e) {
     fail(String((e && e.message) || e));

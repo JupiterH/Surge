@@ -1,8 +1,8 @@
 #!name=VPS Panel
 #!desc = 监控 VPS 流量、上下行、重置时间和状态(Peekabo / 六六云)
 #!category= 𝑷𝒂𝒏𝒆𝒍
-#!arguments=Peekabo-ID:"",Peekabo-Token:"",666-Token:"",666-ID:"",666-IP:"",禁用Peekabo:'',禁用666:'',icon:xserve,icon-color:3B82F6,ip-mode:mask
-#!arguments-desc=[Peekabo] 官网: gigo.peekabo.io\n    ├ Peekabo-ID: control panel 网页链接“/server/”后的内容\n    └ Peekabo-Token: control panel → 左上角“Account” → “API”\n\n[六六云] 官网: 666clouds.com\n    ├ 666-Token: 客户中心 → “我的账户” → “流量 API” 创建密钥\n    ├ 666-ID: 服务编号, 留空则取名下第一台服务器\n    └ 666-IP: 服务器 IP, 用于显示 IP 和地区, 留空则不显示\n\n[开关] 不用的服务商填 # 关闭对应面板\n    ├ 禁用Peekabo\n    └ 禁用666\n\n[通用]\n    ├ icon: SF Symbol 名称\n    ├ icon-color: 6位HEX(不含#)\n    └ ip-mode: full / mask / hide
+#!arguments=Peekabo-ID:"",Peekabo-Token:"",666-Token:"",666-ID:"",666-IP:"",禁用Peekabo:'',禁用666:'',icon:xserve,icon-color:22C55E,ip-mode:mask
+#!arguments-desc=[Peekabo] 官网: gigo.peekabo.io\n    ├ Peekabo-ID: control panel 网页链接“/server/”后的内容\n    └ Peekabo-Token: control panel → 左上角“Account” → “API”\n\n[六六云] 官网: 666clouds.com\n    ├ 666-Token: 客户中心 → “我的账户” → “流量 API” 创建密钥\n    ├ 666-ID: 服务编号, 留空则取名下第一台服务器\n    └ 666-IP: 服务器 IP, 用于显示 IP 和地区, 留空则不显示\n\n[开关] 不用的服务商填 # 关闭对应面板\n    ├ 禁用Peekabo\n    └ 禁用666\n\n[通用]\n    ├ icon: SF Symbol 名称\n    ├ icon-color: 6位HEX(不含#), 用量 70% 以上自动变橙、90% 以上变红\n    └ ip-mode: full / mask / hide
 
 [Panel]
 {{{禁用Peekabo}}}VPS Peekabo = title="Peekabo Server",content="正在获取...",style=info,script-name=vps-panel-peekabo,update-interval=3600
