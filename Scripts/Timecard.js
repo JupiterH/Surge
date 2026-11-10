@@ -8,30 +8,30 @@
  * 顺序无所谓，运行时会按日期排序
  */
 const EVENTS = [
-  ["元 旦", "solar", "01-01"],
-  ["腊 八", "lunar", "12-08"],
-  ["小 年", "lunar", "12-24"],
-  ["除 夕", "lunar", "12-30"],
-  ["春 节", "lunar", "01-01"],
-  ["元 宵", "lunar", "01-15"],
+  ["元旦", "solar", "01-01"],
+  ["腊八", "lunar", "12-08"],
+  ["小年", "lunar", "12-24"],
+  ["除夕", "lunar", "12-30"],
+  ["春节", "lunar", "01-01"],
+  ["元宵", "lunar", "01-15"],
   ["龙抬头", "lunar", "02-02"],
   ["妇女节", "solar", "03-08"],
-  ["清 明", "term", 7],
+  ["清明", "term", 7],
   ["劳动节", "solar", "05-01"],
   ["母亲节", "week", "05-2-0"],
   ["老爸生日", "lunar", "03-27"],
   ["周年&520", "solar", "05-20"],
-  ["端 午", "lunar", "05-05"],
+  ["端午", "lunar", "05-05"],
   ["父亲节", "week", "06-3-0"],
   ["宝宝生日", "lunar", "05-11"],
-  ["生 日", "lunar", "07-05"],
-  ["七 夕", "lunar", "07-07"],
-  ["中 秋", "lunar", "08-15"],
-  ["国 庆", "solar", "10-01"],
+  ["生日", "lunar", "07-05"],
+  ["七夕", "lunar", "07-07"],
+  ["中秋", "lunar", "08-15"],
+  ["国庆", "solar", "10-01"],
   ["老妈生日", "lunar", "09-07"],
-  ["冬 至", "term", 24],
+  ["冬至", "term", 24],
   ["平安夜", "solar", "12-24"],
-  ["圣 诞", "solar", "12-25"],
+  ["圣诞", "solar", "12-25"],
 ];
 
 //>图标依次切换乌龟、兔子、闹钟、礼品盒
@@ -765,7 +765,7 @@ function upcoming() {
       const t = resolve(type, rule, i);
       if (t !== null && t >= today0 && (next === null || t < next)) next = t;
     }
-    if (next !== null) list.push({ name, date: fmt(next), days: (next - today0) / DAY, idx });
+    if (next !== null) list.push({ name, t: next, date: fmt(next), days: (next - today0) / DAY, idx });
   });
   return list.sort((a, b) => a.days - b.days || a.idx - b.idx);
 }
@@ -805,11 +805,27 @@ function title_random(num){
   return num==0?"节日快乐，万事大吉":dic[r]
 }
 
+//显示宽度：汉字等全角字符算 1，英文数字算半个
+function textWidth(s) {
+  return Array.from(s).reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? 1 : 0.5), 0);
+}
+
+//每行："名称　42 天 · 12-22 周二"。面板是比例字体，名称用全角空格补到一样宽，后面的天数才能对齐
+function renderList(list) {
+  const maxWidth = Math.max(...list.map((e) => textWidth(e.name)));
+  return list.map((e) => {
+    const d = new Date(e.t);
+    const name = e.name + "\u3000".repeat(Math.ceil(maxWidth - textWidth(e.name)));
+    const when = pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()) + " 周" + "日一二三四五六"[d.getUTCDay()];
+    return name + "\u3000" + (e.days === 0 ? "🎉 今天" : e.days + " 天") + " · " + when;
+  }).join("\n");
+}
+
 datenotice();
 
 $done({
 title:title_random(tlist[0].days),
 icon:icon_now(tlist[0].days),
 'icon-color': "#5AC8FA",
-content:tlist.slice(0, 3).map((e) => e.name + "  :  " + (e.days === 0 ? "🎉" : e.days + "天")).join("\n")
+content:renderList(tlist.slice(0, 3))
 })
