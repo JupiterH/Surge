@@ -6,19 +6,19 @@
 
 const API_URL = "https://api.exchangerate-api.com/v4/latest/CNY";
 const HTTP_TIMEOUT = 8; // 秒
-const TITLE = "🪙当前汇率信息";
+const TITLE = "汇率";
 const ERROR_ICON = "exclamationmark.triangle.fill";
 const ERROR_COLOR = "#EF4444";
 
 // [旗帜, 名称, 货币代码, 方向]  toCny: 1 外币兑多少人民币; fromCny: 1 人民币兑多少外币
 const ROWS = [
   ["🇺🇸", "美元", "USD", "toCny"],
+  ["🇪🇺", "欧元", "EUR", "toCny"],
+  ["🇬🇧", "英镑", "GBP", "toCny"],
   ["🇭🇰", "港币", "HKD", "fromCny"],
   ["🇯🇵", "日元", "JPY", "fromCny"],
   ["🇰🇷", "韩元", "KRW", "fromCny"],
   ["🇹🇷", "里拉", "TRY", "fromCny"],
-  ["🇪🇺", "欧元", "EUR", "toCny"],
-  ["🇬🇧", "英镑", "GBP", "toCny"],
 ];
 
 const params = parseArgs(typeof $argument === "string" ? $argument : "");
@@ -46,8 +46,9 @@ function fail(msg) {
 function formatRow([flag, name, code, direction], rates) {
   const rate = Number(rates[code]);
   const ok = Number.isFinite(rate) && rate > 0;
-  if (direction === "toCny") return `${flag}1${name}兑换 ${ok ? (1 / rate).toFixed(2) : "N/A"}🇨🇳人民币`;
-  return `🇨🇳1人民币兑换 ${ok ? rate.toFixed(2) : "N/A"}${flag}${name}`;
+  // 面板是比例字体, 靠"等号左边的字符组成相同"来对齐: 币种名都是两个汉字, "元"后面补一个全角空格
+  if (direction === "toCny") return `${flag} 1 ${name} = 🇨🇳 ${ok ? (1 / rate).toFixed(2) : "N/A"} 元`;
+  return `🇨🇳 1 元\u3000 = ${flag} ${ok ? rate.toFixed(2) : "N/A"} ${name}`;
 }
 
 $httpClient.get({ url: API_URL, timeout: HTTP_TIMEOUT }, (error, response, data) => {
@@ -64,7 +65,7 @@ $httpClient.get({ url: API_URL, timeout: HTTP_TIMEOUT }, (error, response, data)
     const now = new Date();
     const pad = (n) => String(n).padStart(2, "0");
     $done({
-      title: `${TITLE} ${pad(now.getHours())}:${pad(now.getMinutes())}`,
+      title: `${TITLE} · ${pad(now.getHours())}:${pad(now.getMinutes())}`,
       content: ROWS.map((row) => formatRow(row, rates)).join("\n"),
       icon: ICON,
       "icon-color": COLOR,
