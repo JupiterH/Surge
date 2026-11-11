@@ -44,7 +44,7 @@
 | 🌐 国外网站 | 🚀 节点选择 | Google、GitHub、Twitter 等常见国外服务 |
 | 🐟 漏网之鱼 | 🚀 节点选择 | 未命中任何规则的流量 |
 
-地区分组包括香港、台湾、日本、新加坡、美国（`smart` 类型）及全部节点（手动选择）。
+地区分组包括香港、台湾、日本、新加坡、美国，均为 `smart` 类型。
 
 分流规则的顺序依照 [SukkaW/Surge](https://github.com/SukkaW/Surge) 的说明：所有 `DOMAIN-SET` 与 `non_ip` 规则均置于 `ip` 规则之前，以避免对需要代理的域名提前发起 DNS 解析。
 
