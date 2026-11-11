@@ -7,7 +7,7 @@
 | 路径 | 内容 |
 |---|---|
 | `Universal.conf` | 通用配置文件，去除了个人节点与规则，填入机场订阅即可使用，详见[通用配置](#通用配置) |
-| `Rule/` | 自行维护的规则集，除 `Reject.list` 外均由 Surge 与 Clash 共用 |
+| `Rule/` | 自行维护的规则集，由 Surge 与 Clash（mihomo）共用 |
 | `Module/` | Surge 模块，包括通用设置、DNS 分流、应用去广告、HTTPDNS 拦截及签到 |
 | `Panel/` | 面板模块，包括网络接口信息、VPS 流量、汇率、节假日倒计时及规则匹配耗时 |
 | `Scripts/` | 面板模块所依赖的脚本，详见[面板](#面板) |
@@ -58,7 +58,7 @@
 | `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
 | `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
-| `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，仅适用于 Surge | 拦截（REJECT），须置于 `domestic.conf` 之前 |
+| `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，mihomo 须为 1.19 及以上版本 | 拦截（REJECT），须置于 `domestic.conf` 之前 |
 | `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未引用（自用） |
 | `japan.list` | MetaTube 刮削站点 | 未引用（自用） |
 
