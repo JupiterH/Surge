@@ -1,6 +1,6 @@
 # NAME: Adobe
 # AUTHOR: Xiao
-# UPDATED: 2026-09-30
+# UPDATED: 2026-11-11
 # https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Adobe/Adobe.list
 
 DOMAIN,cc-ext-prod-pkgs.s3.amazonaws.com
@@ -144,4 +144,8 @@ DOMAIN-SUFFIX,adbephotos.com
 DOMAIN-SUFFIX,myportfolio.com
 DOMAIN-SUFFIX,frame.io
 DOMAIN-SUFFIX,f.io
+# 补充自 v2fly/domain-list-community（adobe、adobe-activation）
+DOMAIN-SUFFIX,adobestats.io
+DOMAIN-SUFFIX,tubemogul.com
+DOMAIN-SUFFIX,adobeereg.com
 DOMAIN-KEYWORD,adobe

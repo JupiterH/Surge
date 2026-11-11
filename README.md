@@ -7,6 +7,7 @@
 | 路径 | 内容 |
 |---|---|
 | `Xiao.conf` | 主配置文件，包含 `[General]`、策略组与分流规则 |
+| `Universal.conf` | 通用配置文件，去除了个人节点与规则，填入机场订阅即可使用，详见[通用配置](#通用配置) |
 | `Rule/` | 自行维护的规则集，除 `Reject.list` 外均由 Surge 与 Clash 共用 |
 | `Module/` | Surge 模块，包括通用设置、DNS 分流、应用去广告、HTTPDNS 拦截及签到 |
 | `Panel/` | 面板模块，包括网络接口信息、VPS 流量、汇率、节假日倒计时及规则匹配耗时 |
@@ -28,6 +29,35 @@
 
 远程控制相关配置项（`external-controller-access`、`http-api`）包含访问密码，未纳入公开配置。如需启用，请在本机 Surge 中单独添加，配置文件内附有示例注释。
 
+## 通用配置
+
+`Universal.conf` 由主配置整理而来，去除了自建节点、个人直连规则、MTProto、SSID 设置及 MITM 证书等与个人环境相关的内容，适合直接分享给他人使用。
+
+使用方法：
+
+1. 将 `[Proxy Group]` 中「📦 订阅」的 `policy-path` 替换为机场订阅地址。其余地区分组通过 `include-other-group` 从该分组中按名称筛选节点，无需逐一修改。
+2. 建议同时安装 `Module/General.sgmodule`、`Module/DNS.sgmodule`，以及 Sukka 的 [谷歌中国重定向](https://ruleset.skk.moe/Modules/google_cn_307.sgmodule) 模块；后者须在 Surge 中生成并信任 MITM 证书后方可生效。
+3. 自定义规则写在 `[Rule]` 开头的注释处，自建节点写在 `[Proxy]` 中。
+
+配置使用了 `smart` 策略组与 `include-other-group`，须使用较新版本的 Surge。
+
+| 策略组 | 默认 | 用途 |
+|---|---|---|
+| 🚀 节点选择 | ♻️ 自动选择 | 默认代理出口，同时用于 CDN 与测速 |
+| 🤖 AI | 🇺🇸 美国 | OpenAI、Claude、Gemini 及 Apple Intelligence |
+| 📺 流媒体 | 🚀 节点选择 | 各地区流媒体 |
+| ✈️ Telegram | 🚀 节点选择 | Telegram 域名与 IP |
+| 🍎 Apple / Ⓜ️ 微软 | 直连 | 系统服务与国内 CDN |
+| 🅰️ Adobe | 直连 | 可切换为 REJECT 以阻止联网验证 |
+| 💳 PayPal | 🇺🇸 美国 | PayPal、Venmo、Braintree |
+| ⬇️ 下载 | 🚀 节点选择 | 软件更新与系统镜像等大文件，可指定低倍率节点 |
+| 🌐 国外网站 | 🚀 节点选择 | Google、GitHub、Twitter 等常见国外服务 |
+| 🐟 漏网之鱼 | 🚀 节点选择 | 未命中任何规则的流量 |
+
+地区分组包括香港、台湾、日本、新加坡、美国（`smart` 类型）及全部节点（手动选择）。
+
+分流规则的顺序依照 [SukkaW/Surge](https://github.com/SukkaW/Surge) 的说明：所有 `DOMAIN-SET` 与 `non_ip` 规则均置于 `ip` 规则之前，以避免对需要代理的域名提前发起 DNS 解析。
+
 ## 规则集
 
 规则集的引用地址为 `https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/<文件名>`。
@@ -36,7 +66,7 @@
 |---|---|---|
 | `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 下载、淘宝 IP | 直连 |
 | `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 美国 |
-| `adobe.list` | Adobe 系列产品（源自 blackmatrix7） | Adobe 策略组 |
+| `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | Adobe 策略组 |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 美国 |
 | `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，仅适用于 Surge | 拦截（REJECT），须置于 `domestic.conf` 之前 |
 | `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未在主配置中引用 |
