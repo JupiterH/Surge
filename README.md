@@ -48,6 +48,12 @@
 
 分流规则的顺序依照 [SukkaW/Surge](https://github.com/SukkaW/Surge) 的说明：所有 `DOMAIN-SET` 与 `non_ip` 规则均置于 `ip` 规则之前，以避免对需要代理的域名提前发起 DNS 解析。
 
+### Clash 版本
+
+[JupiterH/Clash](https://github.com/JupiterH/Clash) 仓库提供与本配置一一对应的 mihomo 版本 [`Universal.yaml`](https://github.com/JupiterH/Clash/blob/main/Universal.yaml)，策略组与分流规则均与 `Universal.conf` 相同，适用于 Clash Verge Rev、Mihomo Party、FlClash 等使用 mihomo 1.19 及以上版本内核的客户端。两者的差异及使用方法详见该仓库的 README。
+
+修改 `Universal.conf` 的策略组或规则时，应同步修改 `Universal.yaml`。
+
 ## 规则集
 
 规则集的引用地址为 `https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/<文件名>`。
