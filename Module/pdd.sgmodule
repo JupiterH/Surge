@@ -1,7 +1,7 @@
 #!name = 拼多多去广告
 #!desc = 移除拼多多开屏广告及各页面推广
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-11-05
+#!date = 2026-11-11
 # 来源：拼多多去广告 by ZenmoFeiShi、可莉🅥 https://kelee.one/Tool/Loon/Lpx/PinDuoDuo_remove_ads.lpx
 
 [Rule]
@@ -55,7 +55,7 @@ http-response-jq ^https:\/\/api\.pinduoduo\.com\/api\/aristotle\/order_list_v4\?
 ^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v2\/query\/goods_detail_with_tags\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
 [Script]
-拼多多-移除扫码取件页面商品推荐及弹窗 = type=http-response, pattern=^https:\/\/m\.pinduoduo\.net\/mdkd\/package\?from_app_scan, requires-body=1, script-path=https://kelee.one/Resource/JavaScript/PinDuoDuo/PinDuoDuo_remove_ads.js
+拼多多-移除扫码取件页面商品推荐及弹窗 = type=http-response, pattern=^https:\/\/m\.pinduoduo\.net\/mdkd\/package\?from_app_scan, requires-body=1, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/PinDuoDuo/PinDuoDuo_remove_ads.js
 
 [MITM]
 hostname = %APPEND% api.pinduoduo.com, m.pinduoduo.net

@@ -143,6 +143,8 @@ python3 Tools/loon2surge.py [--dry-run | --stale-hosts]
 | `rule_suffix` | 附加于域名类拦截规则末尾的参数，例如 `,extended-matching,pre-matching` |
 | `extra_hosts` | 插件未声明但实际需要的 MITM 域名 |
 
+配置文件顶层的 `mirror` 用于维护第三方脚本的镜像。凡指向 `sources` 所列源站的脚本与 jq 文件，转换时均改为引用本仓库 `Scripts/` 中的副本，目录结构与源站保持一致。每次运行时，工具依据地址的 MD5 从 Loon 与 Surge 的本地缓存中读取最新内容，与模块一并提交；手写分组所引用的镜像文件亦会同步。本地缓存中不存在的资源将保留源站地址，并给出提示。
+
 遇到无法识别的 Loon 语法时，工具将报错并终止，不会写入或推送任何文件。若系统已安装 `jq`，工具还会校验所生成的 jq 表达式能否通过编译。
 
 ## 免责声明

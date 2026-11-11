@@ -1,7 +1,7 @@
 #!name = 𝑩𝒂𝒊𝒅𝒖
 #!desc = 移除百度网盘，百度贴吧广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date=2026-11-05
+#!date=2026-11-11
 #!arguments=per_filter_video_thread:true
 #!arguments-desc=per_filter_video_thread：是否拦截首页推荐标签下的视频帖，填 true 或 false
 # 来源（贴吧）：百度贴吧去广告 by 可莉🅥、app2smile https://kelee.one/Tool/Loon/Lpx/Tieba_remove_ads.lpx
@@ -48,7 +48,7 @@ http-response-jq ^https:\/\/pan\.baidu\.com\/feed\/kingkongdistrict\? '.data.dat
 
 [Script]
 # 贴吧
-贴吧-ProtoBuf处理 = type=http-response, pattern=^https?:\/\/tieba(?:c)?\.baidu\.com\/c\/(f\/excellent\/personalized|f\/frs\/page|b\/ad\/adBid|f\/ad\/getFeedAd|f\/pb\/page|f\/frs\/generalTabList)\?cmd=\d+&format=protobuf, requires-body=1, binary-body-mode=1, timeout=10, script-path=https://kelee.one/Resource/JavaScript/Tieba/tieba-proto.js, argument="per_filter_video_thread={{{per_filter_video_thread}}}"
+贴吧-ProtoBuf处理 = type=http-response, pattern=^https?:\/\/tieba(?:c)?\.baidu\.com\/c\/(f\/excellent\/personalized|f\/frs\/page|b\/ad\/adBid|f\/ad\/getFeedAd|f\/pb\/page|f\/frs\/generalTabList)\?cmd=\d+&format=protobuf, requires-body=1, binary-body-mode=1, timeout=10, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/Tieba/tieba-proto.js, argument="per_filter_video_thread={{{per_filter_video_thread}}}"
 
 [MITM]
 hostname = %APPEND% tiebac.baidu.com, tieba.baidu.com, pan.baidu.com

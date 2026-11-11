@@ -1,12 +1,12 @@
 #!name = 高德地图去广告
 #!desc = 移除高德地图开屏广告及各页面推广
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!date = 2026-11-05
+#!date = 2026-11-11
 # 来源：高德地图去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/Amap_remove_ads.lpx
 
 [Body Rewrite]
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? 'del(.data.adStatementConfig, .data.adCustomerRetainArchitecture, .data.adImEntryConfig, .data.adVenueConfig, .data.adPerfSwitch, .data.EndNaviC3AdCard, .data.infoCpcReport, .data.hotsaleConfig, .data.marketing_resource_config, .data.coupon_risk_asac, .data.commonCouponSceneLog, .data.sug_coupon_opt, .data.giftEntryConfig, .data.splashscreen, .data.SplashScreenControl, .data.splashview_config, .data.feedback_banner, .data.TrainOrderBanner, .data.nearby_business_popup, .data.shortcut_popup_frequency, .data.tel_retention_popup, .data.hotel_activity, .data.taxi_activity, .data.hotel_privilege, .data.sportsActivityConfig, .data.activity_qingke_contry_control, .data["920bestwishes"], .data.custom_consult, .data.widget_guide, .data.free_ride, .data.homepage_resource_config, .data.home_message_guide, .data.hotel_tipsicon, .data.sur_bar, .data.nearby_map_entry_guide, .data.comment_info, .data.small_biz_index, .data.small_biz_fun, .data.setpagesearch, .data.wallet)'
-http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? jq-path="https://kelee.one/Resource/JQLang/Amap/updatable.jq"
+http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\? jq-path="https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/Amap/updatable.jq"
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaasv3\? 'del(.data.tipData, .data.wallet) | .data.cardList |= map(select(.dataKey == "MineNewFootprintCard" or .dataKey == "MineNewBEntranceCardV4")) | (.data.cardList[] | select(.dataKey == "MineNewBEntranceCardV4") | .content.entranceList_1) |= map(select(.id == 7 or .id == 8 or .id == 10 or .id == 17)) | (.data.cardList[] | select(.dataKey == "MineNewBEntranceCardV4") | .content.entranceList_2) |= map(select(.id == 32 or .id == 4 or .id == 9 or .id == 16 or .id == 14))'
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? 'del(.data.shadingWords)'
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? '.data.toolsRecommend.data.default |= map(select(.id == 102 or .id == 103 or .id == 106 or .id == 151))'
@@ -19,7 +19,7 @@ http-response-jq ^https:\/\/center\.amap\.com\/ws\/amc\/server\/conv\/raise_list
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? '(if (try (.data.shadingWords.data.regions.content | type == "array") catch false) then .data.shadingWords.data.regions.content |= map(select(IN("quickLink","history","searchFind"))) else . end) | (if (try (.data.shadingWords.data.modules | type == "object") catch false) then .data.shadingWords.data.modules |= with_entries(select(.key == "searchFind")) else . end)'
 http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search_business\/process\/middleLayer\/sug\? '.tip_list |= map(select(.tip.task_tag == "common_content_general" or .tip.task_tag == "sp"))'
 http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search\/poi\/detail\? 'del(.data.modules.combineReviews.data.write_comment.btnRightTag, .data.modules.combineReviews.data.write_comment.title)'
-http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search\/poi\/detail\? jq-path="https://kelee.one/Resource/JQLang/Amap/search_poi_detail.jq"
+http-response-jq ^https:\/\/info\.amap\.com\/ws\/shield\/search\/poi\/detail\? jq-path="https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/Amap/search_poi_detail.jq"
 http-response-jq ^https:\/\/m5\.amap\.com\/ws\/smartui\/near_recommend\? 'del(.data.operation_activity)'
 
 [Map Local]

@@ -16,6 +16,8 @@
 - [MITM] 只增不删：保留原有域名，补上插件里新增的域名；插件漏掉的域名写在配置的 extra_hosts 里。
   插件已经去掉的域名不会自动删除，用 --stale-hosts 查看后手动清理。
 - 配置里的 fixes 在每次转换后做文字替换，rule_suffix 给域名类拦截规则加后缀。
+- 配置里的 mirror：指向 sources 源站的脚本和 jq 文件改用本仓库 Scripts/ 里的镜像，
+  每次运行时从 Loon / Surge 的本地缓存（按地址 md5 命名）同步最新内容，与模块一起提交。
 - 遇到不认识的 Loon 写法会报错退出，不会写入或推送任何文件。
 """
 import argparse
@@ -40,6 +42,12 @@ CONTENT_SECTIONS = ['[Rule]', '[Body Rewrite]', '[Map Local]', '[Script]']
 JSON_HDR = 'header="Content-Type:application/json"'
 MIME = {'json': 'application/json', 'text': 'text/plain', 'html': 'text/html'}
 REWRITE_LINE = re.compile(r'^(request|response) if \$\{url\} ~= /(.*)/i? then (.*)$')
+# 脚本和 jq 文件的本地缓存：(目录, 扩展名)，文件名是地址的 md5
+MIRROR_CACHES = [
+    ('/Library/Application Support/com.loon.Loon/scripts', '.js'),
+    ('/Library/Application Support/com.loon.Loon/jq', ''),
+    (os.path.expanduser('~/Library/Caches/com.nssurge.surge-mac/External Resource'), ''),
+]
 
 
 class ConvertError(Exception):
@@ -361,7 +369,60 @@ def apply_tweaks(entry, sections):
                               for l in sections['[Rule]']]
 
 
-def build_module(path, entries, plugins, today):
+def find_cached(url):
+    """Loon / Surge 按地址的 md5 缓存脚本和 jq 文件，返回最新的一份路径。"""
+    h = hashlib.md5(url.encode('utf-8')).hexdigest()
+    found = [p for d, ext in MIRROR_CACHES if os.path.isfile(p := os.path.join(d, h + ext))]
+    return max(found, key=os.path.getmtime) if found else None
+
+
+def mirror_rel(url, mirror):
+    """源站地址 -> 仓库里的相对路径（不在镜像范围内返回 None）。"""
+    for src in mirror.get('sources', []):
+        if url.startswith(src):
+            return url[len(src):]
+    return None
+
+
+def apply_mirror(sections, mirror):
+    """把转换结果里的源站地址换成仓库镜像地址；本地缓存和仓库里都没有的保持原样。"""
+    if not mirror:
+        return
+    for name, lines in sections.items():
+        for i, line in enumerate(lines):
+            for url in re.findall(r'https?://[^\s,"\']+', line):
+                rel = mirror_rel(url, mirror)
+                if rel is None:
+                    continue
+                if find_cached(url) or os.path.isfile(os.path.join(REPO, mirror['dir'], rel)):
+                    line = line.replace(url, mirror['url'] + rel)
+                else:
+                    print(f'提示：本地缓存里没有 {url}，暂时保留源站地址（先在 Loon 或 Surge 里用一次这个模块）')
+            lines[i] = line
+
+
+def sync_mirrors(texts, mirror):
+    """扫描所有模块里引用的镜像地址，从本地缓存取最新内容。返回 [(相对路径, 新内容)]。"""
+    if not mirror:
+        return []
+    rels = sorted({m for t in texts for m in re.findall(re.escape(mirror['url']) + r'([^\s,"\']+)', t)})
+    changes, missing = [], []
+    for rel in rels:
+        target = os.path.join(REPO, mirror['dir'], rel)
+        cached = [p for p in (find_cached(src + rel) for src in mirror['sources']) if p]
+        if not cached:
+            if not os.path.isfile(target):
+                missing.append(rel)
+            continue
+        data = open(max(cached, key=os.path.getmtime), 'rb').read()
+        if not os.path.isfile(target) or open(target, 'rb').read() != data:
+            changes.append((rel, data))
+    if missing:
+        print('警告：以下镜像文件在仓库和本地缓存里都没有，模块引用它们会失效：\n  ' + '\n  '.join(missing))
+    return changes
+
+
+def build_module(path, entries, plugins, today, mirror=None):
     """返回 (新的文件内容, [(插件名, 插件日期)], [MITM 里已经没有插件需要的域名])。
 
     没有变化时，文件内容和原文件一样。
@@ -374,6 +435,7 @@ def build_module(path, entries, plugins, today):
         prefix = e.get('prefix', e.get('label'))
         sections, hosts, args, meta = convert_plugin(e['plugin'], text, prefix)
         apply_tweaks(e, sections)
+        apply_mirror(sections, mirror)
         hosts = dedupe(hosts + e.get('extra_hosts', []))
         converted.append((e.get('label'), (sections, hosts, args, meta)))
         sources.append(source_line(e, meta, url))
@@ -529,10 +591,11 @@ def main():
 
     plugins = load_plugins(loon_dir, config.get('loon_config', DEFAULT_LOON_CONF))
     today = datetime.date.today().isoformat()
+    mirror = config.get('mirror')
     results = {}
     try:
         for path, entries in config['modules'].items():
-            results[path] = build_module(path, entries, plugins, today)
+            results[path] = build_module(path, entries, plugins, today, mirror)
     except ConvertError as e:
         sys.exit('转换失败，没有写入任何文件：\n' + str(e))
 
@@ -553,7 +616,17 @@ def main():
         if text != old:
             changed.append((path, old, text, sources))
 
-    if not changed:
+    # 镜像：扫描全部模块（含不由本工具生成的），同步被引用的脚本和 jq 文件
+    texts = {os.path.relpath(p, REPO): open(p, encoding='utf-8').read()
+             for p in glob.glob(os.path.join(REPO, 'Module', '*.sgmodule'))}
+    texts.update({p: t for p, (t, _, _) in results.items()})
+    mirror_changes = sync_mirrors(texts.values(), mirror)
+    if mirror_changes:
+        print('需要新增或更新的镜像文件：')
+        for rel, _ in mirror_changes:
+            print(f'  {mirror["dir"]}/{rel}')
+
+    if not changed and not mirror_changes:
         print('所有模块都已是最新，没有改动。')
         ahead = 0 if opts.dry_run else unpushed()
         if ahead:
@@ -561,7 +634,8 @@ def main():
             git('push', '-q')
             print('完成：' + git('log', '-1', '--format=%h %s').strip())
         return
-    print('有改动的模块：')
+    if changed:
+        print('有改动的模块：')
     for path, _, _, sources in changed:
         print(f'  {path}  ←  ' + '、'.join(f'{n}({d[:10]})' for n, d in sources))
     if opts.dry_run:
@@ -575,11 +649,17 @@ def main():
     for path, _, text, _ in changed:
         with open(os.path.join(REPO, path), 'w', encoding='utf-8') as f:
             f.write(text)
-    paths = [p for p, _, _, _ in changed]
+    for rel, data in mirror_changes:
+        target = os.path.join(REPO, mirror['dir'], rel)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        with open(target, 'wb') as f:
+            f.write(data)
+    paths = [p for p, _, _, _ in changed] + [f'{mirror["dir"]}/{rel}' for rel, _ in mirror_changes]
     git('add', '--', *paths)
     print(git('diff', '--cached', '--stat', '--', *paths))
     msg = 'Update modules from Loon plugins\n\n' + '\n'.join(
-        f'- {os.path.basename(p)}: ' + ', '.join(n for n, _ in s) for p, _, _, s in changed)
+        [f'- {os.path.basename(p)}: ' + ', '.join(n for n, _ in s) for p, _, _, s in changed]
+        + [f'- {mirror["dir"]}/{rel}' for rel, _ in mirror_changes])
     git('commit', '-q', '-m', msg, '--', *paths)
     print('推送中…')
     git('push', '-q')
