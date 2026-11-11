@@ -8,7 +8,9 @@
     "Module/xiaohongshu.sgmodule": [{"plugin": "小红书去广告", "prefix": "小红书"}],
     "Module/pdd.sgmodule": [{"plugin": "拼多多去广告", "prefix": "拼多多"}],
     "Module/xiaoheihe.sgmodule": [{"plugin": "小黑盒去广告"}],
-    "Module/weibo.sgmodule": [{"plugin": "微博去广告", "prefix": "微博"}],
+    "Module/weibo.sgmodule": [{"plugin": "微博去广告", "prefix": "微博", "fixes": [
+      {"from": "https://kelee.one/Resource/JavaScript/Weibo/Weibo_remove_ads.js", "to": "https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/Weibo_remove_ads.js"}
+    ]}],
     "Module/didi.sgmodule": [{"plugin": "滴滴去广告"}],
     "Module/gaode.sgmodule": [
       {"plugin": "高德地图去广告", "fixes": [

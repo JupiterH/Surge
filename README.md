@@ -10,7 +10,7 @@
 | `Rule/` | 自行维护的规则集，由 Surge 与 Clash（mihomo）共用 |
 | `Module/` | Surge 模块，包括通用设置、DNS 分流、应用去广告、HTTPDNS 拦截及签到 |
 | `Panel/` | 面板模块，包括网络接口信息、VPS 流量、汇率、节假日倒计时及规则匹配耗时 |
-| `Scripts/` | 面板模块所依赖的脚本，详见[面板](#面板) |
+| `Scripts/` | 面板模块所依赖的脚本，详见[面板](#面板)；以及部分去广告模块所用第三方脚本的镜像，以避免源站不可访问时模块失效 |
 | `Tools/` | Loon 插件转换工具 `loon2surge.py`，详见[转换工具](#转换工具) |
 
 模块的引用地址为 `https://raw.githubusercontent.com/JupiterH/Surge/main/Module/<文件名>`，面板模块将路径中的 `Module` 替换为 `Panel`。
@@ -139,7 +139,7 @@ python3 Tools/loon2surge.py [--dry-run | --stale-hosts]
 | `plugin` | Loon 插件名称，必填 |
 | `label` | 分组名称。同一模块合并多个插件时必填，转换结果写入各段的 `# label` 分组之下 |
 | `prefix` | 脚本名称前缀，用于避免不同模块间的脚本重名；缺省时取 `label` 的值 |
-| `fixes` | 转换完成后执行的文本替换，用于修正插件中的错误 |
+| `fixes` | 转换完成后执行的文本替换，用于修正插件中的错误，或将脚本地址替换为本仓库 `Scripts/` 中的镜像 |
 | `rule_suffix` | 附加于域名类拦截规则末尾的参数，例如 `,extended-matching,pre-matching` |
 | `extra_hosts` | 插件未声明但实际需要的 MITM 域名 |
 
