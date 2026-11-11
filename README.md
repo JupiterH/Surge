@@ -6,7 +6,6 @@
 
 | 路径 | 内容 |
 |---|---|
-| `Xiao.conf` | 主配置文件，包含 `[General]`、策略组与分流规则 |
 | `Universal.conf` | 通用配置文件，去除了个人节点与规则，填入机场订阅即可使用，详见[通用配置](#通用配置) |
 | `Rule/` | 自行维护的规则集，除 `Reject.list` 外均由 Surge 与 Clash 共用 |
 | `Module/` | Surge 模块，包括通用设置、DNS 分流、应用去广告、HTTPDNS 拦截及签到 |
@@ -18,20 +17,9 @@
 
 仓库内容更新后，需在 Surge 中更新相应的模块与外部资源，变更方可生效。
 
-## 主配置
-
-`Xiao.conf` 的分流规则主要引用自 [ruleset.skk.moe](https://ruleset.skk.moe)，并以本仓库 `Rule/` 目录下的规则集作为补充与修正。建议同时启用以下两个模块：
-
-- `Module/General.sgmodule`：提供 skip-proxy、always-real-ip 及 MITM 例外等通用设置。
-- `Module/DNS.sgmodule`：将国内主要厂商的域名指向其对应的 DNS 服务器。
-
-使用前，须将策略组中的 `policy-path=订阅链接` 替换为实际的订阅地址。
-
-远程控制相关配置项（`external-controller-access`、`http-api`）包含访问密码，未纳入公开配置。如需启用，请在本机 Surge 中单独添加，配置文件内附有示例注释。
-
 ## 通用配置
 
-`Universal.conf` 由主配置整理而来，去除了自建节点、个人直连规则、MTProto、SSID 设置及 MITM 证书等与个人环境相关的内容，适合直接分享给他人使用。
+`Universal.conf` 的分流规则主要引用自 [ruleset.skk.moe](https://ruleset.skk.moe)，并以本仓库 `Rule/` 目录下的规则集作为补充。配置中不含自建节点、个人直连规则、MTProto、SSID 设置及 MITM 证书等与个人环境相关的内容，填入机场订阅即可使用。
 
 使用方法：
 
@@ -40,6 +28,8 @@
 3. 自定义规则写在 `[Rule]` 开头的注释处，自建节点写在 `[Proxy]` 中。
 
 配置使用了 `smart` 策略组与 `include-other-group`，须使用较新版本的 Surge。
+
+远程控制相关配置项（`external-controller-access`、`http-api`）包含访问密码，未纳入配置。如需启用，请在本机 Surge 中单独添加，配置文件内附有示例注释。
 
 | 策略组 | 默认 | 用途 |
 |---|---|---|
@@ -62,15 +52,15 @@
 
 规则集的引用地址为 `https://raw.githubusercontent.com/JupiterH/Surge/main/Rule/<文件名>`。
 
-| 文件 | 用途 | 主配置中的策略 |
+| 文件 | 用途 | 通用配置中的策略 |
 |---|---|---|
 | `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 下载、淘宝 IP | 直连 |
-| `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 美国 |
-| `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | Adobe 策略组 |
-| `paypal.list` | PayPal（源自 blackmatrix7） | 美国 |
+| `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
+| `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
+| `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
 | `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，仅适用于 Surge | 拦截（REJECT），须置于 `domestic.conf` 之前 |
-| `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未在主配置中引用 |
-| `japan.list` | MetaTube 刮削站点 | 未在主配置中引用 |
+| `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未引用（自用） |
+| `japan.list` | MetaTube 刮削站点 | 未引用（自用） |
 
 规则统一采用 `类型,值` 的格式，逗号后不留空格。修改规则集时，应同步更新文件开头的 `# UPDATED:` 日期。
 

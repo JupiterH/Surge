@@ -1,7 +1,7 @@
 # NAME: Reject
 # AUTHOR: Xiao
 # UPDATED: 2026-11-08
-# 自维护拦截规则：补充 skk 规则集没覆盖到的，主配置中策略为 REJECT
+# 自维护拦截规则：补充 skk 规则集没覆盖到的，通用配置中策略为 REJECT
 
 # 芒果TV P2P 信令（signal、signal2 等），拦掉后 App 不再做 P2P 上传，视频回落到 CDN
 DOMAIN-WILDCARD,signal*.api.mgtv.com
