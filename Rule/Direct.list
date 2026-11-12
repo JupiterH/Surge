@@ -1,6 +1,6 @@
 # NAME: Direct
 # AUTHOR: Xiao
-# UPDATED: 2026-11-05
+# UPDATED: 2026-11-12
 # https://github.com/xiaorouji/openwrt-passwall/discussions/2117
 # https://femoon.top/article/f5540f1e-fa0b-4883-9104-21ffee1e2f1b
 # steam下载登录，VPS官网，Emby直连等
@@ -58,6 +58,12 @@ DOMAIN-SUFFIX,steamchina.com
 DOMAIN-SUFFIX,api.steampowered.com
 DOMAIN-SUFFIX,test.steampowered.com
 DOMAIN-SUFFIX,steamusercontent.com
+# Steam 下载 CDN
+DOMAIN,steampipe.akamaized.net
+DOMAIN,steampipe-kr.akamaized.net
+DOMAIN,steampipe-partner.akamaized.net
+DOMAIN-SUFFIX,steamcontent.com
+DOMAIN-SUFFIX,content.steampowered.com
 IP-CIDR,103.10.124.0/23,no-resolve
 IP-CIDR,103.28.54.0/24,no-resolve
 IP-CIDR,146.66.152.0/24,no-resolve
@@ -80,6 +86,16 @@ IP-CIDR,205.185.194.0/24,no-resolve
 IP-CIDR,205.196.6.0/24,no-resolve
 IP-CIDR,208.64.200.0/22,no-resolve
 IP-CIDR,208.78.164.0/22,no-resolve
+
+# Epic 下载 CDN
+DOMAIN,download2.epicgames.com
+DOMAIN,download3.epicgames.com
+DOMAIN,download4.epicgames.com
+DOMAIN,fastly-download.epicgames.com
+DOMAIN,epicgames-download1.akamaized.net
+DOMAIN,egdownload.fastly-edge.com
+DOMAIN-SUFFIX,download.epicgames.com
+DOMAIN-SUFFIX,epicgamescdn.com
 
 # 淘宝
 IP-CIDR,155.102.0.0/16,no-resolve
