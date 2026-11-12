@@ -1,7 +1,8 @@
 /*
   VPS 流量信息 (Surge 面板), 多服务商共用一份脚本
   依赖参数(argument): provider=<peekabo|666>&id=<服务器ID>&token=<API Token>&ip=<可选>&icon=<SF Symbol>&icon-color=<6位HEX>&ip-mode=<full|mask|hide>
-  面板内容(标题带用量百分比): [警告] / 国旗 地区 · IP / 进度条 已用 / 总量 / 剩余 · 上下行 / 重置
+  面板内容(标题带用量百分比): [警告] / 国旗 地区 · IP / 进度条 已用 / 总量 / 上下行 / 剩余 · 距重置天数
+  面板是比例字体, 过长会自动换行; 各行按最宽的数值实测过, 不超过面板宽度的 93%
   图标颜色: 用量 70% 以上变橙, 90% 以上变红, 其余用 icon-color
 
   服务商:
@@ -217,13 +218,6 @@ function formatBps(bps) {
   return `${Number(v.toFixed(v >= 100 ? 0 : 1))} ${units[i]}`;
 }
 
-// 按北京时间格式化: "11-23 21:34"
-function formatTime(ms) {
-  const d = new Date(ms + 8 * 3600 * 1000);
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
-}
-
 // "17.77 / 540 GB": 单位相同时前一个数省略单位
 function formatUsage(used, quota) {
   const [a, b] = [formatBytes(used), formatBytes(quota)];
@@ -238,6 +232,21 @@ function usageBar(pct) {
 }
 
 const formatPct = (pct) => `${pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`;
+
+// 估算一行文字的显示宽度, 以一个汉字的宽度为 1 (面板是比例字体, 只能估算)
+// 实测面板一行约能放 17 个汉字宽, 超过 MAX_LINE_WIDTH 就有换行的风险
+const MAX_LINE_WIDTH = 15.5;
+function estWidth(str) {
+  let width = 0;
+  for (const ch of str) {
+    const code = ch.codePointAt(0);
+    if (code >= 0x1f1e6 && code <= 0x1f1ff) width += 0.65; // 国旗由两个区域指示符组成
+    else if (code > 0x2e7f) width += 1; // 汉字等全角字符
+    else if (" .·:".includes(ch)) width += 0.28;
+    else width += 0.58;
+  }
+  return width;
+}
 
 // 国家 + 城市 (没有城市时用省/州)
 function composeRegion(country, place) {
@@ -313,26 +322,29 @@ function render(info) {
   const ip = MANUAL_IP || info.ip;
   const lines = info.warnings.map((w) => `⚠️ ${w.text}`);
 
-  const where = [];
-  if (ip && info.geo) where.push(`${info.geo.flag ? `${info.geo.flag} ` : ""}${info.geo.region}`);
-  if (ip && IP_MODE !== "hide") where.push(IP_MODE === "mask" ? maskIp(ip) : ip);
-  if (where.length) lines.push(where.join(" · "));
+  const shownIp = ip && IP_MODE !== "hide" ? (IP_MODE === "mask" ? maskIp(ip) : ip) : "";
+  const whereLine = (region) =>
+    [region && `${info.geo.flag ? `${info.geo.flag} ` : ""}${region}`, shownIp].filter(Boolean).join(" · ");
+  let where = whereLine(ip && info.geo ? info.geo.region : "");
+  // 完整 IP 加上较长的城市名会超出面板宽度, 这时只保留国家
+  if (ip && info.geo && estWidth(where) > MAX_LINE_WIDTH) where = whereLine(info.geo.region.split(" ")[0]);
+  if (where) lines.push(where);
 
   if (info.unlimited) lines.push(`已用 ${formatBytes(info.used)} · 不限量`);
   else if (Number.isFinite(info.pct)) lines.push(`${usageBar(info.pct)} ${formatUsage(info.used, info.quota)}`);
   else lines.push(`已用 ${formatBytes(info.used)}`);
 
-  const detail = [];
-  if (!info.unlimited && Number.isFinite(info.remaining)) detail.push(`剩余 ${formatBytes(Math.max(0, info.remaining))}`);
   if (Number.isFinite(info.down) && Number.isFinite(info.up)) {
-    detail.push(`↓ ${formatBytes(info.down)} ↑ ${formatBytes(info.up)}`);
+    lines.push(`↓ ${formatBytes(info.down)} · ↑ ${formatBytes(info.up)}`);
   }
-  if (detail.length) lines.push(detail.join(" · "));
 
+  const tail = [];
+  if (!info.unlimited && Number.isFinite(info.remaining)) tail.push(`剩余 ${formatBytes(Math.max(0, info.remaining))}`);
   if (Number.isFinite(info.resetAt)) {
     const days = Math.max(0, Math.ceil((info.resetAt - Date.now()) / 86400000));
-    lines.push(`${formatTime(info.resetAt)} 重置 · ${days > 0 ? `还有 ${days} 天` : "今天"}`);
+    tail.push(days > 0 ? `${days} 天后重置` : "今天重置");
   }
+  if (tail.length) lines.push(tail.join(" · "));
   return lines.join("\n");
 }
 

@@ -81,7 +81,7 @@
 
 | 模块 | 脚本 | 内容 |
 |---|---|---|
-| `VPSPanel.sgmodule` | `Scripts/VPSPanel.js` | Peekabo 与六六云的流量信息：地区与 IP、用量进度条、剩余流量、上下行流量、重置时间 |
+| `VPSPanel.sgmodule` | `Scripts/VPSPanel.js` | Peekabo 与六六云的流量信息：地区与 IP、用量进度条、上下行流量、剩余流量、距重置的天数 |
 | `Rates.sgmodule` | `Scripts/Rates.js` | 人民币对美元、欧元、英镑、港币、日元、韩元、里拉的汇率，每小时刷新一次 |
 | `Holiday.sgmodule` | `Scripts/Timecard.js` | 最近三个节假日或纪念日的倒计时；节日当天 8:00 推送一条通知 |
 | `interface-info.sgmodule` | [xream/scripts](https://github.com/xream/scripts) | 网络接口的实时速率与流量 |
