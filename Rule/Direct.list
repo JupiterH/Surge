@@ -97,7 +97,3 @@ DOMAIN,epicgames-download1.akamaized.net
 DOMAIN,egdownload.fastly-edge.com
 DOMAIN-SUFFIX,download.epicgames.com
 DOMAIN-SUFFIX,epicgamescdn.com
-
-# 淘宝
-IP-CIDR,155.102.0.0/16,no-resolve
-IP-CIDR,47.246.0.0/16,no-resolve
