@@ -47,7 +47,6 @@ DOMAIN,xz.pphimalayanrt.com
 DOMAIN,steamstat.us
 DOMAIN,steamstat.com
 DOMAIN,steamgames.com
-DOMAIN,akamaihd.net
 DOMAIN,cdn.steampowered.com
 DOMAIN,steam-chat.com
 DOMAIN-SUFFIX,rmbgame.net
@@ -64,6 +63,8 @@ DOMAIN,steampipe-kr.akamaized.net
 DOMAIN,steampipe-partner.akamaized.net
 DOMAIN-SUFFIX,steamcontent.com
 DOMAIN-SUFFIX,content.steampowered.com
+DOMAIN-SUFFIX,qtlglb.com
+DOMAIN-SUFFIX,queniuqe.com
 IP-CIDR,103.10.124.0/23,no-resolve
 IP-CIDR,103.28.54.0/24,no-resolve
 IP-CIDR,146.66.152.0/24,no-resolve
