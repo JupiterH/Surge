@@ -1,6 +1,6 @@
 # NAME: Proxy
 # AUTHOR: Xiao
-# UPDATED: 2026-11-05
+# UPDATED: 2026-11-12
 
 # Fix
 DOMAIN-SUFFIX,trakt.tv
@@ -59,6 +59,19 @@ DOMAIN-SUFFIX,bingapistatistics.com
 DOMAIN-SUFFIX,bingsandbox.com
 DOMAIN-SUFFIX,bingvisualsearch.com
 DOMAIN-SUFFIX,bingworld.com
+
+# Steam 商店/社区（登录与下载的直连规则在 Direct.list，须排在本文件之前）
+DOMAIN,steambroadcast.akamaized.net
+DOMAIN-SUFFIX,steampowered.com
+DOMAIN-SUFFIX,valvesoftware.com
+DOMAIN-SUFFIX,playartifact.com
+DOMAIN-SUFFIX,underlords.com
+DOMAIN-SUFFIX,humblebundle.com
+DOMAIN-SUFFIX,fanatical.com
+
+# Epic
+DOMAIN,ak.epicgames.com
+DOMAIN,on.epicgames.com
 
 # Google CN
 IP-CIDR,120.232.181.162/32,no-resolve
