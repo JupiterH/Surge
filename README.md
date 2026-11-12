@@ -60,7 +60,7 @@
 
 | 文件 | 用途 | 通用配置中的策略 |
 |---|---|---|
-| `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 登录与下载、Epic、淘宝 IP | 未引用（自用） |
+| `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 登录与下载、Epic 下载、淘宝 IP | 未引用（自用） |
 | `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
 | `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
