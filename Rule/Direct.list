@@ -88,15 +88,13 @@ IP-CIDR,205.196.6.0/24,no-resolve
 IP-CIDR,208.64.200.0/22,no-resolve
 IP-CIDR,208.78.164.0/22,no-resolve
 
-# Epic 下载 CDN
-DOMAIN,download2.epicgames.com
-DOMAIN,download3.epicgames.com
-DOMAIN,download4.epicgames.com
-DOMAIN,fastly-download.epicgames.com
+# Epic（商店、登录、下载 CDN）
 DOMAIN,epicgames-download1.akamaized.net
 DOMAIN,egdownload.fastly-edge.com
-DOMAIN-SUFFIX,download.epicgames.com
+DOMAIN-SUFFIX,epicgames.com
+DOMAIN-SUFFIX,epicgames.dev
 DOMAIN-SUFFIX,epicgamescdn.com
+DOMAIN-SUFFIX,unrealengine.com
 
 # 淘宝
 IP-CIDR,155.102.0.0/16,no-resolve

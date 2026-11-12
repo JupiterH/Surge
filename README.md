@@ -60,12 +60,11 @@
 
 | 文件 | 用途 | 通用配置中的策略 |
 |---|---|---|
-| `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 下载、淘宝 IP | 未引用（自用） |
+| `Direct.list` | 直连修正：个人域名、VPS 服务商官网、直播源、Steam 登录与下载、Epic、淘宝 IP | 未引用（自用） |
 | `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
 | `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
 | `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，mihomo 须为 1.19 及以上版本 | 拦截（REJECT），须置于 `domestic.conf` 之前 |
-| `Proxy.list` | 代理修正：GitHub、Bing、Google CN 等 | 未引用（自用） |
 | `japan.list` | MetaTube 刮削站点 | 未引用（自用） |
 
 规则统一采用 `类型,值` 的格式，逗号后不留空格。修改规则集时，应同步更新文件开头的 `# UPDATED:` 日期。
