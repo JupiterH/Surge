@@ -2,8 +2,8 @@
 #!desc = 𝒀𝒐𝒖𝒕𝒖𝒃𝒆去广告，解锁后台播放、画中画、4倍速、跳过精彩部分等\n合并自 Maasea 与 gholts/YouTube Enhance（Apache-2.0）
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!requirement = SYSTEM = 'iOS'
-#!arguments = 屏蔽上传按钮:true,屏蔽Shorts按钮:false,自动高画质:true,屏蔽小游戏:true,屏蔽竖屏直播:false,跳过精彩部分:true,屏蔽商店卡片:true,屏蔽AI功能:true,OnTheGo控件:true,翻译模式:false,屏蔽选段按钮:true,字幕翻译语言:off,歌词翻译语言:off,启用调试模式:false
-#!arguments-desc = - 开关参数：[true, false]\n- 翻译参数：[语言代码, off]\n\n【翻译模式】\nfalse：使用 gholts 增强脚本（默认）\ntrue：使用 Maasea 原版脚本，支持字幕/歌词翻译、屏蔽选段按钮、调试模式\n\n翻译模式开启时，以下首页/界面选项不生效：屏蔽小游戏、屏蔽竖屏直播、屏蔽商店卡片、屏蔽AI功能；后台播放、倍速等解锁仍然有效\n\n语言代码遵循 Google Translate Languages Codes，填 off 关闭翻译
+#!arguments = 屏蔽上传按钮:true,屏蔽Shorts按钮:false,自动高画质:true,屏蔽小游戏:true,屏蔽竖屏直播:false,跳过精彩部分:true,屏蔽商店卡片:true,屏蔽AI功能:true,OnTheGo控件:true,屏蔽选段按钮:true,字幕翻译语言:off,歌词翻译语言:off,启用调试模式:false
+#!arguments-desc = - 开关参数：[true, false]\n- 翻译参数：[语言代码, off]\n\n1. 语言代码遵循 Google Translate Languages Codes，填 off 关闭翻译\n2. 屏蔽小游戏、屏蔽竖屏直播、跳过精彩部分、屏蔽商店卡片、屏蔽AI功能、OnTheGo控件 由 gholts 的播放流脚本处理，主响应改用 Maasea 后效果可能不完整\n3. 开启调试模式用于输出更多日志
 
 
 # > Note
@@ -21,9 +21,8 @@ AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
 # 广告请求
 youtube.ad-break = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\/ad_break(?:\?.*)?$,engine=jsc,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/YouTube/gholts-request.js
 
-# 主响应脚本（二选一，由「翻译模式」决定）
-youtube.enhance.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(?:navigation\/resolve_url|browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)(?:\?.*)?$,requires-body=1,max-size=-1,binary-body-mode=1,engine=webview,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/YouTube/gholts-response.js,argument="{"blockUpload":{{{屏蔽上传按钮}}},"blockShorts":{{{屏蔽Shorts按钮}}},"blockGames":{{{屏蔽小游戏}}},"blockVerticalLive":{{{屏蔽竖屏直播}}},"jumpAhead":{{{跳过精彩部分}}},"autoHd":{{{自动高画质}}},"blockStore":{{{屏蔽商店卡片}}},"blockAi":{{{屏蔽AI功能}}},"onTheGo":{{{OnTheGo控件}}}}" #!REQUIREMENT "'{{{翻译模式}}}' == 'false'"
-youtube.maasea.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/YouTube/maasea-youtube.response.js,argument="{"lyricLang":"{{{歌词翻译语言}}}","captionLang":"{{{字幕翻译语言}}}","blockUpload":{{{屏蔽上传按钮}}},"blockImmersive":{{{屏蔽选段按钮}}},"blockShorts":{{{屏蔽Shorts按钮}}},"debug":{{{启用调试模式}}}}" #!REQUIREMENT "'{{{翻译模式}}}' == 'true'"
+# 主响应脚本（Maasea）
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/YouTube/maasea-youtube.response.js,argument="{"lyricLang":"{{{歌词翻译语言}}}","captionLang":"{{{字幕翻译语言}}}","blockUpload":{{{屏蔽上传按钮}}},"blockImmersive":{{{屏蔽选段按钮}}},"blockShorts":{{{屏蔽Shorts按钮}}},"debug":{{{启用调试模式}}}}"
 
 # Premium 功能解锁（后台播放、画中画、倍速等）
 youtube.enhance.key = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(?:config|log_event)(?:\?.*)?$,requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/YouTube/gholts-key.js

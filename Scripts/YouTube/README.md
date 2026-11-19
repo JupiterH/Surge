@@ -5,7 +5,6 @@
 | 文件 | 来源 |
 | --- | --- |
 | `maasea-youtube.response.js` | [Maasea/sgmodule](https://github.com/Maasea/sgmodule) `Script/Youtube/youtube.response.js` |
-| `gholts-response.js` | [gholts/surge](https://github.com/gholts/surge) `scripts/youtube/response.js` |
 | `gholts-request.js` | [gholts/surge](https://github.com/gholts/surge) `scripts/youtube/request.js` |
 | `gholts-key.js` | [gholts/surge](https://github.com/gholts/surge) `scripts/youtube/key.js` |
 | `gholts-ump.js` | [gholts/surge](https://github.com/gholts/surge) `scripts/youtube/ump.js` |
