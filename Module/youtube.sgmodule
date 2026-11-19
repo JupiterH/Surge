@@ -1,7 +1,6 @@
 #!name = 𝒀𝒐𝒖𝒕𝒖𝒃𝒆
 #!desc = 𝒀𝒐𝒖𝒕𝒖𝒃𝒆去广告，解锁后台播放、画中画、4倍速、跳过精彩部分等\n合并自 Maasea 与 gholts/YouTube Enhance（Apache-2.0）
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!requirement = SYSTEM = 'iOS'
 #!arguments = 屏蔽上传按钮:true,屏蔽Shorts按钮:false,自动高画质:true,屏蔽小游戏:true,屏蔽竖屏直播:false,跳过精彩部分:true,屏蔽商店卡片:true,屏蔽AI功能:true,OnTheGo控件:true,翻译模式:false,屏蔽选段按钮:true,字幕翻译语言:off,歌词翻译语言:off,启用调试模式:false
 #!arguments-desc = - 开关参数：[true, false]\n- 翻译参数：[语言代码, off]\n\n【翻译模式】\nfalse：使用 gholts 增强脚本（默认）\ntrue：使用 Maasea 原版脚本，支持字幕/歌词翻译、屏蔽选段按钮、调试模式\n\n翻译模式开启时，以下首页/界面选项不生效：屏蔽小游戏、屏蔽竖屏直播、屏蔽商店卡片、屏蔽AI功能；后台播放、倍速等解锁仍然有效\n\n语言代码遵循 Google Translate Languages Codes，填 off 关闭翻译
 
