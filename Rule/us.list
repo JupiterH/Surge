@@ -9,13 +9,12 @@ DOMAIN-SUFFIX,claude.com
 DOMAIN-SUFFIX,claudeusercontent.com
 DOMAIN-SUFFIX,servd-anthropic-website.b-cdn.net
 DOMAIN-SUFFIX,usefathom.com
+# Claude 遥测：Datadog 日志/前端监控、Sentry 错误上报（Anthropic 专属组织）
 DOMAIN,http-intake.logs.us5.datadoghq.com
-# Claude 桌面端与 Claude Code 进程的全部流量
+DOMAIN,browser-intake-us5-datadoghq.com
+DOMAIN,o1158394.ingest.us.sentry.io
+# Claude 桌面端主进程与 Claude Code 进程
 PROCESS-NAME,Claude
-PROCESS-NAME,Claude Helper
-PROCESS-NAME,Claude Helper (Renderer)
-PROCESS-NAME,Claude Helper (GPU)
-PROCESS-NAME,Claude Helper (Plugin)
 PROCESS-NAME,claude
 
 # Muse AI
