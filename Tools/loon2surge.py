@@ -15,7 +15,7 @@
 - 各段里不属于任何插件的 "# 分组"（手写内容）原样保留；没有分组注释的内容视为转换结果，每次重新生成。
 - [MITM] 只增不删：保留原有域名，补上插件里新增的域名；插件漏掉的域名写在配置的 extra_hosts 里。
   插件已经去掉的域名不会自动删除，用 --stale-hosts 查看后手动清理。
-- 配置里的 fixes 在每次转换后做文字替换，rule_suffix 给域名类拦截规则加后缀。
+- 配置里的 fixes 在每次转换后做文字替换，drop 删除包含指定文字的整行，drop_hosts 从 [MITM] 里排除指定域名，rule_suffix 给域名类拦截规则加后缀。
 - 配置里的 mirror：指向 sources 源站的脚本和 jq 文件改用本仓库 Scripts/ 里的镜像，
   每次运行时从 Loon / Surge 的本地缓存（按地址 md5 命名）同步最新内容，与模块一起提交。
 - 遇到不认识的 Loon 写法会报错退出，不会写入或推送任何文件。
@@ -353,7 +353,7 @@ def set_sources(header, lines):
 
 
 def apply_tweaks(entry, sections):
-    """配置里的手动修正：fixes 做文字替换，rule_suffix 给域名类拦截规则加后缀。"""
+    """配置里的手动修正：fixes 做文字替换，drop 删整行，rule_suffix 给域名类拦截规则加后缀。"""
     for fix in entry.get('fixes', []):
         hit = False
         for name, lines in sections.items():
@@ -363,6 +363,14 @@ def apply_tweaks(entry, sections):
                     hit = True
         if not hit:
             print(f'提示：「{entry["plugin"]}」里已经没有要替换的内容：{fix["from"]}（插件可能已修正，可以从配置里删掉这条）')
+    for text in entry.get('drop', []):
+        hit = False
+        for name, lines in sections.items():
+            kept = [l for l in lines if text not in l]
+            hit = hit or len(kept) != len(lines)
+            lines[:] = kept
+        if not hit:
+            print(f'提示：「{entry["plugin"]}」里已经没有要删除的内容：{text}（插件可能已修正，可以从配置里删掉这条）')
     suffix = entry.get('rule_suffix')
     if suffix:
         sections['[Rule]'] = [l + suffix if re.fullmatch(r'(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD),[^,]+,REJECT(-DROP)?', l) else l
@@ -436,7 +444,7 @@ def build_module(path, entries, plugins, today, mirror=None):
         sections, hosts, args, meta = convert_plugin(e['plugin'], text, prefix)
         apply_tweaks(e, sections)
         apply_mirror(sections, mirror)
-        hosts = dedupe(hosts + e.get('extra_hosts', []))
+        hosts = [h for h in dedupe(hosts + e.get('extra_hosts', [])) if h not in e.get('drop_hosts', [])]
         converted.append((e.get('label'), (sections, hosts, args, meta)))
         sources.append(source_line(e, meta, url))
     unlabeled = [lab for lab, _ in converted if lab is None]

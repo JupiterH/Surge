@@ -150,6 +150,8 @@ python3 Tools/loon2surge.py [--dry-run | --stale-hosts]
 | `label` | 分组名称。同一模块合并多个插件时必填，转换结果写入各段的 `# label` 分组之下 |
 | `prefix` | 脚本名称前缀，用于避免不同模块间的脚本重名；缺省时取 `label` 的值 |
 | `fixes` | 转换完成后执行的文本替换，用于修正插件中的错误，或将脚本地址替换为本仓库 `Scripts/` 中的镜像 |
+| `drop` | 转换完成后删除包含指定文字的整行，用于去掉插件中有问题的规则或改写 |
+| `drop_hosts` | 从 `[MITM]` 中排除的域名，例如存在证书锁定、解密后会导致应用异常的域名 |
 | `rule_suffix` | 附加于域名类拦截规则末尾的参数，例如 `,extended-matching,pre-matching` |
 | `extra_hosts` | 插件未声明但实际需要的 MITM 域名 |
 

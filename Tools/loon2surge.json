@@ -14,7 +14,7 @@
     "Module/pdd.sgmodule": [{"plugin": "拼多多去广告", "prefix": "拼多多"}],
     "Module/xiaoheihe.sgmodule": [{"plugin": "小黑盒去广告"}],
     "Module/weibo.sgmodule": [{"plugin": "微博去广告", "prefix": "微博"}],
-    "Module/didi.sgmodule": [{"plugin": "滴滴去广告"}],
+    "Module/didi.sgmodule": [{"plugin": "滴滴去广告", "drop": ["poi\\.map\\.xiaojukeji\\.com"], "drop_hosts": ["poi.map.xiaojukeji.com"]}],
     "Module/gaode.sgmodule": [
       {"plugin": "高德地图去广告", "fixes": [
         {"from": ".data.custom_consultdata.widget_guide", "to": ".data.custom_consult, .data.widget_guide"}
@@ -24,7 +24,7 @@
     "Module/keep.sgmodule": [{"plugin": "Keep去广告"}],
     "Module/weixin.sgmodule": [{"plugin": "微信小程序去广告", "prefix": "小程序"}],
     "Module/baidu.sgmodule": [
-      {"plugin": "百度贴吧去广告", "label": "贴吧"},
+      {"plugin": "百度贴吧去广告", "label": "贴吧", "drop": ["DOMAIN,180.76.76.200,"]},
       {"plugin": "百度网盘去广告", "label": "网盘"}
     ],
     "Module/ads.sgmodule": [
