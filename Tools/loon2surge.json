@@ -27,9 +27,6 @@
       {"plugin": "百度贴吧去广告", "label": "贴吧"},
       {"plugin": "百度网盘去广告", "label": "网盘"}
     ],
-    "Module/read.sgmodule": [
-      {"plugin": "番茄小说去广告", "label": "番茄小说", "rule_suffix": ",extended-matching,pre-matching"}
-    ],
     "Module/ads.sgmodule": [
       {"plugin": "两步路户外助手去广告", "label": "两步路"},
       {"plugin": "小米音箱去广告", "label": "小米音箱"},

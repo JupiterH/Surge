@@ -1,9 +1,11 @@
 #!name = 𝑹𝒆𝒂𝒅𝒊𝒏𝒈
 #!desc = 阅读去广告
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
-#!logtime = 2026-11-11
+#!logtime = 2026-11-24
 # 包含 快看漫画，七猫小说，微信阅读，番茄，纵横
-# 来源（番茄小说）：番茄小说去广告 by 可莉🅥 https://kelee.one/Tool/Loon/Lpx/DragonRead_remove_ads.lpx
+# 来源（番茄小说）：番茄小说去广告 V1.26 by 许舟 https://son.zhiaon.top/m/fanqie.sgmodule
+# 番茄的 snssdk 心跳/登录、bytegecko 资源等域名按原作者实测改为 DIRECT（硬拦截会触发密集重试）；短剧/直播关键词拦截须在 bytegecko DIRECT 之前
+# 未采用原模块对 api5-normal-*.fqnovel.com、reading/ichannel.snssdk.com 的 MITM：没有改写用到它们，且番茄有证书固定
 
 [Rule]
 # 快看漫画
@@ -17,40 +19,81 @@ DOMAIN,cdn-new-ad.wtzw.com,REJECT,extended-matching,pre-matching
 DOMAIN-SUFFIX,gdt.qq.com,REJECT,extended-matching,pre-matching
 
 # 番茄小说
-DOMAIN,zlink.ugsdk.cn,REJECT,extended-matching,pre-matching
-DOMAIN,mon.toutiaocloud.net,REJECT,extended-matching,pre-matching
-DOMAIN,lf-normal-gr-sourcecdn.bytegecko.com,REJECT,extended-matching,pre-matching
-DOMAIN,lf-webcast-gr-sourcecdn.bytegecko.com,REJECT,extended-matching,pre-matching
-DOMAIN,p3-developer.bytemaimg.com,REJECT,extended-matching,pre-matching
-DOMAIN,webcast-open.douyin.com,REJECT,extended-matching,pre-matching
-DOMAIN,p11-webcast-sign.douyinpic.com,REJECT,extended-matching,pre-matching
-DOMAIN,p3-webcast-sign.douyinpic.com,REJECT,extended-matching,pre-matching
-DOMAIN,log3-applog.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,log5-applog.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,mon11-misc-lq.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,mon11-misc.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,mon3-misc.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,rtlog3-applog.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,rtlog5-applog.fqnovel.com,REJECT,extended-matching,pre-matching
-DOMAIN,effect.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,i.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,is-lq.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,is.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,security.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,vas.snssdk.com,REJECT,extended-matching,pre-matching
-DOMAIN,mon.toutiaocloud.com,REJECT,extended-matching,pre-matching
-DOMAIN,abtest3-misc.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,ads3-normal.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,ads5-normal.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,feedback-c.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,gecko3.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,gecko5.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,ma.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,minigame3-normal.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,minigame5-normal.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,mssdk.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,timon.zijieapi.com,REJECT,extended-matching,pre-matching
-DOMAIN,vcs.zijieapi.com,REJECT,extended-matching,pre-matching
+DOMAIN,frontier-aweme.snssdk.com,REJECT,extended-matching
+DOMAIN,mon.snssdk.com,REJECT,extended-matching
+DOMAIN,toblog.ctobsnssdk.com,REJECT,extended-matching
+DOMAIN,mssdk.zijieapi.com,REJECT,extended-matching
+DOMAIN,aweme.snssdk.com,DIRECT,extended-matching
+DOMAIN,i.snssdk.com,DIRECT,extended-matching
+DOMAIN,is.snssdk.com,DIRECT,extended-matching
+DOMAIN,vas.snssdk.com,DIRECT,extended-matching
+DOMAIN,effect.snssdk.com,DIRECT,extended-matching
+DOMAIN,gurd.snssdk.com,DIRECT,extended-matching
+DOMAIN,security.snssdk.com,DIRECT,extended-matching
+DOMAIN,reading.snssdk.com,DIRECT,extended-matching
+DOMAIN,ichannel.snssdk.com,DIRECT,extended-matching
+DOMAIN-KEYWORD,applog-lf.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,applog-hl.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,applog-lq.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,misc-lf.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,misc-hl.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,misc-lq.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,applog.zijieapi.com,REJECT,extended-matching
+DOMAIN-KEYWORD,-misc-lf.amemv.com,REJECT,extended-matching
+DOMAIN-KEYWORD,applog-lf.amemv.com,REJECT,extended-matching
+DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT,extended-matching
+DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT,extended-matching
+DOMAIN-SUFFIX,toutiaocloud.com,REJECT,extended-matching
+DOMAIN-SUFFIX,toutiaocloud.net,REJECT,extended-matching
+DOMAIN-KEYWORD,webcast-gr-sourcecdn,REJECT,extended-matching
+DOMAIN-KEYWORD,gr-sourcecdn,REJECT,extended-matching
+DOMAIN-KEYWORD,dy-sourcecdn,REJECT,extended-matching
+DOMAIN-KEYWORD,webcastcdn-tos,REJECT,extended-matching
+DOMAIN-KEYWORD,webcast-cdn-tos,REJECT,extended-matching
+DOMAIN-SUFFIX,bytegecko.com,DIRECT,extended-matching
+DOMAIN,p6-ad-sign.byteimg.com,REJECT-DROP,extended-matching
+DOMAIN,p9-ad-sign.byteimg.com,REJECT-DROP,extended-matching
+DOMAIN,zlink.ugsdk.cn,REJECT-DROP,extended-matching
+DOMAIN,dig.bdurl.net,REJECT-DROP,extended-matching
+DOMAIN,activity-ag.awemeughun.com,REJECT,extended-matching
+DOMAIN-KEYWORD,-ad.ecombdimg.com,REJECT,extended-matching
+DOMAIN,ads5-normal-hl.zijieapi.com,REJECT,extended-matching
+DOMAIN,ads3-normal-hl.zijieapi.com,REJECT,extended-matching
+DOMAIN,ads5-normal.zijieapi.com,REJECT,extended-matching
+DOMAIN,ads3-normal.zijieapi.com,REJECT,extended-matching
+DOMAIN,abtest3-misc.zijieapi.com,REJECT,extended-matching
+DOMAIN,abtest3-misc-hl.zijieapi.com,REJECT,extended-matching
+DOMAIN,abtest3-misc-lf.zijieapi.com,REJECT,extended-matching
+DOMAIN-KEYWORD,luckycat.byteimg.com,REJECT,extended-matching
+DOMAIN-KEYWORD,mgsdk-sign.byteimg.com,REJECT,extended-matching
+DOMAIN,mssdk3-normal-lf.zijieapi.com,REJECT-DROP,extended-matching
+DOMAIN,ads5-normal-lf.zijieapi.com,REJECT-DROP,extended-matching
+DOMAIN,ads3-normal-lf.zijieapi.com,REJECT-DROP,extended-matching
+DOMAIN,ma.zijieapi.com,DIRECT,extended-matching
+DOMAIN,imapi5-oth-lf.zijieapi.com,DIRECT,extended-matching
+DOMAIN,gecko5-hj.zijieapi.com,DIRECT,extended-matching
+DOMAIN-SUFFIX,ad.toutiao.com,REJECT,extended-matching
+DOMAIN-SUFFIX,ad.zijieapi.com,REJECT,extended-matching
+DOMAIN-SUFFIX,ads.zijieapi.com,REJECT,extended-matching
+DOMAIN-SUFFIX,mon.zijieapi.com,REJECT,extended-matching
+DOMAIN-SUFFIX,log-api.pangolin-sdk-toutiao.com,REJECT,extended-matching
+DOMAIN-SUFFIX,log-api.pangolin-sdk-toutiao-b.com,REJECT,extended-matching
+DOMAIN-SUFFIX,gromore.pangolin-sdk-toutiao.com,REJECT,extended-matching
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao1.com,REJECT,extended-matching
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao-b.com,REJECT,extended-matching
+DOMAIN-SUFFIX,pangolin.snssdk.com,REJECT,extended-matching
+DOMAIN-SUFFIX,jdjr.jd.com,REJECT,extended-matching
+DOMAIN-SUFFIX,jr.jd.com,REJECT,extended-matching
+DOMAIN-SUFFIX,ccc-x.jd.com,REJECT,extended-matching
+DOMAIN-SUFFIX,knicks.jd.com,REJECT,extended-matching
+DOMAIN-SUFFIX,p3-ad-sign.byteimg.com,REJECT,extended-matching
+DOMAIN,frontier100-toutiao-lf.fqnovel.com,REJECT,extended-matching
+DOMAIN-KEYWORD,-open.douyin.com,REJECT,extended-matching
+DOMAIN-KEYWORD,-open-lf.douyin.com,REJECT,extended-matching
+DOMAIN-SUFFIX,yingt.fun,REJECT,extended-matching
+DOMAIN-SUFFIX,ndcpp.com,REJECT,extended-matching
+DOMAIN-WILDCARD,lf-fe*.fqnovelstatic.com,REJECT,pre-matching,extended-matching
+USER-AGENT,ttplayer*,REJECT
 
 [Map Local]
 # 纵横
@@ -99,6 +142,21 @@ DOMAIN,vcs.zijieapi.com,REJECT,extended-matching,pre-matching
 WeRead = type=http-response,pattern=https:\/\/i\.weread\.qq\.com\/(book\/(reading[sS]tat|chapterReview)|user\/profile|groups\/readerEntrance|review\/list|mobileSync),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/WeRead/weread.js
 
 [URL Rewrite]
+# 番茄小说
+^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/ - reject
+^https?:\/\/api-access\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/ - reject
+^https?:\/\/.+\.pglstatp-toutiao\.com\/.+\/toutiao\.mp4 - reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/(ad-app-package|ad)\/.+ - reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(obj|img)\/web\.business\.image\/.+ - reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/obj\/ad-pattern\/renderer - reject
+^https?:\/\/.+\.(pglstatp-toutiao|pstatp)\.com\/(ad-app-package|ad)\/.+ - reject
+^https?:\/\/.+\.pstatp\.com\/obj\/mosaic-legacy\/.+\?from\=ad - reject
+^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/track_log\/src\/.+ - reject
+^https?:\/\/gurd\.snssdk\.com\/src\/server\/v3\/package - reject
+^https?:\/\/.+\.snssdk\.com\/video\/play\/1\/toutiao\/.+\/mp4 - reject
+^https?:\/\/.+\.snssdk\.com\/api\/ad\/.+ - reject
+^https?:\/\/.+?\.snssdk\.com\/motor\/operation\/activity\/display\/config\/V2\/ - reject
+
 # 七猫小说
 ^https:\/\/sf3-fe-tos\.pglstatp-toutiao\.com\/obj\/ad-pattern\/ - reject
 ^https:\/\/api-cfg\.wtzw\.com\/v\d\/reward\/ - reject
@@ -113,4 +171,4 @@ http-response-jq ^https:\/\/xiaoshuo\.wtzw\.com\/api\/v\d\/user\/my-center\? 'de
 http-response-jq ^https:\/\/xiaoshuo\.wtzw\.com\/api\/v\d\/user\/my-center\? 'delpaths([["data","func_area",2]])'
 
 [MITM]
-hostname = %APPEND% api?.zongheng.com, i.weread.qq.com, api.kkmh.com, cdn-api.kkmh.com, social.kkmh.com, cdn-social.kkmh.com, h5.kuaikanmanhua.com, cdn-h5.kuaikanmanhua.com, pay.kkmh.com, cdn-pay.kkmh.com, shop.kkmh.com, cdn-shop.kkmh.com, topic.kkmh.com, cdn-topic.kkmh.com, api-cfg.wtzw.com, sf3-fe-tos.pglstatp-toutiao.com, api-bc.wtzw.com, api-gw.wtzw.com, cdn.wtzw.com
+hostname = %APPEND% api?.zongheng.com, i.weread.qq.com, api.kkmh.com, cdn-api.kkmh.com, social.kkmh.com, cdn-social.kkmh.com, h5.kuaikanmanhua.com, cdn-h5.kuaikanmanhua.com, pay.kkmh.com, cdn-pay.kkmh.com, shop.kkmh.com, cdn-shop.kkmh.com, topic.kkmh.com, cdn-topic.kkmh.com, api-cfg.wtzw.com, sf3-fe-tos.pglstatp-toutiao.com, api-bc.wtzw.com, api-gw.wtzw.com, cdn.wtzw.com, *.pangolin-sdk-toutiao.com, *.pglstatp-toutiao.com, *.pstatp.com
