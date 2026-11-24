@@ -60,8 +60,7 @@
 
 | 文件 | 用途 | 通用配置中的策略 |
 |---|---|---|
-| `ai.list` | 补充 skk `ai.conf` 未收录的境外 AI 服务（源自 MagicRule GlobalAI，已去除国内 AI 服务及通用基础设施域名） | 🤖 AI，须置于 skk `ai.conf` 之后 |
-| `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
+| `ai.list` | 境外 AI 服务，合并自三处：自用的 Claude、Muse AI、Ultra Mobile（原 `us.list`），Sukka's Ruleset 的 `ai.conf`（快照），以及 MagicRule GlobalAI 中前两者未收录的部分（已去除国内 AI 服务及通用基础设施域名）。skk 部分不随源站自动更新，需手动重新合并 | 🤖 AI |
 | `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
 | `Reject.list` | 拦截修正：芒果 TV 的 P2P 信令等，用于避免其持续占用上行带宽。该文件使用了 `DOMAIN-WILDCARD` 规则类型，mihomo 须为 1.19 及以上版本 | 拦截（REJECT），须置于 `domestic.conf` 之前 |
