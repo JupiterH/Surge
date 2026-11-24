@@ -1,28 +1,16 @@
 #!name = 𝑺𝒊𝒈𝒏 𝑰𝒏
-#!desc = 签到脚本合集
+#!desc = 签到合集
 #!category = 𝑭𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒂𝒍 𝑴𝒐𝒅𝒖𝒍𝒆𝒔
 #!date = 2026-11-24
 #!arguments = ikuuu_cookie:-,ikuuu_capture:true,ikuuu_notify:true,ikuuu_cron:0 8 * * *,ikuuu_enabled:true,ikuuu_node:-,ikuuu_site:auto
 #!arguments-desc = 以下均为 iKuuu 签到的参数。\n\nikuuu_cookie：填 - 时使用自动抓取的 Cookie；也可直接粘贴 Cookie 整行。\nikuuu_capture：true 时在 Safari 登录并打开用户中心即自动保存 Cookie；false 停止抓取（已保存的仍可用）。\nikuuu_notify：签到结果是否发通知，true 或 false。\nikuuu_cron：每日签到时间，五段 cron（分 时 日 月 周），默认 0 8 * * * 即每天 08:00。另有每 10 分钟的本地补签检查，已签到或等待登录时不发请求。\nikuuu_enabled：是否启用定时签到，true 或 false。\nikuuu_node：签到请求使用的策略，填 - 时跟随规则，也可填 DIRECT 或策略组名。\nikuuu_site：签到站点，auto 时使用抓取 Cookie 时的域名（未抓取过则用 ikuuu.org），也可填 ikuuu.org / ikuuu.pw / ikuuu.me。
 
 [Script]
-# 阿里云盘签到（要重新抓 cookie 时：取消下一行的注释，并把 auth.alipan.com 加回 [MITM]）
-#阿里云盘签到cookie = requires-body=1,type=http-response,pattern=https:\/\/auth.(aliyundrive|alipan).com\/v2\/account\/token,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
-阿里云盘签到 = type=cron,cronexp="0 10 0 * * ?",wake-system=1,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
-
 # iKuuu 签到（来源：Yjwj205/loon-modules，Surge 移植 by 许舟 https://son.zhiaon.top/m/ikuuu.sgmodule，脚本 V1.3 镜像于本仓库 Scripts/iKuuu）
 # 在 Safari 登录 ikuuu 并打开用户中心即可抓取 Cookie，Cookie 只保存在 Surge 本地存储
 iKuuu Cookie 抓取 = type=http-request,pattern=^https:\/\/(?:[a-z0-9-]+\.)*ikuuu\.(?:org|pw|me)\/user(?:[/?]|$),script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/iKuuu/ikuuu-cookie.js,script-update-interval=86400,argument="{{{ikuuu_capture}}}|{{{ikuuu_notify}}}",timeout=10
 iKuuu 定时签到 = type=cron,cronexp="{{{ikuuu_cron}}}",script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/iKuuu/ikuuu-checkin.js,script-update-interval=86400,argument="{{{ikuuu_cookie}}}|{{{ikuuu_notify}}}|{{{ikuuu_node}}}|{{{ikuuu_enabled}}}|{{{ikuuu_site}}}",timeout=60,wake-system=1
 iKuuu 补签检查 = type=cron,cronexp="*/10 * * * *",script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/iKuuu/ikuuu-checkin.js,script-update-interval=86400,argument="{{{ikuuu_cookie}}}|{{{ikuuu_notify}}}|{{{ikuuu_node}}}|{{{ikuuu_enabled}}}|{{{ikuuu_site}}}|loop|{{{ikuuu_cron}}}",timeout=60
-
-# 达美乐签到（已停用。脚本来自 Sliverkiss，直接引用上游；启用时把 game.dominos.com.cn 加回 [MITM]）
-# 达美乐披萨获取token = type=http-request, pattern=^https:\/\/game\.dominos\.com\.cn\/.+\/game\/gameDone, script-path=https://gist.githubusercontent.com/Sliverkiss/6b4da0d367d13790a9fd1d928c82bdf8/raw/dlm.js, requires-body=true, timeout=10
-# 达美乐披萨 = type=cron, cronexp="30 10 * * *", script-path=https://gist.githubusercontent.com/Sliverkiss/6b4da0d367d13790a9fd1d928c82bdf8/raw/dlm.js, timeout=300
-
-# Bing积分（已停用。启用时把 rewards.bing.com 加回 [MITM]）
-#Bing积分cookie = requires-body=0,type=http-request,pattern=https:\/\/rewards\.bing\.com,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/bing/bingPoint.js
-#Bing积分 = type=cron,cronexp="0 10 0 * * ?",wake-system=1,script-path=https://raw.githubusercontent.com/lowking/Scripts/master/bing/bingPoint.js
 
 [MITM]
 # iKuuu 抓 Cookie 需要解密；其余抓 cookie / token 时按上面的说明把对应域名加回来：auth.alipan.com, game.dominos.com.cn, rewards.bing.com
