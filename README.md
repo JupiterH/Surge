@@ -60,6 +60,7 @@
 
 | 文件 | 用途 | 通用配置中的策略 |
 |---|---|---|
+| `ai.list` | 补充 skk `ai.conf` 未收录的境外 AI 服务（源自 MagicRule GlobalAI，已去除国内 AI 服务及通用基础设施域名） | 🤖 AI，须置于 skk `ai.conf` 之后 |
 | `us.list` | 须经美国节点访问的服务（Claude、Muse AI、Ultra Mobile） | 未引用（自用） |
 | `adobe.list` | Adobe 系列产品（源自 blackmatrix7，并以 v2fly/domain-list-community 补充） | 🅰️ Adobe |
 | `paypal.list` | PayPal（源自 blackmatrix7） | 💳 PayPal |
