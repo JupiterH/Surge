@@ -13,5 +13,5 @@ iKuuu 定时签到 = type=cron,cronexp="{{{ikuuu_cron}}}",script-path=https://ra
 iKuuu 补签检查 = type=cron,cronexp="*/10 * * * *",script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/iKuuu/ikuuu-checkin.js,script-update-interval=86400,argument="{{{ikuuu_cookie}}}|{{{ikuuu_notify}}}|{{{ikuuu_node}}}|{{{ikuuu_enabled}}}|{{{ikuuu_site}}}|loop|{{{ikuuu_cron}}}",timeout=60
 
 [MITM]
-# iKuuu 抓 Cookie 需要解密；其余抓 cookie / token 时按上面的说明把对应域名加回来：auth.alipan.com, game.dominos.com.cn, rewards.bing.com
+# iKuuu 抓 Cookie 需要解密
 hostname = %APPEND% ikuuu.org, *.ikuuu.org, ikuuu.pw, *.ikuuu.pw, ikuuu.me, *.ikuuu.me
