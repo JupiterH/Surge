@@ -1,23 +1,11 @@
 #!name = 𝑹𝒆𝒂𝒅𝒊𝒏𝒈
-#!desc = 阅读去广告
+#!desc = 阅读去广告（目前仅番茄小说）
 #!category = 𝑨𝒏𝒕𝒊-𝑨𝑫
 #!logtime = 2026-11-24
-# 包含 快看漫画，七猫小说，微信阅读，番茄，纵横
 # 来源（番茄小说）：番茄小说去广告 V1.26 by 许舟 https://son.zhiaon.top/m/fanqie.sgmodule
 # 番茄的 snssdk 心跳/登录、bytegecko 资源等域名按原作者实测改为 DIRECT（硬拦截会触发密集重试）；短剧/直播关键词拦截须在 bytegecko DIRECT 之前
-# 未采用原模块对 api5-normal-*.fqnovel.com、reading/ichannel.snssdk.com 的 MITM：没有改写用到它们，且番茄有证书固定
 
 [Rule]
-# 快看漫画
-DOMAIN,ad.v3mh.com,REJECT,extended-matching,pre-matching
-DOMAIN,ipv6.kkmh.com,REJECT,extended-matching,pre-matching
-DOMAIN,ipv4.kkmh.com,REJECT,extended-matching,pre-matching
-
-# 七猫小说
-DOMAIN,cdn-ad.wtzw.com,REJECT,extended-matching,pre-matching
-DOMAIN,cdn-new-ad.wtzw.com,REJECT,extended-matching,pre-matching
-DOMAIN-SUFFIX,gdt.qq.com,REJECT,extended-matching,pre-matching
-
 # 番茄小说
 DOMAIN,frontier-aweme.snssdk.com,REJECT,extended-matching
 DOMAIN,mon.snssdk.com,REJECT,extended-matching
@@ -95,52 +83,6 @@ DOMAIN-SUFFIX,ndcpp.com,REJECT,extended-matching
 DOMAIN-WILDCARD,lf-fe*.fqnovelstatic.com,REJECT,pre-matching,extended-matching
 USER-AGENT,ttplayer*,REJECT
 
-[Map Local]
-# 纵横
-^https:\/\/api2\.zongheng\.com\/api\/giftBag\/bindingBag$ data-type=text data="{}" status-code=200
-
-# 快看漫画
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/ad\/ data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?h5\.kuaikanmanhua\.com\/user\/scene\/api\/new_user\/sign_in\/list data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/business\/activities\/get data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/business\/mine\/business_config data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?topic\.kkmh\.com\/gamecard\/v\d\/activityModule\/userSignInInfo\?activitySignInConfigId data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?topic\.kkmh\.com\/gamecard\/v\d\/activityModule\/fetchButtonInfo\?buttonConfigId data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?topic\.kkmh\.com\/gamecard\/v\d\/activityText\/getUserActivityTextInfo\?activityTextConfigId data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?pay\.kkmh\.com\/v\d\/kb\/comic_page_banner\/detail data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/business\/fake_push\/info data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?shop\.kkmh\.com\/mbff\/popup_administration\/page_management_popup_administration$ data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?pay\.kkmh\.com\/v\d\/vip\/banner_tip_list data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?pay\.kkmh\.com\/v\d\/vip\/charge_tip_list data-type=text data="{}" status-code=200
-^https:\/\/h5\.kuaikanmanhua\.com\/v\d\/kb\/recharge_good\/list_h5 data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?pay\.kkmh\.com\/v\d\/kb\/wallet data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/checkin\/api\/new_user\/tab_info$ data-type=text data="{}" status-code=200
-^https:\/\/h5\.kuaikanmanhua\.com\/game-h5\/new-user-welfare\/index\.html data-type=text data=" " status-code=200
-^https:\/\/(cdn-)?pay\.kkmh\.com\/v\d\/vip\/platform_base\/popups_display$ data-type=text data="{}" status-code=200
-^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/checkin\/task_center\/get_by_task_type data-type=text data="{}" status-code=200
-
-# 七猫小说
-^https:\/\/api-cfg\.wtzw\.com\/v\d\/splash\/ data-type=text data="{}" status-code=200
-^https:\/\/api-bc\.wtzw\.com\/api\/v4\/search\/dispose data-type=text data="{}" status-code=200
-^https:\/\/api-bc\.wtzw\.com\/api\/v\d\/book-store\/config data-type=text data="{}" status-code=200
-^https:\/\/api-bc\.wtzw\.com\/api\/v\d\/book-store\/push-book data-type=text data="{}" status-code=200
-^https:\/\/api-bc\.wtzw\.com\/api\/v\d\/operation data-type=text data="{}" status-code=200
-^https:\/\/api-gw\.wtzw\.com\/welf\/app\/v\d\/task\/red-packet data-type=text data="{}" status-code=200
-^https:\/\/cdn\.wtzw\.com\/bookimg\/free\/api\/v\d\/reader\/reader-copy-paragraph-all\.json data-type=text data="{}" status-code=200
-^https:\/\/api-cfg\.wtzw\.com\/v\d\/offline-adv\/index data-type=text data="{}" status-code=200
-^https:\/\/api-cfg\.wtzw\.com\/v\d\/operation\/index\?ad_personal_switch data-type=text data="{}" status-code=200
-^https:\/\/xiaoshuo\.wtzw\.com\/api\/v\d\/withdraw\/init data-type=text data="{}" status-code=200
-
-[Script]
-# 快看漫画
-修改广告参数 = type=http-response, pattern=^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/ironman\/comic\/recommend, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/KuaiKanComic/KuaiKanComic_remove_ads.js, requires-body=true
-精简首页热门标签 = type=http-response, pattern=^https:\/\/(cdn-)?api\.kkmh\.com\/v\d\/ironman\/discovery_v\d\/tab_list_v\d, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/KuaiKanComic/KuaiKanComic_remove_ads.js, requires-body=true
-精简社区标签 = type=http-response, pattern=^https:\/\/(cdn-)?social\.kkmh\.com\/v\d\/graph\/homepage\/comicVideo\/v\d\/configs, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/KuaiKanComic/KuaiKanComic_remove_ads.js, requires-body=true
-精简社区信息流 = type=http-response, pattern=^https:\/\/(cdn-)?social\.kkmh\.com\/v\d\/graph\/unified_feed$, script-path=https://raw.githubusercontent.com/JupiterH/Surge/main/Scripts/KuaiKanComic/KuaiKanComic_remove_ads.js, requires-body=true
-
-# 微信阅读
-WeRead = type=http-response,pattern=https:\/\/i\.weread\.qq\.com\/(book\/(reading[sS]tat|chapterReview)|user\/profile|groups\/readerEntrance|review\/list|mobileSync),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/WeRead/weread.js
-
 [URL Rewrite]
 # 番茄小说
 ^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/ - reject
@@ -157,18 +99,5 @@ WeRead = type=http-response,pattern=https:\/\/i\.weread\.qq\.com\/(book\/(readin
 ^https?:\/\/.+\.snssdk\.com\/api\/ad\/.+ - reject
 ^https?:\/\/.+?\.snssdk\.com\/motor\/operation\/activity\/display\/config\/V2\/ - reject
 
-# 七猫小说
-^https:\/\/sf3-fe-tos\.pglstatp-toutiao\.com\/obj\/ad-pattern\/ - reject
-^https:\/\/api-cfg\.wtzw\.com\/v\d\/reward\/ - reject
-^https:\/\/api-cfg\.wtzw\.com\/v\d\/adv\/ - reject
-
-# 纵横
-^https:\/\/api1\.zongheng\.com\/iosapi\/system\/startup$ - reject
-
-[Body Rewrite]
-# 七猫小说
-http-response-jq ^https:\/\/xiaoshuo\.wtzw\.com\/api\/v\d\/user\/my-center\? 'delpaths([["data","func_area",1]])'
-http-response-jq ^https:\/\/xiaoshuo\.wtzw\.com\/api\/v\d\/user\/my-center\? 'delpaths([["data","func_area",2]])'
-
 [MITM]
-hostname = %APPEND% api?.zongheng.com, i.weread.qq.com, api.kkmh.com, cdn-api.kkmh.com, social.kkmh.com, cdn-social.kkmh.com, h5.kuaikanmanhua.com, cdn-h5.kuaikanmanhua.com, pay.kkmh.com, cdn-pay.kkmh.com, shop.kkmh.com, cdn-shop.kkmh.com, topic.kkmh.com, cdn-topic.kkmh.com, api-cfg.wtzw.com, sf3-fe-tos.pglstatp-toutiao.com, api-bc.wtzw.com, api-gw.wtzw.com, cdn.wtzw.com, *.pangolin-sdk-toutiao.com, *.pglstatp-toutiao.com, *.pstatp.com
+hostname = %APPEND% api5-normal-lf.fqnovel.com, api5-normal-hl.fqnovel.com, api5-normal-lq.fqnovel.com, api5-normal-sinfonlinec.fqnovel.com, frontier100-toutiao-lf.fqnovel.com, reading.snssdk.com, ichannel.snssdk.com, *.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao.com, *.pglstatp-toutiao.com, *.pstatp.com
