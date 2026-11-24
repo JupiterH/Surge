@@ -75,7 +75,19 @@
 - **手动维护**：`General`、`DNS`、`Signin`、`youtube`，直接编辑文件即可。
 - **由转换工具生成**：其余去广告、HTTPDNS 拦截、天气增强等模块，其来源记录于各文件开头的 `# 来源` 行。此类模块中未归入 `# 分组` 注释的内容会在每次转换时重新生成，不应手动修改；如需追加自定义内容，应写入某一 `# 分组` 之下，或通过 `Tools/loon2surge.json` 进行配置。
 
-`Signin.sgmodule` 目前仅启用阿里云盘签到，其余脚本及 `[MITM]` 域名均已注释。需要重新获取 Cookie 时，请按文件内的说明恢复相应条目。
+`Signin.sgmodule` 目前启用阿里云盘与 iKuuu 签到，其余脚本及对应的 `[MITM]` 域名均已注释。需要重新获取 Cookie 时，请按文件内的说明恢复相应条目。
+
+iKuuu 签到的脚本镜像于 `Scripts/iKuuu/`，参数如下：
+
+| 参数 | 说明 |
+|---|---|
+| `ikuuu_cookie` | 填 `-` 时使用自动抓取的 Cookie；亦可直接填入 Cookie |
+| `ikuuu_capture` | 是否在打开用户中心时自动保存登录 Cookie |
+| `ikuuu_notify` | 是否推送签到结果 |
+| `ikuuu_cron` | 每日签到时间，默认 `0 8 * * *`；另有每 10 分钟一次的本地补签检查 |
+| `ikuuu_enabled` | 是否启用定时签到 |
+| `ikuuu_node` | 签到请求所用策略，填 `-` 时跟随规则 |
+| `ikuuu_site` | 签到站点，`auto` 时沿用抓取 Cookie 时的域名 |
 
 ## 面板
 
