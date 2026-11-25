@@ -225,9 +225,9 @@ function formatUsage(used, quota) {
   return `${a.endsWith(` ${unit}`) ? a.slice(0, -unit.length - 1) : a} / ${b}`;
 }
 
-// 10 格进度条: 用量大于 0 时至少亮 1 格, 用满才亮满 10 格
+// 10 格进度条: 每格代表 10%, 用量进入某一格就点亮这一格 (12% 亮 2 格); 用满 100% 才亮满 10 格
 function usageBar(pct) {
-  const filled = Math.min(pct >= 100 ? 10 : 9, Math.max(pct > 0 ? 1 : 0, Math.round(pct / 10)));
+  const filled = Math.min(pct >= 100 ? 10 : 9, Math.max(0, Math.ceil(pct / 10)));
   return "▰".repeat(filled) + "▱".repeat(10 - filled);
 }
 
