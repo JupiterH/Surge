@@ -34,17 +34,10 @@ const EVENTS = [
   ["圣诞", "solar", "12-25"],
 ];
 
-//>图标依次切换乌龟、兔子、闹钟、礼品盒
-function icon_now(num){
-  if(num<=7 && num>3 ){
-    return "hare"
-  }else if(num<=3 && num>0){
-    return "timer"
-  }else if(num==0){
-    return "gift"
-  }else{
-    return "tortoise"
-  }
+//图标：平时是红色日历，节日当天换成礼物
+const ICON_COLOR = "#FF3B30";
+function icon_now(days) {
+  return days === 0 ? "gift" : "calendar";
 }
 
 
@@ -807,6 +800,6 @@ datenotice();
 $done({
 title:nowlunar,
 icon:icon_now(tlist[0].days),
-'icon-color': "#5AC8FA",
+'icon-color': ICON_COLOR,
 content:renderList(tlist.slice(0, 3))
 })
