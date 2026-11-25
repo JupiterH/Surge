@@ -782,28 +782,9 @@ function datenotice() {
   }
 }
 
+//面板标题：农历日期 + 干支 + 生肖，例如"十月十七 丙午己亥癸卯 马年"
 var lunar = calendar.solar2lunar();
-//var nowsolar = lunar.cYear + '年' +lunar.cMonth +  '月' + lunar.cDay +'日（'+lunar.astro+'）';
-var nowsolar = lunar.cMonth +  '月' + lunar.cDay +'日（'+lunar.astro+'）';
-//var nowlunar = lunar.lYear + '年' +lunar.IMonthCn+lunar.IDayCn+'，'+lunar.gzYear+'年'+lunar.gzMonth+'月'+lunar.gzDay+'日（'+lunar.Animal+'年）';
-var nowlunar = lunar.IMonthCn+lunar.IDayCn+' '+lunar.gzYear+lunar.gzMonth+lunar.gzDay+' '+lunar.Animal+'年';
-
-function title_random(num){
-  let r = Math.floor((Math.random()*10)+1);
-  let dic = {
-    1:"距离放假，还要摸鱼多少天？",
-    2:"坚持住，就快放假啦！",
-    3:"上班好累呀，下顿吃啥？",
-    4:"努力，我还能加班24小时！",
-    5:"今日宜：吃饭饭  忌：减肥",
-    6:"躺平中，等放假",
-    7:"只有摸鱼才是赚老板的钱",
-    8: nowlunar,
-    9: nowsolar,
-    10: "小乌龟慢慢爬"
-  };
-  return num==0?"节日快乐，万事大吉":dic[r]
-}
+var nowlunar = lunar.IMonthCn + lunar.IDayCn + " " + lunar.gzYear + lunar.gzMonth + lunar.gzDay + " " + lunar.Animal + "年";
 
 //显示宽度：汉字等全角字符算 1，英文数字算半个
 function textWidth(s) {
@@ -824,7 +805,7 @@ function renderList(list) {
 datenotice();
 
 $done({
-title:title_random(tlist[0].days),
+title:nowlunar,
 icon:icon_now(tlist[0].days),
 'icon-color': "#5AC8FA",
 content:renderList(tlist.slice(0, 3))
