@@ -1,6 +1,6 @@
 # NAME: AI
 # AUTHOR: Xiao
-# UPDATED: 2026-11-24
+# UPDATED: 2026-11-26
 # 合并自三处来源，按来源分组：
 #   1. 自用：Claude、Muse AI、Ultra Mobile（原 us.list）
 #   2. Sukka's Ruleset（AGPL 3.0）https://ruleset.skk.moe/List/non_ip/ai.conf ，快照 2026-11-24（源站更新于 2026-11-19）
@@ -29,6 +29,8 @@ PROCESS-NAME,claude
 DOMAIN-SUFFIX,muse.ai
 DOMAIN-SUFFIX,museai.com
 DOMAIN-SUFFIX,ecto1.ai
+# Meta 的 Muse 桌面端：进程规则让它连的 graph.facebook.com、meta.graph.meta.com 等也走 AI 分流
+PROCESS-NAME,Muse
 
 # Ultra Mobile
 DOMAIN-KEYWORD,ultramobile
